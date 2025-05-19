@@ -1,0 +1,27 @@
+{
+  "short_name": "SDBS",
+  "name": "Sensor-Dream Boxed System",
+  "description": "Sensor-Dream Boxed System. Zero page of Server: SDBS - 23.06.06 - rev: 1730486928",
+  "icons": [
+    {
+      "src": "/favicon.png",
+      "type": "image/x-icon",
+      "sizes": "64x64"
+    },
+    {
+      "src": "/logo.png",
+      "type": "image/png",
+      "sizes": "196x196"
+    },
+    {
+      "src": "/mail-link.png",
+      "type": "image/png",
+      "sizes": "900x900"
+    }
+  ],
+  "start_url": "/",
+  "background_color": "#fff",
+  "display": "standalone",
+  "scope": "/",
+  "theme_color": "#fff"
+}

@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>403 - Access Denied</title>
+    <style>
+        :root {
+            --hacker-green: #00ff00;
+            --hacker-dark: #001a00;
+            --hacker-light: #00cc00;
+        }
+        
+        body {
+            background-color: #000;
+            color: var(--hacker-green);
+            font-family: 'Courier New', monospace;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .terminal-container {
+            width: 90%;
+            max-width: 800px;
+            border: 1px solid var(--hacker-green);
+            box-shadow: 0 0 20px rgba(0, 255, 0, 0.3);
+            position: relative;
+            padding: 2rem;
+            background-color: rgba(0, 10, 0, 0.7);
+            animation: terminal-flicker 0.1s infinite alternate;
+        }
+        
+        @keyframes terminal-flicker {
+            0% { opacity: 0.95; }
+            100% { opacity: 1; }
+        }
+        
+        .scanlines {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: repeating-linear-gradient(
+                to bottom,
+                transparent 0%,
+                rgba(0, 255, 0, 0.05) 1px,
+                transparent 2px
+            );
+            pointer-events: none;
+            animation: scan 5s linear infinite;
+        }
+        
+        @keyframes scan {
+            0% { background-position: 0 0; }
+            100% { background-position: 0 100%; }
+        }
+        
+        .ascii-art {
+            white-space: pre;
+            font-size: 12px;
+            line-height: 1.2;
+            margin: 1.5rem 0;
+            text-shadow: 0 0 5px var(--hacker-green);
+            animation: glitch 8s infinite alternate;
+        }
+        
+        @keyframes glitch {
+            0%, 100% { transform: translate(0); }
+            20% { transform: translate(-3px, 3px); }
+            40% { transform: translate(-3px, -3px); }
+            60% { transform: translate(3px, 3px); }
+            80% { transform: translate(3px, -3px); }
+        }
+        
+        .error-title {
+            color: var(--hacker-light);
+            font-size: 1.5rem;
+            margin: 1.5rem 0;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            animation: pulse 2s infinite alternate;
+        }
+        
+        @keyframes pulse {
+            0% { text-shadow: 0 0 5px var(--hacker-green); }
+            100% { text-shadow: 0 0 15px var(--hacker-green), 0 0 20px var(--hacker-green); }
+        }
+        
+        .error-message {
+            margin: 1.5rem 0;
+            line-height: 1.6;
+            border-left: 2px solid var(--hacker-green);
+            padding-left: 1rem;
+        }
+        
+        .command-prompt {
+            display: flex;
+            margin: 2rem 0;
+        }
+        
+        .prompt {
+            color: var(--hacker-green);
+            margin-right: 0.5rem;
+        }
+        
+        .command {
+            color: var(--hacker-light);
+        }
+        
+        .cursor {
+            display: inline-block;
+            width: 10px;
+            height: 1rem;
+            background-color: var(--hacker-green);
+            animation: blink 1s step-end infinite;
+            vertical-align: middle;
+        }
+        
+        @keyframes blink {
+            50% { opacity: 0; }
+        }
+        
+        .options {
+            margin: 2rem 0;
+        }
+        
+        .option {
+            margin: 0.8rem 0;
+            display: flex;
+            align-items: center;
+        }
+        
+        .option-bullet {
+            color: var(--hacker-green);
+            margin-right: 0.8rem;
+        }
+        
+        .option-link {
+            color: var(--hacker-light);
+            text-decoration: none;
+            position: relative;
+        }
+        
+        .option-link:hover {
+            text-shadow: 0 0 10px var(--hacker-green);
+        }
+        
+        .option-link::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 0;
+            height: 1px;
+            background-color: var(--hacker-green);
+            transition: width 0.3s ease;
+        }
+        
+        .option-link:hover::after {
+            width: 100%;
+        }
+        
+        .warning-symbol {
+            color: #ff0000;
+            animation: warning-pulse 1.5s infinite alternate;
+        }
+        
+        @keyframes warning-pulse {
+            0% { opacity: 0.5; }
+            100% { opacity: 1; }
+        }
+        
+        .access-denied {
+            position: absolute;
+            font-size: 10rem;
+            opacity: 0.03;
+            z-index: -1;
+            animation: float 15s infinite linear;
+            pointer-events: none;
+        }
+        
+        @keyframes float {
+            0% { transform: translate(-50%, -50%) rotate(0deg); }
+            100% { transform: translate(-50%, -50%) rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <div class="access-denied" style="top: 20%; left: 20%;">403</div>
+    <div class="access-denied" style="top: 80%; left: 80%;">DENIED</div>
+    <div class="access-denied" style="top: 30%; left: 70%;">FORBIDDEN</div>
+    <div class="access-denied" style="top: 70%; left: 30%;">ACCESS</div>
+    
+    <div class="terminal-container">
+        <div class="scanlines"></div>
+        
+        <div class="ascii-art">
+   _____ _____ _____ _____    _____ _____ _____ _____ _____ 
+  |  _  |  |  |   __|     |  |     |  |  |   __|   __| __  |
+  |     |  |  |   __|   --|  |   --|     |   __|   __|    -|
+  |__|__|_____|_____|_____|  |_____|__|__|_____|_____|__|__|
+        </div>
+        
+        <div class="error-title">
+            <span class="warning-symbol">⚠</span> ACCESS DENIED <span class="warning-symbol">⚠</span>
+        </div>
+        
+        <div class="error-message">
+            ERROR 403: FORBIDDEN<br>
+            You do not have permission to access this resource.<br>
+            Unauthorized access attempts are being logged.
+        </div>
+        
+        <div class="command-prompt">
+            <span class="prompt">root@server:~#</span>
+            <span class="command" id="typing-command"></span>
+            <span class="cursor"></span>
+        </div>
+        
+        <div class="options">
+            <div class="option">
+                <span class="option-bullet">></span>
+                <a href="/" class="option-link">Return to home directory</a>
+            </div>
+            <div class="option">
+                <span class="option-bullet">></span>
+                <a href="javascript:history.back()" class="option-link">Go back to previous location</a>
+            </div>
+            <div class="option">
+                <span class="option-bullet">></span>
+                <a href="mailto:admin@sensor-dream.ru" class="option-link">Request access from administrator</a>
+            </div>
+        </div>
+        
+        <div class="ascii-art" style="margin-top: 2rem;">
+  _______ _______ _______ _______ 
+ |     __|   |   |    ___|    |  |
+ |__     |       |    ___|       |
+ |_______|___|___|_______|__|____|
+        </div>
+    </div>
+
+    <script>
+        // Typewriter effect for command prompt
+        const commands = [
+            "sudo chmod 755 " + window.location.pathname,
+            "tail -f /var/log/nginx/error.log",
+            "sudo systemctl status nginx",
+            "curl -I " + window.location.href,
+            "whoami",
+            "last | grep " + window.location.pathname
+        ];
+        
+        let currentCommand = 0;
+        let charIndex = 0;
+        let isDeleting = false;
+        let typingSpeed = 100;
+        
+        function typeCommand() {
+            const currentText = commands[currentCommand];
+            const commandElement = document.getElementById('typing-command');
+            
+            if (isDeleting) {
+                commandElement.textContent = currentText.substring(0, charIndex - 1);
+                charIndex--;
+                typingSpeed = 50;
+            } else {
+                commandElement.textContent = currentText.substring(0, charIndex + 1);
+                charIndex++;
+                typingSpeed = 100 + Math.random() * 100;
+            }
+            
+            if (!isDeleting && charIndex === currentText.length) {
+                isDeleting = true;
+                typingSpeed = 1500;
+            } else if (isDeleting && charIndex === 0) {
+                isDeleting = false;
+                currentCommand = (currentCommand + 1) % commands.length;
+                typingSpeed = 500;
+            }
+            
+            setTimeout(typeCommand, typingSpeed);
+        }
+        
+        // Start the typing effect
+        setTimeout(typeCommand, 1000);
+        
+        // Random glitch effect
+        setInterval(() => {
+            if (Math.random() > 0.95) {
+                document.querySelector('.terminal-container').style.animation = 'glitch 0.3s';
+                setTimeout(() => {
+                    document.querySelector('.terminal-container').style.animation = '';
+                }, 300);
+            }
+        }, 5000);
+        
+        // Random warning flash
+        setInterval(() => {
+            if (Math.random() > 0.9) {
+                document.querySelectorAll('.warning-symbol').forEach(el => {
+                    el.style.color = '#ff0000';
+                    setTimeout(() => {
+                        el.style.color = '';
+                    }, 300);
+                });
+            }
+        }, 3000);
+    </script>
+</body>
+</html>

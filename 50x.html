@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>50x - Server Failure</title>
+    <style>
+        :root {
+            --error-red: #ff3333;
+            --error-dark: #1a0000;
+            --error-light: #ff6666;
+            --terminal-bg: rgba(10, 0, 0, 0.85);
+        }
+        
+        body {
+            background-color: #000;
+            color: var(--error-red);
+            font-family: 'Courier New', monospace;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .terminal {
+            width: 90%;
+            max-width: 800px;
+            border: 1px solid var(--error-red);
+            box-shadow: 0 0 25px rgba(255, 50, 50, 0.4);
+            position: relative;
+            padding: 2rem;
+            background-color: var(--terminal-bg);
+            animation: terminal-flicker 0.05s infinite alternate;
+            z-index: 1;
+        }
+        
+        @keyframes terminal-flicker {
+            0% { opacity: 0.9; }
+            100% { opacity: 1; }
+        }
+        
+        .scanlines {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: repeating-linear-gradient(
+                to bottom,
+                transparent 0%,
+                rgba(255, 0, 0, 0.05) 1px,
+                transparent 2px
+            );
+            pointer-events: none;
+            animation: scan 4s linear infinite;
+        }
+        
+        @keyframes scan {
+            0% { background-position: 0 0; }
+            100% { background-position: 0 100%; }
+        }
+        
+        .ascii-art {
+            white-space: pre;
+            font-size: 12px;
+            line-height: 1.2;
+            margin: 1.5rem 0;
+            text-shadow: 0 0 5px var(--error-red);
+            animation: glitch 10s infinite alternate;
+        }
+        
+        @keyframes glitch {
+            0%, 100% { transform: translate(0); text-shadow: 0 0 5px var(--error-red); }
+            15% { transform: translate(-2px, 2px); text-shadow: 0 0 10px var(--error-red); }
+            30% { transform: translate(2px, -2px); text-shadow: 0 0 15px var(--error-red); }
+            45% { transform: translate(-3px, 1px); }
+            60% { transform: translate(1px, -3px); }
+            75% { transform: translate(3px, 3px); }
+        }
+        
+        .error-header {
+            color: var(--error-light);
+            font-size: 1.8rem;
+            margin: 1.5rem 0;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            animation: pulse 2s infinite alternate;
+            position: relative;
+        }
+        
+        @keyframes pulse {
+            0% { text-shadow: 0 0 5px var(--error-red); }
+            100% { text-shadow: 0 0 20px var(--error-red), 0 0 30px var(--error-red); }
+        }
+        
+        .error-details {
+            margin: 1.5rem 0;
+            line-height: 1.6;
+            border-left: 2px solid var(--error-red);
+            padding-left: 1rem;
+            position: relative;
+        }
+        
+        .command-line {
+            display: flex;
+            margin: 2rem 0;
+            align-items: center;
+        }
+        
+        .prompt {
+            color: var(--error-red);
+            margin-right: 0.5rem;
+        }
+        
+        .command {
+            color: var(--error-light);
+        }
+        
+        .cursor {
+            display: inline-block;
+            width: 10px;
+            height: 1rem;
+            background-color: var(--error-red);
+            animation: blink 0.8s step-end infinite;
+            vertical-align: middle;
+            margin-left: 2px;
+        }
+        
+        @keyframes blink {
+            50% { opacity: 0; }
+        }
+        
+        .options {
+            margin: 2rem 0;
+        }
+        
+        .option {
+            margin: 1rem 0;
+            display: flex;
+            align-items: center;
+        }
+        
+        .option-bullet {
+            color: var(--error-red);
+            margin-right: 0.8rem;
+            animation: bullet-pulse 2s infinite;
+        }
+        
+        @keyframes bullet-pulse {
+            0%, 100% { opacity: 0.7; }
+            50% { opacity: 1; }
+        }
+        
+        .option-link {
+            color: var(--error-light);
+            text-decoration: none;
+            position: relative;
+            transition: all 0.3s;
+        }
+        
+        .option-link:hover {
+            text-shadow: 0 0 10px var(--error-red);
+        }
+        
+        .option-link::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 0;
+            height: 1px;
+            background-color: var(--error-red);
+            transition: width 0.3s ease;
+        }
+        
+        .option-link:hover::after {
+            width: 100%;
+        }
+        
+        .critical-icon {
+            color: #ff0000;
+            animation: critical-pulse 1s infinite alternate;
+            margin-right: 0.5rem;
+        }
+        
+        @keyframes critical-pulse {
+            0% { transform: scale(1); }
+            100% { transform: scale(1.2); }
+        }
+        
+        .server-status {
+            margin: 1.5rem 0;
+            padding: 1rem;
+            border: 1px dashed var(--error-red);
+            position: relative;
+        }
+        
+        .status-item {
+            display: flex;
+            margin: 0.5rem 0;
+        }
+        
+        .status-label {
+            width: 120px;
+        }
+        
+        .status-value {
+            color: var(--error-light);
+        }
+        
+        .error-bg {
+            position: absolute;
+            font-size: 15rem;
+            opacity: 0.03;
+            z-index: 0;
+            pointer-events: none;
+            font-weight: bold;
+            animation: float 30s infinite linear;
+        }
+        
+        @keyframes float {
+            0% { transform: translate(-50%, -50%) rotate(0deg); }
+            100% { transform: translate(-50%, -50%) rotate(360deg); }
+        }
+        
+        .flame {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at center, rgba(255,50,0,0.1) 0%, transparent 70%);
+            animation: flame-flicker 2s infinite alternate;
+            pointer-events: none;
+            z-index: -1;
+        }
+        
+        @keyframes flame-flicker {
+            0% { opacity: 0.3; transform: scale(1); }
+            100% { opacity: 0.7; transform: scale(1.05); }
+        }
+    </style>
+</head>
+<body>
+    <div class="flame"></div>
+    <div class="error-bg" style="top: 20%; left: 20%;">500</div>
+    <div class="error-bg" style="top: 80%; left: 80%;">503</div>
+    <div class="error-bg" style="top: 30%; left: 70%;">50x</div>
+    <div class="error-bg" style="top: 70%; left: 30%;">ERROR</div>
+    
+    <div class="terminal">
+        <div class="scanlines"></div>
+        
+        <div class="ascii-art">
+   _____ _____ _____    _______ _______ _______ 
+  |     |   __|   __|  |    ___|     __|    |  |
+  | | | |__   |   __|  |    ___|__     |       |
+  |_|_|_|_____|_____|  |_______|_______|__|____|
+        </div>
+        
+        <div class="error-header">
+            <span class="critical-icon">☢</span> SERVER FAILURE <span class="critical-icon">☢</span>
+        </div>
+        
+        <div class="error-details">
+            CRITICAL SYSTEM ERROR 50x<br>
+            The server encountered a temporary failure processing your request.<br>
+            Technical team has been notified about this issue.
+        </div>
+        
+        <div class="server-status">
+            <div class="status-item">
+                <span class="status-label">Error Type:</span>
+                <span class="status-value" id="error-type">Determining...</span>
+            </div>
+            <div class="status-item">
+                <span class="status-label">Timestamp:</span>
+                <span class="status-value" id="error-time"></span>
+            </div>
+            <div class="status-item">
+                <span class="status-label">Node:</span>
+                <span class="status-value">web-server-01</span>
+            </div>
+            <div class="status-item">
+                <span class="status-label">Status:</span>
+                <span class="status-value" id="recovery-status">Attempting recovery...</span>
+            </div>
+        </div>
+        
+        <div class="command-line">
+            <span class="prompt">root@server:~#</span>
+            <span class="command" id="typing-command"></span>
+            <span class="cursor"></span>
+        </div>
+        
+        <div class="options">
+            <div class="option">
+                <span class="option-bullet">❯</span>
+                <a href="/" class="option-link">Try reloading the page</a>
+            </div>
+            <div class="option">
+                <span class="option-bullet">❯</span>
+                <a href="javascript:location.reload()" class="option-link">Check server status</a>
+            </div>
+            <div class="option">
+                <span class="option-bullet">❯</span>
+                <a href="mailto:admin@sensor-dream.ru?subject=50x%20Server%20Error" class="option-link">Contact system administrator</a>
+            </div>
+        </div>
+        
+        <div class="ascii-art" style="margin-top: 2rem;">
+  _______ _______ _______ _______ _______ 
+ |    ___|    |  |    ___|     __|    |  |
+ |    ___|       |    ___|__     |       |
+ |_______|__|____|_______|_______|__|____|
+        </div>
+    </div>
+
+    <script>
+        // Set current time
+        document.getElementById('error-time').textContent = new Date().toLocaleString();
+        
+        // Determine error type
+        const errorTypes = [
+            "500 Internal Server Error",
+            "502 Bad Gateway",
+            "503 Service Unavailable",
+            "504 Gateway Timeout"
+        ];
+        const randomError = errorTypes[Math.floor(Math.random() * errorTypes.length)];
+        document.getElementById('error-type').textContent = randomError;
+        
+        // Typewriter effect for command prompt
+        const commands = [
+            "systemctl status nginx",
+            "tail -f /var/log/nginx/error.log",
+            "sudo service nginx restart",
+            "netstat -tulnp | grep :80",
+            "df -h",
+            "top -n 1 -b",
+            "journalctl -xe",
+            "curl -I localhost",
+            "ping google.com",
+            "sudo killall -9 nginx"
+        ];
+        
+        let currentCommand = 0;
+        let charIndex = 0;
+        let isDeleting = false;
+        let typingSpeed = 100;
+        
+        function typeCommand() {
+            const currentText = commands[currentCommand];
+            const commandElement = document.getElementById('typing-command');
+            
+            if (isDeleting) {
+                commandElement.textContent = currentText.substring(0, charIndex - 1);
+                charIndex--;
+                typingSpeed = 30;
+            } else {
+                commandElement.textContent = currentText.substring(0, charIndex + 1);
+                charIndex++;
+                typingSpeed = 70 + Math.random() * 50;
+            }
+            
+            if (!isDeleting && charIndex === currentText.length) {
+                isDeleting = true;
+                typingSpeed = 1000;
+            } else if (isDeleting && charIndex === 0) {
+                isDeleting = false;
+                currentCommand = (currentCommand + 1) % commands.length;
+                typingSpeed = 500;
+            }
+            
+            setTimeout(typeCommand, typingSpeed);
+        }
+        
+        // Start the typing effect
+        setTimeout(typeCommand, 1500);
+        
+        // Simulate recovery status
+        const statusMessages = [
+            "Attempting recovery...",
+            "Checking dependencies...",
+            "Restarting services...",
+            "Verifying database connections...",
+            "Testing endpoints...",
+            "Almost there...",
+            "Finalizing recovery..."
+        ];
+        
+        let statusIndex = 0;
+        const statusElement = document.getElementById('recovery-status');
+        
+        function updateStatus() {
+            statusElement.textContent = statusMessages[statusIndex];
+            statusIndex = (statusIndex + 1) % statusMessages.length;
+            
+            if (statusIndex === 0) {
+                setTimeout(updateStatus, 3000);
+            } else {
+                setTimeout(updateStatus, 1500);
+            }
+        }
+        
+        updateStatus();
+        
+        // Random critical flash
+        setInterval(() => {
+            if (Math.random() > 0.9) {
+                document.querySelectorAll('.critical-icon').forEach(el => {
+                    el.style.animation = 'none';
+                    el.style.color = '#ff0000';
+                    el.style.transform = 'scale(1.5)';
+                    setTimeout(() => {
+                        el.style.animation = '';
+                        el.style.color = '';
+                        el.style.transform = '';
+                    }, 300);
+                });
+            }
+        }, 5000);
+        
+        // Random terminal shake
+        setInterval(() => {
+            if (Math.random() > 0.95) {
+                const terminal = document.querySelector('.terminal');
+                terminal.style.transform = 'translateX(10px)';
+                setTimeout(() => {
+                    terminal.style.transform = 'translateX(-10px)';
+                    setTimeout(() => {
+                        terminal.style.transform = '';
+                    }, 100);
+                }, 100);
+            }
+        }, 8000);
+    </script>
+</body>
+</html>
