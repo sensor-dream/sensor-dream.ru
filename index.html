@@ -1,327 +1,516 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="ru">
+<!DOCTYPE html>
+<html lang="en">
 <head>
-  <title>Zero page</title>
-  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-  <meta name="description" content=". Zero page of Server:  - 23.06.06 - rev: 1730486928" />
-  <meta name="keywords" content=", Server, Contacts, License" />
-  <meta name="author" content="" />
-  <meta name="email" content="" />
-  <link rel="icon" href="https://sensor-dream.ru/favicon.png" type="image/png">
-  <link rel="manifest" href="manifest.json">
-  <style type="text/css">
-    /*<![CDATA[*/
-      body {
-        padding: 0px;
-        margin: 0px;
-        border-width: 0px;
-        background-color: white;
-        font-size: 1.2em;
-      }
-
-      body, .app, .wgl-app {
-        width: 100vw;
-        height: 100vh;
-      }
-
-      .app {
-
-        display: flex;
-	      display: -webkit-box;
-	      display: -webkit-flex;
-	      display: -ms-flexbox;
-      }
-
-      .app, .org, .footer {
-        flex-direction: column;
-	      -webkit-box-orient: vertical;
-	      -webkit-box-direction: normal;
-	      -webkit-flex-direction: column;
-	      -ms-flex-direction: column;
-
-        justify-content: center;
-	      -webkit-box-pack: justify;
-	      -webkit-justify-content: center;
-	      -ms-flex-pack: justify;
-
-        align-content: center;
-	      -webkit-align-content: center;
-	      -ms-flex-line-pack: distribute;
-
-        align-items: center;
-	      -webkit-box-align: center;
-	      -webkit-align-items: center;
-	      -ms-flex-align: center;
-      }
-
-      .org {
-        padding: 10px;
-        /***
-          border-bottom: 1px solid rgba(0,0,0,0.1);
-          */
-        text-align: center;
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zero page</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="description" content=". Zero page of Server:  - 23.06.06 - rev: 1730486928" />
+    <meta name="keywords" content=", Server, Contacts, License" />
+    <meta name="author" content="" />
+    <meta name="email" content="" />
+    <link rel="icon" href="https://sensor-dream.ru/favicon.png" type="image/png">
+    <link rel="manifest" href="manifest.json">
+    <style>
+        :root {
+            --hacker-green: #00ff00;
+            --hacker-dark: #001a00;
+            --hacker-light: #00cc00;
+        }
+        /*
+        body {
+            background-color: #121212;
+            color: #00ff00;
+            font-family: 'Courier New', monospace;
+            padding: 20px;
+            overflow: hidden;
+        }
+        */
+        body {
+            background-color: #121212;
+            color: var(--hacker-green);
+            font-family: monospace, 'Courier New';
+            display: block;
+            justify-content: center;
+            align-items: center;
+            height: 90vh;
+            margin: 0;
+            overflow:visible;
+            position: relative;
+            padding: 20px;
+        }
         
-      }
-      .footer {
-        text-align: center;
-        font-weight:bold;
-      }
-      .logo {
-        margin: 5px 5px 25px 5px;
-        width: 64px;
-        height: 64px;
-      }
-      .mail-link {
-        margin-top: 4px;
-        width: 32px;
-        height: 32px;
-      }
-      #statcounter {
-        padding-top: 10px;
-      }
-      a, a:visited, a:link, a:active, a:hover {
-        color: #4285F4;
-        text-decoration: none;
-        font-weight:bold;
-      }
-      .zero-page {
-        font-size: 1.4em;
-        font-weight: bold;
-      }
-      #license {
-        display: none;
-        width: 50vw;
-        margin-top: 40px;
-        color: rgba(150,150,150,1);
-        font-size: 0.5em;
-      }
-    /*]]>*/
-    .wgl-app {
-	position: absolute;
-	background-color: transparent;
-	z-index: -1;
-    }
-  </style>
-
-  <!-- МОдальное окно формы -->
-  <style>
+        .terminal {
+            border: 2px solid #00ff00;
+            border-radius: 5px;
+            padding: 15px;
+            max-width: 800px;
+            margin: 0 auto;
+            position: relative;
+            box-shadow: 0 0 15px rgba(0, 255, 0, 0.3);
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 20px;
+            line-height: 1.3;
+        }
+        
+        .status-bar {
+            border: 1px solid #00ff00;
+            padding: 8px;
+            margin: 15px 0;
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+        }
+        
+        .status-item {
+            margin: 0 10px;
+        }
+        
+        .button {
+            border: 2px solid #00ff00;
+            padding: 15px;
+            text-align: center;
+            margin: 20px 0;
+            cursor: pointer;
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .button:hover {
+            background-color: rgba(0, 255, 0, 0.1);
+            box-shadow: 0 0 10px rgba(0, 255, 0, 0.5);
+        }
+        
+        .button:active {
+            transform: scale(0.98);
+        }
+        
+        .button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(0, 255, 0, 0.2), transparent);
+            transition: 0.5s;
+        }
+        
+        .button:hover::before {
+            left: 100%;
+        }
+        
+        .footer {
+            margin-top: 20px;
+            font-size: 0.9em;
+        }
+        
+        .cursor {
+            animation: blink 1s infinite;
+        }
+        
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0; }
+        }
+        
         .modal {
             display: none;
             position: fixed;
-            z-index: 1;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            overflow: auto;
-            background-color: rgba(0,0,0,0.4);
-            border-radius: 20px;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            border: 2px solid #00ff00;
+            background-color: #121212;
+            padding: 20px;
+            z-index: 100;
+            max-width: 500px;
+            width: 80%;
+            box-shadow: 0 0 20px rgba(0, 255, 0, 0.5);
         }
         
         .modal-content {
-            background-color: #ceceae;
-            margin: 15% auto;
-            padding: 20px;
-            border: 1px solid #888;
-            width: 80%;
-            max-width: 500px;
-            border-radius: 20px;
-            box-shadow: 0 4px 8px 0 rgba(0,0,0,0.5);
+            margin: 15px 0;
         }
         
-        .close {
-            color: #aaa;
-            float: right;
-            font-size: 28px;
-            font-weight: bold;
-            cursor: pointer;
-        }
-        
-        .form-group {
-            margin-bottom: 15px;
-            
-        }
-        
-        .form-group label {
-            display: block;
-            margin-bottom: 5px;
-            font-weight: bold;
-            color: #4285f4;
-            text-align: left;;
-        }
-        
-        .form-group input,
-        .form-group textarea {
-            width: 100%;
+        .modal-option {
             padding: 8px;
-            border: 1px solid #ddd;
-            border-radius: 6px;
-            box-sizing: border-box;
+            margin: 5px 0;
+            cursor: pointer;
         }
         
-        .form-group textarea {
+        .modal-option:hover {
+            background-color: rgba(0, 255, 0, 0.1);
+        }
+        
+        .modal-footer {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+        }
+        
+        .close-btn {
+            cursor: pointer;
+            padding: 5px 10px;
+            font-size: 0.9em;
+        }
+        
+        .close-btn:hover {
+            background-color: rgba(255, 0, 0, 0.2);
+        }
+        
+        .execute-btn {
+            cursor: pointer;
+            padding: 5px 10px;
+        }
+        
+        .execute-btn:hover {
+            background-color: rgba(0, 255, 0, 0.2);
+        }
+        
+        .scan-animation {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: repeating-linear-gradient(
+                0deg,
+                rgba(0, 255, 0, 0),
+                rgba(0, 255, 0, 0) 5px,
+                rgba(0, 255, 0, 0.05) 5px,
+                rgba(0, 255, 0, 0.05) 10px
+            );
+            animation: scan 5s linear infinite;
+            pointer-events: none;
+            opacity: 0.5;
+            z-index: -1;
+        }
+        
+        @keyframes scan {
+            0% { background-position: 0 0; }
+            100% { background-position: 0 100px; }
+        }
+        
+        .sensor-data {
             height: 100px;
-            resize: vertical;
-        }
-        
-        .submit-btn {
-            background-color: #ea4334;
-            color: white;
-            padding: 10px 15px;
-            border: none;
-            border-radius: 10px;
-            cursor: pointer;
-            font-size: 16px;
-        }
-        
-        .open-form-btn {
-            background-color: #4285f4;
-            color: white;
-            padding: 12px 20px;
-            border: none;
-            border-radius: 10px;
-            cursor: pointer;
-            font-size: 16px;
-            margin: 20px;
-        }
-        
-        #formMessage {
-            margin-top: 15px;
+            overflow: hidden;
+            position: relative;
+            border: 1px solid #00ff00;
+            margin: 15px 0;
             padding: 10px;
-            border-radius: 4px;
-            display: none;
         }
         
-        .success {
-            background-color: #dff0d8;
-            color: #3c763d;
+        .data-line {
+            position: absolute;
+            width: 100%;
+            animation: scroll-up 15s linear infinite;
         }
         
-        .error {
-            background-color: #f2dede;
-            color: #a94442;
+        @keyframes scroll-up {
+            0% { transform: translateY(100%); }
+            100% { transform: translateY(-100%); }
+        }
+
+        .btn {
+            border: none;
+            background: transparent;
+            color: #00ff00;
+            padding: 5px 10px;
+            cursor: pointer;
+            margin: 0px;
+            font-size: 0.9em;
+        }
+        
+        .btn:hover {
+            background-color: rgba(0, 255, 0, 0.1);
+            background-color: rgba(255, 0, 0, 0.2);
+        }
+
+        .input-field {
+            background: transparent;
+            border: 1px solid #00ff00;
+            color: #00ff00;
+            font-family: monospace, 'Courier New';
+            padding: 8px;
+            width: 95%;
+            margin: 10px 0px;
         }
     </style>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
-  <canvas id="wgl-app" class="wgl-app"></canvas>
-  <div class="app" id="app">
-<!--      <div style="opacity: 40%; z-index: -10; position: absolute;">
-	  <a  href="https://mynickname.com/id1824931"><img src="https://mynickname.com/img.php?id=1824931&sert=1" alt="Сертификат на никнейм sensor-dream, зарегистрирован на https://sensor-dream.ru" border="0" /></a>
-      </div><br />
--->      
-    <img class="logo" src="logo.png"></img>
-    <div class="org">
-      <span class="zero-page">Zero page.</span>
-      <h1><span style="color: #f5bb09;">S</span>ensor-<span style="color: #3ea852;">D</span>ream <span style="color: #ea4334;">B</span>oxed <span style="color: #4285f4;">S</span>ystem</h1>
-      <!-- Lets go the <a href="https://we-docs.sensor-dream.ru">https://we-docs.sensor-dream.ru</a> -->
+    <div class="scan-animation"></div>
+    
+    <div class="terminal">
+        <div class="header">
+            <pre>
+███████╗██████╗ ██████╗ ███████╗
+██╔════╝██╔══██╗██╔══██╗██╔════╝
+███████╗██║  ██║██████╔╝███████╗
+╚════██║██║  ██║██   ██╗╚════██║
+███████║██████╔╝███████║███████║
+╚══════╝╚═════╝ ╚═════╝╚══════╝
+Sensor-Dream Boxed System 
+            </pre>
+        </div>
+        
+        <div class="status-bar">
+            <div class="status-item">[STATUS] System: <span id="system-status">ONLINE</span></div>
+            <div class="status-item">Memory: <span id="memory">78</span>%</div>
+            <div class="status-item">CPU: <span id="cpu">34</span>%</div>
+            <div class="status-item">Temp: <span id="temp">42</span>°C</div>
+        </div>
+        
+        <div class="sensor-data">
+            <div class="data-line">
+                > Last scan: <span id="scan-time">2023-11-15 14:30:22</span><br>
+                > Detected sensors: <span id="sensor-count">14</span><br>
+                > Active protocols: <span id="protocol-count">5</span><br>
+                > Sensor 01: 23.5°C | 45% RH | Nominal<br>
+                > Sensor 02: 25.1°C | 42% RH | Nominal<br>
+                > Sensor 03: 22.8°C | 47% RH | Nominal<br>
+                > Sensor 04: 24.3°C | 43% RH | Nominal<br>
+                > Sensor 05: 23.9°C | 46% RH | Nominal<br>
+                > Sensor 06: 24.7°C | 44% RH | Nominal<br>
+                > Sensor 07: 23.2°C | 45% RH | Nominal<br>
+                > Sensor 08: 24.1°C | 43% RH | Nominal<br>
+                > Sensor 09: 23.7°C | 46% RH | Nominal<br>
+                > Sensor 10: 24.5°C | 44% RH | Nominal<br>
+                > Sensor 11: 23.0°C | 45% RH | Nominal<br>
+                > Sensor 12: 24.2°C | 43% RH | Nominal<br>
+                > Sensor 13: 23.8°C | 46% RH | Nominal<br>
+                > Sensor 14: 24.4°C | 44% RH | Nominal<br>
+                > Data transmission: Active<br>
+                > Encryption: AES-256<br>
+                > Network: Stable (5ms latency)
+            </div>
+        </div>
+        
+        <div class="button" id="control-panel-btn">
+<pre>
+Zero page
+Sensor-Dream Boxed System Control Panel
+Server: SDBS - 23.06.06 - rev: 1730486928<br />
+[SUBMIT]
+</pre>
+        </div>
+        
+        <div class="footer">
+            > Press [F5] to refresh data<br>
+            > Press [ENTER] to open control panel<span class="cursor">_</span>
+        </div>
     </div>
-    <div class="footer">
-      Server: <strong><span style="color: #f5bb09;">S</span><span style="color: #3ea852;">D</span><span style="color: #ea4334;">B</span><span style="color: #4285f4;">S</span></strong> - <strong>23.06.06</strong> - rev: 1730486928<br />
+    
+    <div class="modal" id="control-panel">
+        <div class="modal-content">
+            <h3>Sensor-Dream Boxed System Control Panel</h3>
+            <div class="modal-option">[1] Run diagnostics</div>
+            <div class="modal-option">[2] Configure sensors</div>
+            <div class="modal-option">[3] Update firmware</div>
+            <div class="modal-option">[4] Export data</div>
+            <div class="modal-option">[5] System settings</div>
+            
+            <div style="margin: 15px 0;">
+            </div>
+        </div>
+        
+        <div class="modal-footer">
+            <div class="close-btn" id="close-modal">[ESC] Close</div> 
+            <button class="btn" id="openModal">[OPEN] Message</button>
+        </div>
+        <div class="modal-footer">
+        </div>
+    </div>
 
-    <br /><button class="open-form-btn" id="openFormBtn">Отправить мне сообщение</button>
-      
-    <div id="contactModal" class="modal">
-    <div class="modal-content">
-        <span class="close">&times;</span>
-        <h2 style="color: #EA4334;">Обратная связь (Feedback)</h2>
-        <form id="contactForm" >
-            <div class="form-group">
-              <label for="name">Ваше имя (Your name):
-                <input type="text" id="name" name="name" required>
+
+    <div class="modal" id="contactModal">
+        <div class="ascii-art" >
+        MESSAGE FORM
+        <form id="contactForm"  method="POST">
+            <div class="form-group ">
+              <label for="name">Your name:
+                <input type="text" id="name" name="name" class="input-field" placeholder="name" required> 
               </label>
             </div>
             <div class="form-group">
           </div>
             
             <div class="form-group">
-                <label for="email">Ваш email (our email address):
-                  <input type="email" id="email" name="email" required>
+                <label for="email">our email address:
+                  <input type="email" id="email" name="email" class="input-field" placeholder="email" required> 
                 </label>
             </div>
             
             <div class="form-group">
-                <label for="message">Сообщение (Message):
-                <textarea id="message" name="message" required></textarea>
+                <label for="message">Message:
+                <textarea id="message" name="message" class="input-field" rows="5"  placeholder="Type here..." required></textarea>
                 </label>
             </div>
-
-            <button type="submit" class="submit-btn">Отправить (Send)</button>
-            <div id="formMessage"></div>
-
+    
+            <div style="text-align: center; margin-top: 15px;">
+                <button type="button" class="btn" id="cancelBtn">[ESC] Close</button>
+                <button type="submit" class="btn" id="sendBtn">[SEND] Message</button>
+            </div>
+    
         </form> 
+       [X] ENCRYPT MESSAGE 
+        </div>
+          
+        <div class="status-bar">
+            <span>CONNECTION: SECURE</span>
+            <span>PROTOCOL: SMTP/SSL</span>
+            <div id="formMessage"></div>
+        </div>
     </div>
-</div>
+    
+    <script>
+        // Control panel button functionality
+        document.getElementById('control-panel-btn').addEventListener('click', function() {
+            document.getElementById('control-panel').style.display = 'block';
+        });
+        
+        // Close modal functionality
+        document.getElementById('close-modal').addEventListener('click', function() {
+            document.getElementById('control-panel').style.display = 'none';
+        });
+        
+        // Close modal when clicking outside
+        window.addEventListener('click', function(event) {
+            if (event.target == document.getElementById('control-panel')) {
+                document.getElementById('control-panel').style.display = 'none';
+            }
+        });
+        
+        // Simulate changing system stats
+        function updateStats() {
+            // Random fluctuations for demo purposes
+            const memory = 78 + Math.floor(Math.random() * 6) - 3;
+            const cpu = 34 + Math.floor(Math.random() * 10) - 5;
+            const temp = 42 + Math.floor(Math.random() * 4) - 2;
+            
+            document.getElementById('memory').textContent = memory;
+            document.getElementById('cpu').textContent = cpu;
+            document.getElementById('temp').textContent = temp;
+            
+            // Update scan time
+            const now = new Date();
+            document.getElementById('scan-time').textContent = now.toISOString().replace('T', ' ').substring(0, 19);
+            
+            // Randomly change system status for demo
+            if (Math.random() > 0.95) {
+                const status = document.getElementById('system-status');
+                status.textContent = 'WARNING';
+                status.style.color = 'yellow';
+                setTimeout(() => {
+                    status.textContent = 'ONLINE';
+                    status.style.color = '#00ff00';
+                }, 2000);
+            }
+        }
+        
+        // Update stats every 3 seconds
+        setInterval(updateStats, 1000);
+        
+        // Handle keyboard events
+        document.addEventListener('keydown', function(event) {
+            // Enter key opens control panel
+            if (event.key === 'Enter') {
+                document.getElementById('control-panel').style.display = 'block';
+            }
+            
+            // Escape key closes control panel
+            if (event.key === 'Escape' && document.getElementById("contactModal").style.display === 'none') {
+                document.getElementById('control-panel').style.display = 'none';
+            }
+            
+            // F5 refreshes data
+            if (event.key === 'F5') {
+//                event.preventDefault();
+                updateStats();
+            }
+        });
+    </script>
 
 <script>
-
-  document.addEventListener('DOMContentLoaded', function() {
-      const modal = document.getElementById("contactModal");
-      const btn = document.getElementById("openFormBtn");
-      const span = document.getElementsByClassName("close")[0];
-      const form = document.getElementById("contactForm");
-      const formMessage = document.getElementById("formMessage");
-      
-      btn.onclick = () => modal.style.display = "block";
-      span.onclick = () => modal.style.display = "none";
-      // window.onclick = (event) => event.target == modal && (modal.style.display = "none");
-      
-      document.body.addEventListener('click', function(event) {
-      if (event.target === modal) {
-        modal.style.display = "none";
-      }
+document.addEventListener('DOMContentLoaded', function() {
+    const modal = document.getElementById("contactModal");
+    const btn = document.getElementById("openModal");
+    const cancelBtn = document.getElementById("cancelBtn");
+    const form = document.getElementById("contactForm");
+    const formMessage = document.getElementById("formMessage");
+    
+    btn.onclick = () => modal.style.display = "block";
+    cancelBtn.onclick = () => modal.style.display = "none";
+    // window.onclick = (event) => event.target == modal && (modal.style.display = "none");
+    
+    document.body.addEventListener('click', function(event) {
+    if (event.target === modal) {
+      modal.style.display = "none";
+    }
 });
-      
-      form.addEventListener("submit", async  function(e) {
-          e.preventDefault();
-          formMessage.style.display = "none";
-          
-          try {
-              const formData = new FormData(this);
-              const response = await fetch('mailer.php', {
-                  method: 'POST',
-                  body: formData
-              });
-              
-              if (!response.ok) throw new Error('Network response was not ok');
-              
-              const data = await response.json();
-              
-              formMessage.style.display = "block";
-              if(data.success) {
-                  formMessage.className = "success";
-                  formMessage.textContent = data.message;
-                  form.reset();
-                  setTimeout(() => {
-                      modal.style.display = "none";
-                      formMessage.style.display = "none";
-                  }, 1500);
-              } else {
-                  formMessage.className = "error";
-                  formMessage.textContent = data.message;
-              }
-          } catch (error) {
-              console.error('Error:', error);
-              formMessage.style.display = "block";
-              formMessage.className = "error";
-              formMessage.textContent = "Произошла ошибка при отправке формы. Пожалуйста, попробуйте позже.";
-          }
-      });
-  });
-  </script>
+
+document.addEventListener('keydown', function(event) {
+    // Escape key closes control panel
+    if (event.key === 'Escape') {
+            modal.style.display = 'none';
+    }
+});
   
-  <br />or<!--&#9660;--><br />
-  <i class="fab fa-telegram"></i>&nbsp;&nbsp;<a href="tg://resolve?domain=sensordream">@sensordream</a>
-  <br />
-  or<!--&#9660;--><br />
-  <a href="mailto: sensor-dream@sensor-dream.ru">Моя почта </a>
-  <br />  <br />
- 
+form.addEventListener("submit", async  function(e) {
+        e.preventDefault();
+        formMessage.style.display = "none";
+        
+        try {
+            const formData = new FormData(this);
 
+            // for (const [key, value] of formData.entries()) {
+            //     console.log(key, value);
+            // }
 
+            const response = await fetch('mailer.php', {
+                method: 'POST',
+                // headers: { 'Content-Type': 'application/json' },
+                // headers: { 'Content-Type': 'multipart/form-data' },
+               //  'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
+                // headers: {
+                //    'X-CSRFToken': getCookie('csrftoken'), // Функция для получения куки
+                //},
+                body: formData
+                //body: JSON.stringify(formData)
+            });
 
-      <!-- Yandex.Metrika counter -->
+            if (!response.ok) throw new Error('Network response was not ok');
+            
+            const data = await response.json();
+            
+            formMessage.style.display = "block";
+            if(data.success) {
+                formMessage.className = "success";
+                formMessage.textContent = data.message;
+                form.reset();
+                setTimeout(() => {
+                    modal.style.display = "none";
+                    formMessage.style.display = "none";
+                }, 1500);
+            } else {
+                formMessage.className = "error";
+                formMessage.textContent = data.message;
+            }
+        } catch (error) {
+            console.error('Error:', error);
+            formMessage.style.display = "block";
+            formMessage.className = "error";
+            formMessage.textContent = "An error occurred when submitting the form. Please try again later.";
+        }
+    });
+});
+</script>
+
+    <!-- Yandex.Metrika counter -->
 	 <script type="text/javascript" >
 	    (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
 	    m[i].l=1*new Date();k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
@@ -335,44 +524,18 @@
 	 </script>
 	 <noscript><div><img src="https://mc.yandex.ru/watch/87100723" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
       <!-- /Yandex.Metrika counter -->
-      
       <!-- Default Statcounter code for My domain sensor-dream.ru https://sensor-dream.ru -->
-        <script type="text/javascript">
-          var sc_project=12511240; 
-          var sc_invisible=0; 
-          var sc_security="3a841b1e"; 
-          var sc_client_storage="disabled"; 
-          var scJsHost = "https://";
-          document.write("<sc"+"ript type='text/javascript' src='" + scJsHost+"statcounter.com/counter/counter.js'></" + "script>");
-        </script>
-        <noscript><div class="statcounter"><a title="Web Analytics" href="https://statcounter.com/" target="_blank"><img class="statcounter" src="https://c.statcounter.com/12511240/0/3a841b1e/0/" alt="Web Analytics"></a></div></noscript>
-      <!-- End of Statcounter Code -->
-      <br />
-      <div id="license">
-        @Copyright © sensor-dream. All rights reserved. Contacts: sensor-dream@sensor-dream.ru
-        <br />
-        @Copyright © sensor-dream. All rights reserved. Contacts: sensor-dream@sensor-dream.ru
-        <br />
-        @Copyright © Sensor-Dream Boxed System (SDBS). Contacts: sensor-dream@sensor-dream.ru
-        <br />
-        Licensed under the Apache License, Version 2.0 (the "License");
-        <br />
-        You may not use this file except in compliance with the License.
-        <br />
-        You may obtain a copy of the License at
-        <br />
-        http://www.apache.org/licenses/LICENSE-2.0
-        <br />
-        Unless required by applicable law or agreed to in writing, software
-        distributed under the License is distributed on an "AS IS" BASIS,
-        WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-        See the License for the specific language governing permissions and
-        limitations under the License.
+       <div style="position: absolute; z-index: -1; top: -20px; ">
+      <script type="text/javascript">
+        var sc_project=12511240; 
+        var sc_invisible=0; 
+        var sc_security="3a841b1e"; 
+        var sc_client_storage="disabled"; 
+        var scJsHost = "https://";
+        document.write("<sc"+"ript type='text/javascript' src='" + scJsHost+"statcounter.com/counter/counter.js'></" + "script>");
+      </script>
+      <noscript><div class="statcounter"><a title="Web Analytics" href="https://statcounter.com/" target="_blank"><img  class="statcounter" src="https://c.statcounter.com/12511240/0/3a841b1e/0/" alt="Web Analytics"></a></div></noscript>
       </div>
-      <br />
-      <!-- Double page: <a href="https://we-docs.sensor-dream.ru">sensor-dream.ru</a> -->
-    </div>
-  </div>
-  <!-- <script src="https://ylei753tkpb.montastic.io/embed/script.js"></script> -->
+    <!-- End of Statcounter Code -->
 </body>
 </html>
