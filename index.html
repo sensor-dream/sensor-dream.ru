@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -38,6 +38,12 @@
             overflow:visible;
             position: relative;
             padding: 20px;
+        }
+
+        a { 
+            color: #00ff00;
+            user-select: none;
+            text-decoration: none; 
         }
         
         .terminal {
@@ -128,8 +134,8 @@
             background-color: #121212;
             padding: 20px;
             z-index: 100;
-            max-width: 500px;
-            width: 80%;
+            max-width: 600px;
+            width: 90%;
             box-shadow: 0 0 20px rgba(0, 255, 0, 0.5);
         }
         
@@ -240,6 +246,8 @@
             width: 95%;
             margin: 10px 0px;
         }
+
+
     </style>
 </head>
 <body>
@@ -310,24 +318,24 @@ tg: @sensordream
     
     <div class="modal" id="control-panel">
         <div class="modal-content">
-            <table>
+            <table  style="color ;">
                 <thead>
-                    <h3>Sensor-Dream Boxed System Control Panel</h3>
+                    <h3 style="text-align: center;">Sensor-Dream Boxed System Control Panel</h3>
                 </thead>
                 <tr>
                     <td>
-                        <div class="modal-option">[1] Run diagnostics</div>
-                        <div class="modal-option">[2] Configure sensors</div>
-                        <div class="modal-option">[3] Update firmware</div>
-                        <div class="modal-option">[4] Export data</div>
-                        <div class="modal-option">[5] System settings</div>
+                        <div class="modal-option">[1] <a href="https://api.whatsapp.com/send/?phone=79538760049&text=Сообщение с сайта.">Напиши мне в WhatsApp</a></div>
+                        <div class="modal-option">[2] <a href="https://web.whatsapp.com/send/?phone=79538760049&text=Сообщение с сайта.">Напиши мне в Web WhatsApp</a></div>
+                        <div class="modal-option">[3] <a href="mailto:sensor-dream@sensor-dream.ru" target="_blank" rel="noopener noreferrer">Напиши мне на Email</a></div>
+                        <div class="modal-option">[4] <a href="tg://resolve?domain=sensordream">Напиши мне в Telegram</a></div>
+                        <div class="modal-option"> <a href="https://vk.com/kid23062006">[5] Я в VK (Browser)</a></div>
                     </td>
                     <td>
-                        <div class="modal-option">[6] Run diagnostics</div>
+                        <!--<div class="modal-option">[6] Run diagnostics</div>
                         <div class="modal-option">[7] Configure sensors</div>
                         <div class="modal-option">[8] Update firmware</div>
                         <div class="modal-option">[9] Export data</div>
-                        <div class="modal-option">[10] System settings</div>
+                        <div class="modal-option">[10] System settings</div>-->
                     </td>
                 </tr>
             </table>
@@ -527,32 +535,23 @@ form.addEventListener("submit", async  function(e) {
 });
 </script>
 
-    <!-- Yandex.Metrika counter -->
-	 <script type="text/javascript" >
-	    (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
-	    m[i].l=1*new Date();k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
-	    (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym");
+<!-- Yandex.Metrika counter -->
+<script type="text/javascript" >
+   (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+   m[i].l=1*new Date();
+   for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}
+   k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
+   (window, document, "script", "https://mc.webvisor.org/metrika/tag_ww.js", "ym");
 
-	    ym(87100723, "init", {
-	         clickmap:true,
-	         trackLinks:true,
-	         accurateTrackBounce:true
-	    });
-	 </script>
-	 <noscript><div><img src="https://mc.yandex.ru/watch/87100723" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
-      <!-- /Yandex.Metrika counter -->
-      <!-- Default Statcounter code for My domain sensor-dream.ru https://sensor-dream.ru -->
-       <div style="position: absolute; z-index: -1; top: -20px; ">
-      <script type="text/javascript">
-        var sc_project=12511240; 
-        var sc_invisible=0; 
-        var sc_security="3a841b1e"; 
-        var sc_client_storage="disabled"; 
-        var scJsHost = "https://";
-        document.write("<sc"+"ript type='text/javascript' src='" + scJsHost+"statcounter.com/counter/counter.js'></" + "script>");
-      </script>
-      <noscript><div class="statcounter"><a title="Web Analytics" href="https://statcounter.com/" target="_blank"><img  class="statcounter" src="https://c.statcounter.com/12511240/0/3a841b1e/0/" alt="Web Analytics"></a></div></noscript>
-      </div>
-    <!-- End of Statcounter Code -->
+   ym(87100723, "init", {
+        clickmap:true,
+        trackLinks:true,
+        accurateTrackBounce:true,
+        trackHash:true
+   });
+</script>
+<noscript><div><img src="https://mc.yandex.ru/watch/87100723" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+<!-- /Yandex.Metrika counter -->
+
 </body>
 </html>
