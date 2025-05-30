@@ -1,0 +1,1040 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SDBS - Компьютерный сервис</title>
+    <style>
+        @font-face {
+            font-family: 'Matrix';
+            src: url('https://fonts.cdnfonts.com/css/matrix-code-nfi') format('woff2');
+        }
+        
+        :root {
+            --matrix-green: #0f0;
+            --dark-bg: #000;
+            --border-color: #0f0;
+            --text-glow: 0 0 5px #0f0;
+        }
+        
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        
+        body {
+            background-color: var(--dark-bg);
+            color: var(--matrix-green);
+            font-family: 'Courier New', monospace;
+            line-height: 1.6;
+            padding-top: 70px;
+            overflow-x: hidden;
+        }
+        
+        /* Header with floating menu */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background-color: rgba(0, 0, 0, 0.9);
+            border-bottom: 1px solid var(--border-color);
+            z-index: 1000;
+            padding: 10px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 0 15px rgba(0, 255, 0, 0.3);
+        }
+        
+        .logo {
+            font-family: 'Matrix', 'Courier New', monospace;
+            font-size: 1.5rem;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            display: flex;
+            align-items: center;
+        }
+        
+        .logo span {
+            color: var(--matrix-green);
+            text-shadow: var(--text-glow);
+            margin-right: 10px;
+        }
+        
+        .logo .blink {
+            animation: blink 1s step-end infinite;
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+        
+        nav ul li {
+            margin-left: 20px;
+        }
+        
+        nav ul li a {
+            color: var(--matrix-green);
+            text-decoration: none;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: all 0.3s;
+            padding: 5px 10px;
+            border: 1px solid transparent;
+        }
+        
+        nav ul li a:hover {
+            text-shadow: var(--text-glow);
+            border-color: var(--border-color);
+        }
+        
+        .menu-toggle {
+            display: none;
+            cursor: pointer;
+            font-size: 1.5rem;
+        }
+        
+        /* Main monitor container */
+        .monitor {
+            width: 95%;
+            max-width: 1200px;
+            margin: 20px auto;
+            border: 15px solid #333;
+            border-radius: 10px;
+            padding: 20px;
+            position: relative;
+            background-color: var(--dark-bg);
+            box-shadow: 0 0 30px rgba(0, 255, 0, 0.5), inset 0 0 10px rgba(0, 255, 0, 0.3);
+            min-height: calc(100vh - 140px);
+        }
+        
+        .monitor::before {
+            content: "";
+            position: absolute;
+            top: -10px;
+            left: -10px;
+            right: -10px;
+            bottom: -10px;
+            border: 2px solid var(--border-color);
+            border-radius: 15px;
+            pointer-events: none;
+            opacity: 0.5;
+        }
+        
+        .scanlines {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: repeating-linear-gradient(
+                to bottom,
+                transparent 0%,
+                rgba(0, 255, 0, 0.05) 1%,
+                transparent 2%
+            );
+            pointer-events: none;
+            z-index: 1;
+        }
+        
+        /* Content styles */
+        .content {
+            position: relative;
+            z-index: 2;
+        }
+        
+        h1, h2, h3 {
+            font-family: 'Matrix', 'Courier New', monospace;
+            color: var(--matrix-green);
+            text-transform: uppercase;
+            margin: 20px 0 15px;
+        }
+        
+        h1 {
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 10px;
+            text-align: center;
+            letter-spacing: 3px;
+            font-size: 1.8rem;
+        }
+        
+        h2 {
+            font-size: 1.5rem;
+            letter-spacing: 2px;
+        }
+        
+        h3 {
+            font-size: 1.2rem;
+            letter-spacing: 1px;
+        }
+        
+        p {
+            margin-bottom: 15px;
+        }
+        
+        a {
+            color: var(--matrix-green);
+            text-decoration: none;
+            border-bottom: 1px dotted var(--border-color);
+        }
+        
+        a:hover {
+            text-shadow: var(--text-glow);
+        }
+        
+        .glow {
+            text-shadow: var(--text-glow);
+        }
+        
+        /* Buttons */
+        .button {
+            display: inline-block;
+            padding: 10px 20px;
+            margin: 10px 5px;
+            border: 1px solid var(--border-color);
+            background: transparent;
+            color: var(--matrix-green);
+            font-family: 'Courier New', monospace;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 0.9rem;
+        }
+        
+        .button:hover {
+            background: var(--matrix-green);
+            color: var(--dark-bg);
+            box-shadow: 0 0 20px var(--matrix-green);
+        }
+        
+        /* Terminal boxes */
+        .terminal {
+            border: 1px solid var(--border-color);
+            padding: 15px;
+            margin: 20px 0;
+            position: relative;
+            background-color: rgba(0, 30, 0, 0.2);
+        }
+        
+        .terminal::before {
+            content: ">_";
+            position: absolute;
+            top: -10px;
+            left: 10px;
+            background: var(--dark-bg);
+            padding: 0 5px;
+            font-family: 'Matrix', 'Courier New', monospace;
+        }
+        
+        /* Features grid */
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin: 30px 0;
+        }
+        
+        .feature {
+            border: 1px solid var(--border-color);
+            padding: 15px;
+            position: relative;
+            background-color: rgba(0, 30, 0, 0.1);
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .feature:hover {
+            background-color: rgba(0, 60, 0, 0.2);
+            box-shadow: 0 0 15px var(--matrix-green);
+        }
+        
+        .feature::before {
+            content: ">>";
+            position: absolute;
+            top: -10px;
+            left: 10px;
+            background: var(--dark-bg);
+            padding: 0 5px;
+            font-family: 'Matrix', 'Courier New', monospace;
+        }
+        
+        /* Matrix text */
+        .matrix-text {
+            font-family: 'Matrix', 'Courier New', monospace;
+            color: var(--matrix-green);
+            white-space: pre;
+            overflow: hidden;
+            margin: 20px 0;
+            font-size: 0.9em;
+            line-height: 1.2;
+        }
+        
+        /* Footer */
+        footer {
+            text-align: center;
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 1px solid var(--border-color);
+            font-size: 0.8em;
+        }
+        
+        /* Modal styles */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            z-index: 2000;
+            overflow: auto;
+        }
+        
+        .modal-content {
+            background-color: var(--dark-bg);
+            margin: 5% auto;
+            padding: 20px;
+            border: 2px solid var(--border-color);
+            width: 90%;
+            max-width: 800px;
+            position: relative;
+            box-shadow: 0 0 30px rgba(0, 255, 0, 0.5);
+        }
+        
+        .close-modal {
+            position: absolute;
+            top: 10px;
+            right: 20px;
+            color: var(--matrix-green);
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        
+        .close-modal:hover {
+            text-shadow: var(--text-glow);
+        }
+        
+        /* Form styles */
+        .form-group {
+            margin-bottom: 15px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-size: 0.9em;
+        }
+        
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 8px;
+            background-color: var(--dark-bg);
+            border: 1px solid var(--border-color);
+            color: var(--matrix-green);
+            font-family: 'Courier New', monospace;
+        }
+        
+        .form-group textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
+        
+        /* Checkbox styles */
+        input[type="checkbox"] {
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
+            width: 16px;
+            height: 16px;
+            border: 1px solid var(--border-color);
+            background-color: var(--dark-bg);
+            vertical-align: middle;
+            position: relative;
+            margin-right: 5px;
+            cursor: pointer;
+        }
+        
+        input[type="checkbox"]:checked::before {
+            content: "✓";
+            position: absolute;
+            color: var(--matrix-green);
+            font-size: 14px;
+            line-height: 16px;
+            left: 2px;
+            top: 0;
+        }
+        
+        /* Select dropdown styles */
+        select {
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
+            background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%230f0'%3e%3cpath d='M7 10l5 5 5-5z'/%3e%3c/svg%3e");
+            background-repeat: no-repeat;
+            background-position: right 8px center;
+            background-size: 12px;
+            padding-right: 25px;
+        }
+        
+        /* Contact links */
+        .contact-links {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin: 20px 0;
+        }
+        
+        .contact-links a {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            border: 1px solid var(--border-color);
+            padding: 8px 15px;
+            transition: all 0.3s;
+        }
+        
+        .contact-links a:hover {
+            background: rgba(0, 255, 0, 0.1);
+            box-shadow: 0 0 10px var(--matrix-green);
+        }
+        
+        /* Chat button */
+        .chat-button {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 60px;
+            height: 60px;
+            background-color: var(--dark-bg);
+            border: 2px solid var(--border-color);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 1000;
+            box-shadow: 0 0 15px rgba(0, 255, 0, 0.5);
+            transition: all 0.3s;
+        }
+        
+        .chat-button:hover {
+            background-color: rgba(0, 60, 0, 0.3);
+            transform: scale(1.1);
+        }
+        
+        .chat-button svg {
+            width: 30px;
+            height: 30px;
+            fill: var(--matrix-green);
+        }
+        
+        /* Chat modal */
+        .chat-modal {
+            display: none;
+            position: fixed;
+            bottom: 100px;
+            right: 30px;
+            width: 350px;
+            height: 500px;
+            background-color: var(--dark-bg);
+            border: 2px solid var(--border-color);
+            z-index: 1001;
+            box-shadow: 0 0 20px rgba(0, 255, 0, 0.7);
+            flex-direction: column;
+        }
+        
+        .chat-header {
+            padding: 10px;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .chat-close {
+            cursor: pointer;
+            font-size: 1.5rem;
+            line-height: 1;
+        }
+        
+        .chat-body {
+            flex: 1;
+            padding: 15px;
+            overflow-y: auto;
+        }
+        
+        .chat-input {
+            padding: 10px;
+            border-top: 1px solid var(--border-color);
+            display: flex;
+        }
+        
+        .chat-input input {
+            flex: 1;
+            background-color: var(--dark-bg);
+            border: 1px solid var(--border-color);
+            color: var(--matrix-green);
+            padding: 8px;
+            font-family: 'Courier New', monospace;
+        }
+        
+        .chat-input button {
+            background-color: var(--dark-bg);
+            border: 1px solid var(--border-color);
+            color: var(--matrix-green);
+            padding: 8px 15px;
+            margin-left: 10px;
+            cursor: pointer;
+            font-family: 'Courier New', monospace;
+        }
+        
+        .chat-input button:hover {
+            background-color: rgba(0, 60, 0, 0.3);
+        }
+        
+        /* Control panel links */
+        .control-links {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .control-link {
+            border: 1px solid var(--border-color);
+            padding: 15px;
+            text-align: center;
+            transition: all 0.3s;
+        }
+        
+        .control-link:hover {
+            background-color: rgba(0, 60, 0, 0.2);
+            box-shadow: 0 0 10px var(--matrix-green);
+        }
+        
+        /* Matrix rain effect */
+        .matrix-rain {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            z-index: -1;
+            opacity: 0.1;
+            pointer-events: none;
+        }
+        
+        /* Responsive styles */
+        @media (max-width: 768px) {
+            header {
+                flex-direction: column;
+                padding: 10px;
+            }
+            
+            .logo {
+                margin-bottom: 10px;
+                font-size: 1.2rem;
+            }
+            
+            nav ul {
+                flex-direction: column;
+                width: 100%;
+                display: none;
+            }
+            
+            nav ul.show {
+                display: flex;
+            }
+            
+            nav ul li {
+                margin: 5px 0;
+                text-align: center;
+            }
+            
+            .menu-toggle {
+                display: block;
+                position: absolute;
+                top: 15px;
+                right: 15px;
+            }
+            
+            .features {
+                grid-template-columns: 1fr;
+            }
+            
+            .monitor {
+                padding: 15px;
+                border-width: 10px;
+            }
+            
+            body {
+                padding-top: 100px;
+            }
+            
+            .contact-links {
+                flex-direction: column;
+                align-items: center;
+                gap: 10px;
+            }
+            
+            .chat-modal {
+                width: 90%;
+                right: 5%;
+                height: 60vh;
+            }
+        }
+        
+        /* Animations */
+        @keyframes blink {
+            from, to { opacity: 1; }
+            50% { opacity: 0; }
+        }
+        
+        @keyframes rain {
+            from { transform: translateY(-100%); }
+            to { transform: translateY(100vh); }
+        }
+    </style>
+</head>
+<body>
+    <div class="matrix-rain" id="matrixRain"></div>
+    
+    <!-- Floating Header -->
+    <header>
+        <div class="logo">
+            <span>SDBS</span> <span class="blink">_</span>
+        </div>
+        <div class="menu-toggle" id="menuToggle">≡</div>
+        <nav>
+            <ul id="mainMenu">
+                <li><a href="#services">Услуги</a></li>
+                <li><a href="#about">О нас</a></li>
+                <li><a href="#contacts">Контакты</a></li>
+                <li><a href="#" id="openControlPanel">Ресурсы</a></li>
+                <li><a href="#" id="openContactForm">Заявка</a></li>
+            </ul>
+        </nav>
+    </header>
+    
+    <!-- Main Monitor Content -->
+    <div class="monitor">
+        <div class="scanlines"></div>
+        <div class="content">
+            <h1 class="glow">SENSOR-DREAM BOXED SYSTEM</h1>
+            
+            <div class="terminal">
+                <p>> Загрузка SDBS Core v4.2.1...</p>
+                <p>> Server: SDBS - 23.06.06 - rev: 1730486928</p>
+                <p>> Система готова к работе</p>
+                <p class="glow">> Добро пожаловать в сервисный центр</p>
+            </div>
+            
+            <section id="services">
+                <h2>НАШИ УСЛУГИ</h2>
+                
+                <div class="features">
+                    <a href="repair.html" class="feature">
+                        <h3>РЕМОНТ КОМПЬЮТЕРОВ</h3>
+                        <p>Диагностика и ремонт компьютеров любой сложности. Замена компонентов, чистка системных блоков, восстановление данных.</p>
+                    </a>
+                    
+                    <a href="software.html" class="feature">
+                        <h3>УСТАНОВКА ПО</h3>
+                        <p>Установка и настройка операционных систем, драйверов, офисных и специализированных программных комплексов.</p>
+                    </a>
+                    
+                    <a href="servers.html" class="feature">
+                        <h3>НАСТРОЙКА СЕРВЕРОВ</h3>
+                        <p>Развертывание и тонкая настройка серверного оборудования: файловые серверы, веб-серверы, серверы баз данных.</p>
+                    </a>
+                    
+                    <a href="remote.html" class="feature">
+                        <h3>УДАЛЕННАЯ ПОМОЩЬ</h3>
+                        <p>Дистанционная поддержка и решение проблем через интернет, включая подключение к рабочему столу и удаленное администрирование.</p>
+                    </a>
+                </div>
+            </section>
+            
+            <section id="about">
+                <h2>О КОМПАНИИ</h2>
+                
+                <p>Sensor-Dream Boxed System (SDBS) - профессиональный сервисный центр, специализирующийся на ремонте и обслуживании компьютерной техники, настройке программного обеспечения и серверных решений.</p>
+                
+                <div class="terminal">
+                    <p>> Основано: 2015 год</p>
+                    <p>> Специалистов: 12</p>
+                    <p>> Успешных проектов: 850+</p>
+                    <p>> Среднее время реакции: 15 минут</p>
+                </div>
+            </section>
+            
+            <section id="contacts">
+                <h2>КОНТАКТЫ</h2>
+                
+                <div class="contact-links">
+                    <a href="https://wa.me/79001234567" target="_blank">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="#0f0">
+                            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335 .157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+                        </svg>
+                        WhatsApp
+                    </a>
+                    <a href="https://vk.com/sensordream" target="_blank">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="#0f0">
+                            <path d="M12.65 18.22c-5.33 0-8.39-3.6-8.58-9.64H6.5v1.77a5.86 5.86 0 003.15-1.1 5.74 5.74 0 001.84-4.17h2.26a4.48 4.48 0 01-1.5 3.3 5.73 5.73 0 003.5 1.32l2.15-2.2h-2.5a5.8 5.8 0 00-1.5-3.3 5.71 5.71 0 00-4.17-1.84H4.07v15.56h8.58v-1.76a5.8 5.8 0 01-3.15 1.1 5.74 5.74 0 01-1.84-4.17H6.5a4.48 4.48 0 001.5 3.3 5.73 5.73 0 003.5 1.32l2.15-2.2h-2.5a5.8 5.8 0 00-1.5-3.3 5.71 5.71 0 00-4.17-1.84H4.07v3.6c.19 6.04 3.25 9.64 8.58 9.64h4.17v-1.76h-4.17z"/>
+                        </svg>
+                        ВКонтакте
+                    </a>
+                    <a href="mailto:sensor-dream@sensor-dream.ru">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="#0f0">
+                            <path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/>
+                        </svg>
+                        sensor-dream@sensor-dream.ru
+                    </a>
+                </div>
+            </section>
+            
+            <div style="text-align: center; margin: 30px 0;">
+                <button class="button" id="openContactForm2">ОСТАВИТЬ ЗАЯВКУ</button>
+            </div>
+            
+            <footer>
+                SDBS v4.2.1 | Server: 23.06.06 - rev: 1730486928<br>
+                © 2023 Sensor-Dream Boxed System. Все права защищены.
+            </footer>
+        </div>
+    </div>
+    
+    <!-- Chat Button -->
+    <div class="chat-button" id="chatButton">
+        <svg viewBox="0 0 24 24">
+            <path d="M12 3c5.514 0 10 3.592 10 8.007 0 4.917-5.144 7.961-9.91 7.961-1.937 0-3.384-.397-4.394-.644-1 .613-1.595 1.037-4.272 1.82.535-1.61.722-2.892.722-3.848 0-4.389-1.056-6.299-2.419-7.352.518-1.587 1.225-2.708 1.882-3.378 1.544-1.393 3.228-2.07 5.391-2.07zm-.691 6.75c-.512 0-.935.423-.935.935v3.189c0 .512.423.935.935.935h4.547c.512 0 .935-.423.935-.935v-3.189c0-.512-.423-.935-.935-.935h-4.547z"/>
+        </svg>
+    </div>
+    
+    <!-- Chat Modal -->
+    <div class="chat-modal" id="chatModal">
+        <div class="chat-header">
+            <span>Техподдержка SDBS</span>
+            <span class="chat-close" id="chatClose">&times;</span>
+        </div>
+        <div class="chat-body" id="chatBody">
+            <!-- Chat messages will be loaded here from chat.php -->
+        </div>
+        <div class="chat-input">
+            <input type="text" id="chatMessage" placeholder="Введите сообщение...">
+            <button id="chatSend">Отправить</button>
+        </div>
+    </div>
+    
+    <!-- Control Panel Modal -->
+    <div id="controlPanelModal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <h2>ПОЛЕЗНЫЕ РЕСУРСЫ</h2>
+            
+            <div class="terminal">
+                <p>> Инициализация панели ресурсов...</p>
+                <p class="glow">> Доступ к внешним сервисам</p>
+            </div>
+            
+            <div class="control-links">
+                <a href="https://teamviewer.com" target="_blank" class="control-link">
+                    <h3>TEAMVIEWER</h3>
+                    <p>Программа для удаленного доступа</p>
+                </a>
+                
+                <a href="https://anydesk.com" target="_blank" class="control-link">
+                    <h3>ANYDESK</h3>
+                    <p>Альтернатива TeamViewer</p>
+                </a>
+                
+                <a href="https://ru.wikipedia.org" target="_blank" class="control-link">
+                    <h3>WIKIPEDIA</h3>
+                    <p>Свободная энциклопедия</p>
+                </a>
+                
+                <a href="https://habr.com" target="_blank" class="control-link">
+                    <h3>HABR</h3>
+                    <p>IT-сообщество и статьи</p>
+                </a>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Contact Form Modal -->
+    <div id="contactModal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <h2>ФОРМА ЗАЯВКИ</h2>
+            
+            <div class="terminal">
+                <p>> Инициализация формы...</p>
+                <p class="glow">> Заполните данные для обращения в сервис</p>
+            </div>
+            
+            <form id="contactForm">
+                <div class="form-group">
+                    <label for="name">ВАШЕ ИМЯ</label>
+                    <input type="text" id="name" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="phone">ТЕЛЕФОН</label>
+                    <input type="tel" id="phone" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="service">ТИП УСЛУГИ</label>
+                    <select id="service" required>
+                        <option value="">Выберите услугу</option>
+                        <option value="repair">Ремонт компьютера</option>
+                        <option value="software">Установка ПО</option>
+                        <option value="server">Настройка сервера</option>
+                        <option value="workstation">Настройка рабочей станции</option>
+                        <option value="remote">Удаленная помощь</option>
+                        <option value="other">Другое</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="message">ОПИСАНИЕ ПРОБЛЕМЫ</label>
+                    <textarea id="message" required></textarea>
+                </div>
+                
+                <div class="form-group">
+                    <label><input type="checkbox" required> Я согласен на обработку персональных данных</label>
+                </div>
+                
+                <div style="text-align: center;">
+                    <button type="submit" class="button">ОТПРАВИТЬ ЗАЯВКУ</button>
+                    <button type="reset" class="button">ОЧИСТИТЬ ФОРМУ</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Matrix rain effect
+            const chars = "01アイウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホマミムメモヤユヨラリルレロワヲン";
+            const rainContainer = document.getElementById('matrixRain');
+            const fontSize = 14;
+            const columns = Math.floor(window.innerWidth / fontSize);
+            
+            for (let i = 0; i < columns; i++) {
+                const column = document.createElement('div');
+                column.style.position = 'absolute';
+                column.style.top = '0';
+                column.style.left = (i * fontSize) + 'px';
+                column.style.width = fontSize + 'px';
+                column.style.height = '100%';
+                column.style.color = '#0f0';
+                column.style.fontFamily = 'Matrix, monospace';
+                column.style.fontSize = fontSize + 'px';
+                column.style.lineHeight = fontSize + 'px';
+                column.style.textAlign = 'center';
+                column.style.opacity = Math.random() * 0.5 + 0.1;
+                column.style.animation = `rain ${Math.random() * 2 + 1}s linear infinite`;
+                column.style.animationDelay = `${Math.random() * 2}s`;
+                
+                let text = '';
+                const length = Math.floor(Math.random() * 20) + 10;
+                for (let j = 0; j < length; j++) {
+                    text += chars[Math.floor(Math.random() * chars.length)];
+                }
+                
+                column.textContent = text;
+                rainContainer.appendChild(column);
+            }
+            
+            // Mobile menu toggle
+            const menuToggle = document.getElementById('menuToggle');
+            const mainMenu = document.getElementById('mainMenu');
+            
+            menuToggle.addEventListener('click', function() {
+                mainMenu.classList.toggle('show');
+            });
+            
+            // Modal functionality
+            const controlPanelModal = document.getElementById('controlPanelModal');
+            const contactModal = document.getElementById('contactModal');
+            const openControlPanel = document.getElementById('openControlPanel');
+            const openContactForm = document.getElementById('openContactForm');
+            const openContactForm2 = document.getElementById('openContactForm2');
+            const closeButtons = document.querySelectorAll('.close-modal');
+            
+            function openModal(modal) {
+                modal.style.display = 'block';
+                document.body.style.overflow = 'hidden';
+                
+                // Load chat if it's the chat modal
+                if (modal.id === 'chatModal') {
+                    loadChat();
+                }
+            }
+            
+            function closeModal(modal) {
+                modal.style.display = 'none';
+                document.body.style.overflow = 'auto';
+            }
+            
+            openControlPanel.addEventListener('click', function(e) {
+                e.preventDefault();
+                openModal(controlPanelModal);
+            });
+            
+            openContactForm.addEventListener('click', function(e) {
+                e.preventDefault();
+                openModal(contactModal);
+            });
+            
+            openContactForm2.addEventListener('click', function(e) {
+                e.preventDefault();
+                openModal(contactModal);
+            });
+            
+            closeButtons.forEach(function(button) {
+                button.addEventListener('click', function() {
+                    const modal = this.closest('.modal');
+                    closeModal(modal);
+                });
+            });
+            
+            // Close modals with ESC key
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape') {
+                    const modals = document.querySelectorAll('.modal');
+                    modals.forEach(modal => {
+                        if (modal.style.display === 'block') {
+                            closeModal(modal);
+                        }
+                    });
+                }
+                
+                // Open control panel with Alt+C
+                if (e.altKey && e.key.toLowerCase() === 'c') {
+                    e.preventDefault();
+                    openModal(controlPanelModal);
+                }
+                
+                // Open contact form with Alt+F
+                if (e.altKey && e.key.toLowerCase() === 'f') {
+                    e.preventDefault();
+                    openModal(contactModal);
+                }
+            });
+            
+            // Chat functionality
+            const chatButton = document.getElementById('chatButton');
+            const chatModal = document.getElementById('chatModal');
+            const chatClose = document.getElementById('chatClose');
+            const chatBody = document.getElementById('chatBody');
+            const chatMessage = document.getElementById('chatMessage');
+            const chatSend = document.getElementById('chatSend');
+            
+            chatButton.addEventListener('click', function() {
+                chatModal.style.display = 'flex';
+            });
+            
+            chatClose.addEventListener('click', function() {
+                chatModal.style.display = 'none';
+            });
+            
+            function loadChat() {
+                // Load chat from external PHP file
+                fetch('chat.php')
+                    .then(response => response.text())
+                    .then(data => {
+                        chatBody.innerHTML = data;
+                        chatBody.scrollTop = chatBody.scrollHeight;
+                    })
+                    .catch(error => {
+                        chatBody.innerHTML = '<p>> Ошибка загрузки чата. Пожалуйста, попробуйте позже.</p>';
+                    });
+            }
+            
+            function sendMessage() {
+                const message = chatMessage.value.trim();
+                if (message) {
+                    // Here you would typically send the message to your server
+                    // For demonstration, we'll just add it to the chat
+                    const messageElement = document.createElement('p');
+                    messageElement.textContent = `Вы: ${message}`;
+                    chatBody.appendChild(messageElement);
+                    chatMessage.value = '';
+                    chatBody.scrollTop = chatBody.scrollHeight;
+                    
+                    // Simulate response
+                    setTimeout(() => {
+                        const responseElement = document.createElement('p');
+                        responseElement.textContent = 'Оператор: Ваше сообщение получено. Мы ответим в ближайшее время.';
+                        chatBody.appendChild(responseElement);
+                        chatBody.scrollTop = chatBody.scrollHeight;
+                    }, 1000);
+                }
+            }
+            
+            chatSend.addEventListener('click', sendMessage);
+            
+            chatMessage.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    sendMessage();
+                }
+            });
+            
+            // Form submission
+            const contactForm = document.getElementById('contactForm');
+            
+            contactForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                alert('Заявка принята. Мы свяжемся с вами в ближайшее время.');
+                closeModal(contactModal);
+                this.reset();
+            });
+            
+            // Blinking cursor effect
+            setInterval(() => {
+                const blinkers = document.querySelectorAll('.blink');
+                blinkers.forEach(el => {
+                    el.style.visibility = el.style.visibility === 'hidden' ? 'visible' : 'hidden';
+                });
+            }, 500);
+        });
+    </script>
+    <!--
+Основные изменения:
+Фон чекбоксов и выпадающих списков:
+Чекбоксы теперь имеют черный фон с зеленой галочкой
+Выпадающие списки стилизованы с черным фоном и зелеными стрелками
+Интерактивные услуги:
+Каждая услуга теперь является ссылкой на соответствующую страницу (repair.html, software.html и т.д.)
+
+Добавлена новая услуга "Удаленная помощь" с описанием подключения к рабочему столу
+Удалены элементы статуса:
+Убрано модальное окно статуса системы
+Убраны связанные с ним кнопки и скрипты
+
+Добавлен чат:
+Плавающая иконка чата в правом нижнем углу
+Модальное окно чата с возможностью отправки сообщений
+Чат подгружается из файла chat.php (вам нужно создать этот файл)
+Модальное окно контрольной панели:
+Содержит полезные ссылки на внешние ресурсы
+Открывается по Alt+C, закрывается по ESC
+
+Другие улучшения:
+Все модальные окна теперь закрываются по ESC
+Контактная форма открывается по Alt+F
+Улучшена адаптивность для мобильных устройств
+Для полной функциональности вам нужно создать файл chat.php с логикой чата (подключение к стороннему чату) и страницы для услуг (repair.html, software.html и т.д.).    
+    -->
+</body>
+</html>
