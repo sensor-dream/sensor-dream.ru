@@ -247,8 +247,45 @@
             margin: 10px 0px;
         }
 
-
+      #license {
+        display: none;
+        width: 50vw;
+        margin-top: 40px;
+        color: rgba(150,150,150,1);
+        font-size: 0.5em;
+      }
     </style>
+
+    <!-- Yandex.Metrika counter -->
+    <script type="text/javascript" >
+    (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+    m[i].l=1*new Date();
+    for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}
+    k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
+    (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym");
+
+    ym(102274508, "init", {
+            clickmap:true,
+            trackLinks:true,
+            accurateTrackBounce:true,
+            webvisor:true,
+            trackHash:true
+    });
+    </script>
+    <noscript><div><img src="https://mc.yandex.ru/watch/102274508" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+    <!-- /Yandex.Metrika counter -->
+      
+      <!-- Default Statcounter code for My domain sensor-dream.ru https://sensor-dream.ru -->
+        <script type="text/javascript">
+          var sc_project=12511240; 
+          var sc_invisible=0; 
+          var sc_security="3a841b1e"; 
+          var sc_client_storage="disabled"; 
+          var scJsHost = "https://";
+          document.write("<sc"+"ript type='text/javascript' src='" + scJsHost+"statcounter.com/counter/counter.js'></" + "script>");
+        </script>
+        <noscript><div class="statcounter"><a title="Web Analytics" href="https://statcounter.com/" target="_blank"><img class="statcounter" src="https://c.statcounter.com/12511240/0/3a841b1e/0/" alt="Web Analytics"></a></div></noscript>
+      <!-- End of Statcounter Code -->
 </head>
 <body>
     <div class="scan-animation"></div>
@@ -329,10 +366,11 @@ tg: @sensordream
                         <div class="modal-option">[3] <a href="mailto:sensor-dream@sensor-dream.ru" target="_blank" rel="noopener noreferrer">Напиши мне на Email</a></div>
                         <div class="modal-option">[4] <a href="tg://resolve?domain=sensordream">Напиши мне в Telegram</a></div>
                         <div class="modal-option"> <a href="https://vk.com/kid23062006">[5] Я в VK (Browser)</a></div>
-                    </td>
-                    <td>
                         <div class="modal-option">[6] <a href="https://icms.sensor-dream.ru">My ICMS</a></div>
                         <div class="modal-option">[7] <a href="https://mywp.sensor-dream.ru">My WP</a></div>
+                        <div class="modal-option">[8] <a href="https://mxcms.sensor-dream.ru">My MXCMS</a></div>
+                    </td>
+                    <td>
                         <!-- <div class="modal-option">[8] Update firmware</div>
                         <div class="modal-option">[9] Export data</div>
                         <div class="modal-option">[10] System settings</div>-->
@@ -438,7 +476,7 @@ tg: @sensordream
         }
         
         // Update stats every 3 seconds
-        setInterval(updateStats, 1000);
+        setInterval(updateStats, 1500);
         
         // Handle keyboard events
         document.addEventListener('keydown', function(event) {
@@ -520,7 +558,7 @@ form.addEventListener("submit", async  function(e) {
                 setTimeout(() => {
                     modal.style.display = "none";
                     formMessage.style.display = "none";
-                }, 1500);
+                }, 3000);
             } else {
                 formMessage.className = "error";
                 formMessage.textContent = data.message;
@@ -534,24 +572,30 @@ form.addEventListener("submit", async  function(e) {
     });
 });
 </script>
-
-<!-- Yandex.Metrika counter -->
-<script type="text/javascript" >
-   (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
-   m[i].l=1*new Date();
-   for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}
-   k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
-   (window, document, "script", "https://mc.webvisor.org/metrika/tag_ww.js", "ym");
-
-   ym(87100723, "init", {
-        clickmap:true,
-        trackLinks:true,
-        accurateTrackBounce:true,
-        trackHash:true
-   });
-</script>
-<noscript><div><img src="https://mc.yandex.ru/watch/87100723" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
-<!-- /Yandex.Metrika counter -->
-
+      <br />
+      <div id="license">
+        @Copyright © sensor-dream. All rights reserved. Contacts: sensor-dream@sensor-dream.ru
+        <br />
+        @Copyright © Sensor-Dream Boxed System (SDBS). Contacts: sensor-dream@sensor-dream.ru
+        <br />
+        Licensed under the Apache License, Version 2.0 (the "License");
+        <br />
+        You may not use this file except in compliance with the License.
+        <br />
+        You may obtain a copy of the License at
+        <br />
+        http://www.apache.org/licenses/LICENSE-2.0
+        <br />
+        Unless required by applicable law or agreed to in writing, software
+        distributed under the License is distributed on an "AS IS" BASIS,
+        WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+        See the License for the specific language governing permissions and
+        limitations under the License.
+      </div>
+      <br />
+      <!-- Double page: <a href="https://we-docs.sensor-dream.ru">sensor-dream.ru</a> -->
+    </div>
+  </div>
+  <!-- <script src="https://ylei753tkpb.montastic.io/embed/script.js"></script> -->
 </body>
 </html>
