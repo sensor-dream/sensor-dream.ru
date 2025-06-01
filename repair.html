@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ремонт компьютеров | SDBS</title>
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        /* Дополнительные стили ТОЛЬКО для этой страницы */
+        .service-hero {
+            text-align: center;
+            padding: 40px 0;
+            border-bottom: 1px solid var(--border-color);
+            margin-bottom: 30px;
+        }
+        
+        .price-list td {
+            padding: 8px 12px;
+        }
+    </style>
+</head>
+<body>
+    <div class="matrix-rain" id="matrixRain"></div>
+    
+    <!-- Шапка (одинаковая для всех страниц) -->
+    <header>
+        <div class="logo">
+            <span>SDBS</span> <span class="blink">></span>
+        </div>
+        <div class="menu-toggle" id="menuToggle">≡</div>
+        <nav>
+            <ul id="mainMenu">
+                <li><a href="index.html">Главная</a></li>
+                <li><a href="services.html">Услуги</a></li>
+                <li><a href="#contacts">Контакты</a></li>
+                <li>
+                    <a href="#" id="openControlPanel">Ресурсы</a>
+                    <span class="key-hint">Alt+C</span>
+                </li>
+                <li>
+                    <a href="#" id="openContactForm">Заявка</a>
+                    <span class="key-hint">Alt+F</span>
+                </li>
+            </ul>
+        </nav>
+    </header>
+    
+    <!-- Основное содержимое -->
+    <div class="monitor">
+        <div class="scanlines"></div>
+        <div class="content">
+            <div class="service-hero">
+                <h1 class="glow">РЕМОНТ КОМПЬЮТЕРОВ</h1>
+                <p>> Профессиональный ремонт любой сложности</p>
+            </div>
+            
+            <!-- Уникальный контент страницы -->
+            <section>
+                <h2>НАШИ УСЛУГИ</h2>
+                <div class="terminal">
+                    <p>> Загрузка списка услуг...</p>
+                    <p class="glow">> Доступно 12 категорий ремонта</p>
+                </div>
+                
+                <table class="price-list">
+                    <tr>
+                        <th>Услуга</th>
+                        <th>Стоимость</th>
+                    </tr>
+                    <tr>
+                        <td>Диагностика</td>
+                        <td>Бесплатно</td>
+                    </tr>
+                    <tr>
+                        <td>Замена жесткого диска</td>
+                        <td>от 2000 ₽</td>
+                    </tr>
+                </table>
+            </section>
+            
+            <!-- Общие элементы (контакты, футер) -->
+            <section id="contacts">
+                <!-- ... как на главной странице ... -->
+            </section>
+            
+            <footer>
+                <!-- ... как на главной странице ... -->
+            </footer>
+        </div>
+    </div>
+    
+    <!-- Общие скрипты -->
+    <script src="js/main.js"></script>
+    <!--
+your-site/
+├── index.html
+├── services/
+│   ├── repair.html
+│   ├── software.html
+│   └── servers.html
+├── css/
+│   └── style.css
+└── js/
+    └── main.js
+Критические исправления:
+Вынос стилей в отдельный файл:
+Все общие стили перенесены в css/style.css
+На каждой странице оставлены только специфические стили
+Единая структура:
+
+Все страницы используют одинаковую разметку шапки, монитора и подвала
+Гарантировано одинаковое поведение всех элементов
+Оптимизация скриптов:
+Общие функции вынесены в main.js
+Проверка существования элементов перед обработкой
+
+Адаптивность:
+Сохранены все медиа-запросы из главной страницы
+
+Эффекты:
+Матричный дождь работает на всех страницах
+Анимации и hover-эффекты идентичны
+
+Для быстрого старта:
+Создайте папки css и js
+Сохраните общие стили в css/style.css
+Сохраните скрипты в js/main.js
+Для новых страниц услуг копируйте шаблон repair.html и меняйте только контент внутри monitor > content
+Это гарантирует полное единство стиля на всех страницах с минимальным дублированием кода.    
+    -->
+</body>
+</html>

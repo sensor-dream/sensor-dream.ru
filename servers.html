@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Настройка серверов | SDBS</title>
+    <style>
+        /* Все стили из главной страницы */
+        /* ... */
+        
+        /* Дополнительные стили для страницы серверов */
+        .server-types {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin: 30px 0;
+        }
+        
+        .server-type {
+            border: 1px solid var(--border-color);
+            padding: 20px;
+            position: relative;
+        }
+        
+        .server-type::before {
+            content: ">>";
+            position: absolute;
+            top: -10px;
+            left: 10px;
+            background: var(--dark-bg);
+            padding: 0 5px;
+            font-family: 'Matrix', 'Courier New', monospace;
+        }
+        
+        .server-features {
+            margin-top: 20px;
+        }
+        
+        .server-features li {
+            margin-bottom: 8px;
+            position: relative;
+            padding-left: 20px;
+        }
+        
+        .server-features li::before {
+            content: ">";
+            position: absolute;
+            left: 0;
+            color: var(--matrix-green);
+        }
+    </style>
+</head>
+<body>
+    <div class="matrix-rain" id="matrixRain"></div>
+    
+    <!-- Floating Header -->
+    <header>
+        <div class="logo">
+            <span>SDBS</span> <span class="blink">></span>
+        </div>
+        <div class="menu-toggle" id="menuToggle">≡</div>
+        <nav>
+            <ul id="mainMenu">
+                <li><a href="index.html">Главная</a></li>
+                <li><a href="services.html">Услуги</a></li>
+                <li><a href="#contacts">Контакты</a></li>
+                <li>
+                    <a href="#" id="openControlPanel">Ресурсы</a>
+                    <span class="key-hint">Alt+C</span>
+                </li>
+                <li>
+                    <a href="#" id="openContactForm">Заявка</a>
+                    <span class="key-hint">Alt+F</span>
+                </li>
+            </ul>
+        </nav>
+    </header>
+    
+    <!-- Main Monitor Content -->
+    <div class="monitor">
+        <div class="scanlines"></div>
+        <div class="content">
+            <div class="service-hero">
+                <h1 class="glow">НАСТРОЙКА СЕРВЕРОВ</h1>
+                <p>> Профессиональное развертывание и администрирование серверных решений</p>
+            </div>
+            
+            <section>
+                <h2>О УСЛУГЕ</h2>
+                <div class="terminal">
+                    <p>> Инициализация данных о сервисе...</p>
+                    <p class="glow">> Полный цикл работ с серверным оборудованием и ПО</p>
+                </div>
+                
+                <p>Мы предлагаем комплексные решения для развертывания и обслуживания серверов любой сложности. Наши специалисты имеют сертификаты ведущих производителей серверного оборудования и программного обеспечения.</p>
+            </section>
+            
+            <section>
+                <h2>ТИПЫ СЕРВЕРОВ</h2>
+                <div class="server-types">
+                    <div class="server-type">
+                        <h3>ФАЙЛ-СЕРВЕРЫ</h3>
+                        <p>Организация централизованного хранилища данных для компаний</p>
+                        <ul class="server-features">
+                            <li>Настройка прав доступа</li>
+                            <li>Резервное копирование</li>
+                            <li>Восстановление данных</li>
+                            <li>Мониторинг использования</li>
+                        </ul>
+                        <p class="glow">от 15000 ₽</p>
+                    </div>
+                    <div class="server-type">
+                        <h3>ВЕБ-СЕРВЕРЫ</h3>
+                        <p>Развертывание и настройка серверов для хостинга сайтов</p>
+                        <ul class="server-features">
+                            <li>Apache, Nginx, IIS</li>
+                            <li>Настройка SSL-сертификатов</li>
+                            <li>Балансировка нагрузки</li>
+                            <li>Защита от DDoS</li>
+                        </ul>
+                        <p class="glow">от 20000 ₽</p>
+                    </div>
+                    <div class="server-type">
+                        <h3>СЕРВЕРЫ БАЗ ДАННЫХ</h3>
+                        <p>Установка и оптимизация СУБД для бизнес-приложений</p>
+                        <ul class="server-features">
+                            <li>MySQL, PostgreSQL, MS SQL</li>
+                            <li>Настройка репликации</li>
+                            <li>Резервное копирование</li>
+                            <li>Оптимизация запросов</li>
+                        </ul>
+                        <p class="glow">от 25000 ₽</p>
+                    </div>
+                </div>
+            </section>
+            
+            <section>
+                <h2>ДОПОЛНИТЕЛЬНЫЕ УСЛУГИ</h2>
+                <ul>
+                    <li>Миграция серверов на новое оборудование</li>
+                    <li>Настройка виртуализации (VMware, Hyper-V, Proxmox)</li>
+                    <li>Развертывание облачных решений</li>
+                    <li>Настройка мониторинга (Zabbix, Nagios, Prometheus)</li>
+                    <li>Аудит безопасности серверов</li>
+                </ul>
+            </section>
+            
+            <section>
+                <h2>НАШИ КЛИЕНТЫ</h2>
+                <div class="terminal">
+                    <p>> Загрузка данных о клиентах...</p>
+                    <p>> ООО "ТехноПром" - файловый сервер (50 пользователей)</p>
+                    <p>> ИП Смирнов А.В. - веб-сервер для интернет-магазина</p>
+                    <p>> ООО "ДевелопментСофт" - сервер баз данных для CRM</p>
+                    <p class="glow">> Всего обслуживаем 42 сервера в 17 компаниях</p>
+                </div>
+            </section>
+            
+            <!-- Контакты и футер как на главной странице -->
+            <!-- ... -->
+        </div>
+    </div>
+    
+    <!-- Все модальные окна и скрипты из главной страницы -->
+    <!-- ... -->
+</body>
+</html>
