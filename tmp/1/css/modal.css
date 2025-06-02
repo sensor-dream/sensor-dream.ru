@@ -1,0 +1,108 @@
+/* Modal Styles */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 100;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.8);
+}
+
+.modal-content {
+    background-color: #000;
+    margin: 5% auto;
+    padding: 20px;
+    border: 1px solid #0f0;
+    width: 80%;
+    max-width: 800px;
+    position: relative;
+}
+
+.terminal-modal {
+    color: #0f0;
+}
+
+.close {
+    color: #0f0;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.close:hover {
+    color: #f00;
+}
+
+/* AI Chat Modal */
+.ai-chat-container {
+    height: 300px;
+    overflow-y: auto;
+    border: 1px solid #0f0;
+    padding: 15px;
+    margin-bottom: 15px;
+    background-color: rgba(0, 10, 0, 0.3);
+}
+
+.ai-message {
+    margin-bottom: 10px;
+}
+
+.user-message {
+    color: #0af;
+    margin-bottom: 10px;
+}
+
+.ai-input-container {
+    display: flex;
+    gap: 10px;
+}
+
+.ai-input-container input {
+    flex: 1;
+    padding: 10px;
+    background-color: #000;
+    border: 1px solid #0f0;
+    color: #0f0;
+}
+
+.ai-input-container button {
+    padding: 10px 20px;
+    background-color: rgba(0, 20, 0, 0.5);
+    border: 1px solid #0f0;
+    color: #0f0;
+    cursor: pointer;
+}
+
+/* Feedback Modal */
+.form-group {
+    margin-bottom: 15px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+.form-group input,
+.form-group textarea {
+    width: 100%;
+    padding: 10px;
+    background-color: #000;
+    border: 1px solid #0f0;
+    color: #0f0;
+}
+
+.form-group textarea {
+    resize: vertical;
+}
+
+/* Responsive Modals */
+@media (max-width: 768px) {
+    .modal-content {
+        width: 95%;
+        margin: 10% auto;
+    }
+}

@@ -1,0 +1,121 @@
+/* Floating Header Styles */
+.floating-header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background-color: rgba(0, 10, 0, 0.9);
+    border-bottom: 1px solid #0f0;
+    z-index: 1000;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(5px);
+}
+
+.header-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 15px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo {
+    font-family: 'Courier New', monospace;
+    font-size: 24px;
+    font-weight: bold;
+    color: #0f0;
+    display: flex;
+}
+
+.logo-sd {
+    color: #0f0;
+}
+
+.logo-bs {
+    color: #0af;
+}
+
+.main-nav ul {
+    display: flex;
+    list-style: none;
+    gap: 25px;
+}
+
+.main-nav a {
+    color: #0f0;
+    text-decoration: none;
+    font-size: 16px;
+    transition: all 0.3s ease;
+    position: relative;
+    padding: 5px 0;
+}
+
+.main-nav a:hover {
+    color: #0af;
+    text-shadow: 0 0 5px #0af;
+}
+
+.main-nav a:after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: 1px;
+    background-color: #0af;
+    transition: width 0.3s ease;
+}
+
+.main-nav a:hover:after {
+    width: 100%;
+}
+
+.mobile-menu-btn {
+    display: none;
+    background: none;
+    border: none;
+    color: #0f0;
+    font-size: 24px;
+    cursor: pointer;
+}
+
+/* Header Scroll Effect */
+.floating-header.scrolled {
+    background-color: rgba(0, 5, 0, 0.95);
+    padding: 5px 0;
+}
+
+/* Responsive Header */
+@media (max-width: 992px) {
+    .main-nav ul {
+        gap: 15px;
+    }
+}
+
+@media (max-width: 768px) {
+    .main-nav {
+        position: fixed;
+        top: 70px;
+        left: -100%;
+        width: 80%;
+        height: calc(100vh - 70px);
+        background-color: rgba(0, 10, 0, 0.95);
+        border-right: 1px solid #0f0;
+        transition: left 0.3s ease;
+    }
+    
+    .main-nav.active {
+        left: 0;
+    }
+    
+    .main-nav ul {
+        flex-direction: column;
+        padding: 20px;
+        gap: 15px;
+    }
+    
+    .mobile-menu-btn {
+        display: block;
+    }
+}

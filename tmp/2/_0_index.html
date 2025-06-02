@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Matrix IT Services</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <!-- Floating Menu -->
+  <nav class="menu">
+    <button onclick="openSection('about')">/about</button>
+    <button onclick="openSection('services')">/services</button>
+    <button onclick="openSection('contact')">/contact</button>
+  </nav>
+
+  <!-- Chat Button -->
+  <div id="chat-button" onclick="toggleChat()">$ help</div>
+
+  <!-- Chat Modal -->
+  <div id="chat-modal" class="modal hidden">
+    <div class="modal-content">
+      <span class="close-btn" onclick="toggleChat()">&times;</span>
+      <h3>$ chat</h3>
+      <p>This is a simple chat placeholder.</p>
+      <input type="text" id="chat-input" placeholder="$ type your message..." />
+      <button onclick="sendChatMessage()">Send</button>
+    </div>
+  </div>
+
+  <!-- Hero Section -->
+  <section id="hero" class="section">
+    <h1>Welcome to Matrix IT Services</h1>
+    <p>Your digital world in terminal style.</p>
+  </section>
+
+  <!-- About Section -->
+  <section id="about" class="section hidden">
+    <h2>About Us</h2>
+    <p>We provide high-quality IT services and support through an old-school terminal interface.</p>
+  </section>
+
+  <!-- Services Section -->
+  <section id="services" class="section hidden">
+    <h2>Services</h2>
+    <div class="service-card" onclick="openModal('web')">
+      <h3>Web Development</h3>
+    </div>
+    <div class="service-card" onclick="openModal('server')">
+      <h3>Server Management</h3>
+    </div>
+    <div class="service-card" onclick="openModal('support')">
+      <h3>IT Support</h3>
+    </div>
+  </section>
+
+  <!-- Contact Section -->
+  <section id="contact" class="section hidden">
+    <h2>Contact Us</h2>
+    <!--
+    <form id="contact-form">
+      <label>Name:</label><br/>
+      <input type="text" name="name" required /><br/>
+      <label>Email:</label><br/>
+      <input type="email" name="email" required /><br/>
+      <label>Message:</label><br/>
+      <textarea name="message" required></textarea><br/>
+      <button type="submit">$ send</button>
+    </form>
+-->
+    <form id="contact-form" action="send-mail.php" method="POST">
+        <label>Name:</label><br/>
+        <input type="text" name="name" required /><br/>
+        <label>Email:</label><br/>
+        <input type="email" name="email" required /><br/>
+        <label>Message:</label><br/>
+        <textarea name="message" required></textarea><br/>
+        <button type="submit">$ send</button>
+    </form>
+  </section>
+
+  <!-- Modal for Services -->
+  <div id="modal" class="modal hidden">
+    <div class="modal-content">
+      <span class="close-btn" onclick="closeModal()">&times;</span>
+      <h3 id="modal-title"></h3>
+      <p id="modal-body"></p>
+    </div>
+  </div>
+
+  <!-- Matrix Animation -->
+  <canvas id="matrix-canvas"></canvas>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script> 
+  <script src="script.js"></script>
+</body>
+</html>

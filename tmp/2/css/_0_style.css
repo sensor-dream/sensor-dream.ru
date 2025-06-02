@@ -1,0 +1,136 @@
+/* Основные стили */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Courier New', monospace;
+    color: #fff;
+    background-color: black;
+}
+
+.matrix-bg::before {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    pointer-events: none;
+    content: '';
+    animation: matrixEffect 1s infinite linear alternate-reverse;
+}
+
+@keyframes matrixEffect {
+    from {background-position: 0%;}
+    to {background-position: 100%; }
+}
+
+.menu-bar li a {
+    text-decoration: none;
+    color: limegreen;
+    transition: all .3s ease-in-out;
+}
+
+.menu-bar li a:hover {
+    transform: scale(1.1);
+}
+
+.content-grid {
+    display: grid;
+    gap: 2rem;
+    justify-items: center;
+    align-items: stretch;
+    max-width: 700px;
+    margin: auto;
+}
+
+.modal.hidden {
+    visibility: hidden;
+    opacity: 0;
+    transition: visibility 0s, opacity 0.3s linear;
+}
+
+.modal-content {
+    background-color: rgba(0, 0, 0, 0.8);
+    color: white;
+    padding: 20px;
+    border-radius: 5px;
+    min-height: 200px;
+    overflow-y: scroll;
+    font-size: 1em;
+    line-height: 1.5;
+    word-wrap: break-word;
+}
+
+.close-btn {
+    float: right;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 24px;
+}
+
+.livecat-style {
+    border-top-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+    backdrop-filter: blur(5px);
+}
+
+#help-modal form input,
+#help-modal form textarea {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    resize: vertical;
+    outline: none;
+    border: 1px solid greenyellow;
+    border-radius: 5px;
+    background-color: transparent;
+    color: inherit;
+}
+
+/* SVG-кнопки социальных сетей */
+.svgsvg {
+    fill: currentColor;
+    stroke: currentColor;
+    height: 30px;
+    width: 30px;
+    filter: drop-shadow(0 0 1px greenyellow);
+    cursor: pointer;
+    transition: transform 0.3s cubic-bezier(.17,.67,.83,.67),filter 0.3s cubic-bezier(.17,.67,.83,.67);
+}
+
+.svgsvg:hover {
+    transform: translateY(-5px);
+    filter: drop-shadow(0 0 5px greenyellow);
+}
+
+svg.icon-wpp path {fill:#25D366;} /* WhatsApp */
+svg.icon-vk path {fill:#4A76A8;} /* VKontakte */
+svg.icon-tg path {fill:#0088CC;} /* Telegram */
+
+.social-icons {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+footer {
+    text-align: center;
+    padding: 10px;
+    bottom: 0;
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.8);
+    color: lightgray;
+}
+
+/* Медиа-запросы для адаптации дизайна */
+@media screen and (max-width: 768px) {
+    body > div {font-size: smaller;}
+    h1,h2 {margin: 10px 0;}
+    nav ul {display: block;}
+    button[data-modal-target], .social-icons {flex-direction: column;}
+}

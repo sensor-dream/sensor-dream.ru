@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sensor-dream Boxed System (SDBS)</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <script defer src="js/scripts.js"></script>
+</head>
+<body class="terminal-theme">
+    <header class="sticky-header">
+        <h1>Sensor-dream Boxed System (SDBS)</h1>
+        <nav role="navigation">
+            <ul class="menu-bar">
+                <li><a href="#home">Главная</a></li>
+                <li><a href="#services">Услуги</a></li>
+                <li><a href="#about">О нас</a></li>
+                <li><a href="#contact">Связаться</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="grid-container">
+        <section id="home" class="section">
+            <h2>Добро пожаловать в мир SDBS</h2>
+            <p>Предоставляем качественные ИТ-решения и поддержку серверов.</p>
+        </section>
+
+        <section id="services" class="section">
+            <h2>Наши Услуги</h2>
+            <ul>
+                <li>IT-консалтинг</li>
+                <li>Поддержка серверов</li>
+                <li>Онлайн помощь</li>
+            </ul>
+        </section>
+
+        <section id="about" class="section">
+            <h2>О Нас</h2>
+            <p>Команда профессионалов в сфере информационных технологий.</p>
+        </section>
+
+        <section id="contact" class="section">
+            <h2>Связаться с нами</h2>
+            <button onclick="toggleLiveChat()">Online Help</button>
+        </section>
+    </main>
+
+    <footer>
+        <small>© 2023 SDBS</small>
+    </footer>
+
+    <!-- Modal Chat Window -->
+    <div id="livechat-modal" class="modal hidden">
+        <div class="modal-content">
+            <span class="close" onclick="toggleLiveChat()">×</span>
+            <iframe src="livechat.php" title="LiveChat Frame" allowfullscreen></iframe>
+        </div>
+    </div>
+</body>
+</html>

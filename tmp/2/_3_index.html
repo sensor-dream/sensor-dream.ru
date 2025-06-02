@@ -1,0 +1,991 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SDBS - Sensor-dream Boxed System</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Глобальные стили */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Courier New', monospace;
+        }
+        
+        :root {
+            --matrix-green: #0f0;
+            --terminal-text: #33ff33;
+            --dark-bg: #0a0a0a;
+            --card-bg: rgba(10, 20, 10, 0.7);
+            --glow: 0 0 10px var(--matrix-green);
+        }
+        
+        body {
+            background-color: var(--dark-bg);
+            color: var(--terminal-text);
+            background-image: 
+                linear-gradient(rgba(0, 20, 0, 0.2) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 20, 0, 0.2) 1px, transparent 1px);
+            background-size: 20px 20px;
+            overflow-x: hidden;
+            position: relative;
+            min-height: 100vh;
+        }
+        
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: repeating-linear-gradient(
+                0deg,
+                rgba(0, 20, 0, 0.1),
+                rgba(0, 20, 0, 0.1) 1px,
+                transparent 1px,
+                transparent 2px
+            );
+            pointer-events: none;
+            z-index: -1;
+        }
+        
+        /* Анимация матрицы */
+        .matrix-rain {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -2;
+            opacity: 0.1;
+        }
+        
+        /* Плавающее меню */
+        .floating-nav {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0, 15, 0, 0.8);
+            border: 1px solid var(--matrix-green);
+            border-radius: 30px;
+            padding: 10px 20px;
+            display: flex;
+            gap: 15px;
+            z-index: 1000;
+            box-shadow: var(--glow);
+            backdrop-filter: blur(5px);
+        }
+        
+        .nav-btn {
+            background: transparent;
+            color: var(--terminal-text);
+            border: 1px solid var(--matrix-green);
+            border-radius: 20px;
+            padding: 8px 20px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .nav-btn:hover {
+            background: var(--matrix-green);
+            color: black;
+            box-shadow: var(--glow);
+        }
+        
+        /* Основной контент */
+        .container {
+            max-width: 1200px;
+            margin: 100px auto 50px;
+            padding: 20px;
+        }
+        
+        header {
+            text-align: center;
+            margin-bottom: 50px;
+            padding: 30px;
+            border: 2px solid var(--matrix-green);
+            border-radius: 10px;
+            background: var(--card-bg);
+            box-shadow: var(--glow);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        h1 {
+            font-size: 3.5rem;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            color: var(--matrix-green);
+            text-shadow: var(--glow);
+        }
+        
+        .subtitle {
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+            opacity: 0.8;
+        }
+        
+        .logo {
+            font-size: 5rem;
+            margin-bottom: 20px;
+            color: var(--matrix-green);
+            text-shadow: var(--glow);
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0% { opacity: 0.7; }
+            50% { opacity: 1; }
+            100% { opacity: 0.7; }
+        }
+        
+        /* Сетка услуг */
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            margin-bottom: 50px;
+        }
+        
+        .service-card {
+            background: var(--card-bg);
+            border: 1px solid var(--matrix-green);
+            border-radius: 10px;
+            padding: 25px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .service-card:hover {
+            transform: translateY(-10px);
+            box-shadow: var(--glow);
+        }
+        
+        .service-card::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: var(--matrix-green);
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.3s ease;
+        }
+        
+        .service-card:hover::before {
+            transform: scaleX(1);
+        }
+        
+        .service-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            color: var(--matrix-green);
+        }
+        
+        .service-card p {
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+        
+        .service-card .icon {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+            color: var(--matrix-green);
+        }
+        
+        /* LiveCat модальное окно */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 5, 0, 0.9);
+            z-index: 2000;
+            align-items: center;
+            justify-content: center;
+            backdrop-filter: blur(5px);
+        }
+        
+        .modal-content {
+            background: var(--card-bg);
+            border: 2px solid var(--matrix-green);
+            border-radius: 10px;
+            width: 90%;
+            max-width: 600px;
+            max-height: 90vh;
+            overflow: hidden;
+            box-shadow: 0 0 20px var(--matrix-green);
+            position: relative;
+        }
+        
+        .terminal-header {
+            background: rgba(0, 20, 0, 0.8);
+            padding: 15px;
+            border-bottom: 1px solid var(--matrix-green);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .terminal-title {
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--matrix-green);
+        }
+        
+        .close-btn {
+            background: transparent;
+            border: none;
+            color: var(--terminal-text);
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .close-btn:hover {
+            color: var(--matrix-green);
+            transform: scale(1.1);
+        }
+        
+        .terminal-body {
+            padding: 20px;
+            height: 400px;
+            overflow-y: auto;
+            font-family: 'Courier New', monospace;
+            font-size: 16px;
+            line-height: 1.6;
+        }
+        
+        .terminal-output {
+            margin-bottom: 20px;
+        }
+        
+        .terminal-output p {
+            margin-bottom: 10px;
+        }
+        
+        .terminal-input {
+            display: flex;
+            align-items: center;
+            margin-top: 15px;
+        }
+        
+        .prompt {
+            color: var(--matrix-green);
+            margin-right: 10px;
+        }
+        
+        .cmd-input {
+            background: transparent;
+            border: none;
+            color: var(--terminal-text);
+            font-family: 'Courier New', monospace;
+            font-size: 16px;
+            width: 100%;
+            outline: none;
+            caret-color: var(--matrix-green);
+        }
+        
+        /* Форма обратной связи */
+        .form-container {
+            padding: 20px;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: var(--matrix-green);
+        }
+        
+        .form-control {
+            width: 100%;
+            padding: 12px;
+            background: rgba(0, 15, 0, 0.5);
+            border: 1px solid var(--matrix-green);
+            border-radius: 5px;
+            color: var(--terminal-text);
+            font-family: 'Courier New', monospace;
+            font-size: 16px;
+        }
+        
+        .form-control:focus {
+            outline: none;
+            box-shadow: var(--glow);
+        }
+        
+        .submit-btn {
+            background: var(--matrix-green);
+            color: black;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: all 0.3s ease;
+            width: 100%;
+            margin-top: 10px;
+        }
+        
+        .submit-btn:hover {
+            background: #0d0;
+            box-shadow: var(--glow);
+        }
+        
+        /* Кнопка помощи */
+        .help-btn {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 70px;
+            height: 70px;
+            background: var(--matrix-green);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: var(--glow);
+            z-index: 1000;
+            animation: pulse 2s infinite;
+            border: 2px solid black;
+        }
+        
+        .help-btn i {
+            font-size: 2rem;
+            color: black;
+        }
+        
+        /* Социальные кнопки */
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 25px;
+            margin-top: 40px;
+        }
+        
+        .social-btn {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: rgba(0, 20, 0, 0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid var(--matrix-green);
+            transition: all 0.3s ease;
+        }
+        
+        .social-btn:hover {
+            background: var(--matrix-green);
+            transform: translateY(-5px);
+            box-shadow: var(--glow);
+        }
+        
+        .social-btn svg {
+            width: 60%;
+            height: 60%;
+        }
+        
+        /* Футер */
+        footer {
+            text-align: center;
+            padding: 30px;
+            margin-top: 50px;
+            border-top: 1px solid var(--matrix-green);
+            background: rgba(0, 10, 0, 0.5);
+        }
+        
+        /* Модальное окно обратной связи */
+        .feedback-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 5, 0, 0.9);
+            z-index: 2000;
+            align-items: center;
+            justify-content: center;
+            backdrop-filter: blur(5px);
+        }
+        
+        .feedback-content {
+            background: var(--card-bg);
+            border: 2px solid var(--matrix-green);
+            border-radius: 10px;
+            width: 90%;
+            max-width: 500px;
+            padding: 30px;
+            box-shadow: 0 0 20px var(--matrix-green);
+            position: relative;
+        }
+        
+        .feedback-header {
+            text-align: center;
+            margin-bottom: 25px;
+        }
+        
+        .feedback-title {
+            font-size: 1.8rem;
+            color: var(--matrix-green);
+            text-shadow: var(--glow);
+            margin-bottom: 10px;
+        }
+        
+        .feedback-subtitle {
+            opacity: 0.8;
+        }
+        
+        /* Адаптивность */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2.5rem;
+            }
+            
+            .subtitle {
+                font-size: 1.2rem;
+            }
+            
+            .logo {
+                font-size: 3.5rem;
+            }
+            
+            .floating-nav {
+                top: 10px;
+                padding: 8px 15px;
+            }
+            
+            .nav-btn {
+                padding: 6px 15px;
+                font-size: 14px;
+            }
+            
+            .container {
+                margin-top: 80px;
+            }
+            
+            .help-btn {
+                width: 60px;
+                height: 60px;
+                bottom: 20px;
+                right: 20px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            h1 {
+                font-size: 2rem;
+            }
+            
+            .floating-nav {
+                flex-wrap: wrap;
+                justify-content: center;
+                width: 90%;
+                top: 10px;
+            }
+            
+            .services-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .help-btn {
+                width: 50px;
+                height: 50px;
+            }
+            
+            .feedback-title {
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Анимация матрицы -->
+    <div class="matrix-rain" id="matrixRain"></div>
+    
+    <!-- Плавающее меню -->
+    <nav class="floating-nav">
+        <button class="nav-btn">Главная</button>
+        <button class="nav-btn">Услуги</button>
+        <button class="nav-btn">О нас</button>
+        <button class="nav-btn">Контакты</button>
+        <button class="nav-btn" id="feedbackNavBtn">Обратная связь</button>
+    </nav>
+    
+    <!-- Основной контент -->
+    <div class="container">
+        <header>
+            <div class="logo">SDBS</div>
+            <h1>Sensor-dream Boxed System</h1>
+            <div class="subtitle">Ваш надежный партнер в мире IT-технологий</div>
+        </header>
+        
+        <div class="services-grid">
+            <div class="service-card" data-service="server">
+                <div class="icon"><i class="fas fa-server"></i></div>
+                <h3>Серверные решения</h3>
+                <p>Проектирование, установка и обслуживание серверов любой сложности</p>
+            </div>
+            
+            <div class="service-card" data-service="cloud">
+                <div class="icon"><i class="fas fa-cloud"></i></div>
+                <h3>Облачные технологии</h3>
+                <p>Миграция, настройка и оптимизация облачных инфраструктур</p>
+            </div>
+            
+            <div class="service-card" data-service="support">
+                <div class="icon"><i class="fas fa-headset"></i></div>
+                <h3>Онлайн поддержка</h3>
+                <p>Круглосуточная техническая поддержка и удаленное администрирование</p>
+            </div>
+            
+            <div class="service-card" data-service="security">
+                <div class="icon"><i class="fas fa-shield-alt"></i></div>
+                <h3>Кибербезопасность</h3>
+                <p>Комплексная защита данных и систем от современных угроз</p>
+            </div>
+            
+            <div class="service-card" data-service="network">
+                <div class="icon"><i class="fas fa-network-wired"></i></div>
+                <h3>Сетевые решения</h3>
+                <p>Проектирование и внедрение корпоративных сетей</p>
+            </div>
+            
+            <div class="service-card" data-service="backup">
+                <div class="icon"><i class="fas fa-database"></i></div>
+                <h3>Резервное копирование</h3>
+                <p>Надежные системы резервного копирования и восстановления данных</p>
+            </div>
+        </div>
+        
+        <!-- Социальные кнопки -->
+        <div class="social-links">
+            <a href="#" class="social-btn">
+                <svg viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M17.472,14.382c-0.297,0.149 -0.549,0.246 -0.757,0.291c-0.227,0.058 -0.459,0.087 -0.695,0.087c-0.416,0 -0.765,-0.078 -1.046,-0.234c-0.282,-0.155 -0.494,-0.364 -0.637,-0.625c-0.143,-0.262 -0.214,-0.557 -0.214,-0.887c0,-0.33 0.071,-0.625 0.214,-0.887c0.143,-0.261 0.355,-0.47 0.637,-0.625c0.281,-0.156 0.63,-0.234 1.046,-0.234c0.236,0 0.468,0.029 0.695,0.087c0.208,0.045 0.46,0.142 0.757,0.291l0,-1.523c-0.264,-0.097 -0.51,-0.167 -0.738,-0.209c-0.228,-0.042 -0.469,-0.063 -0.722,-0.063c-0.469,0 -0.89,0.09 -1.263,0.271c-0.373,0.18 -0.692,0.426 -0.957,0.737c-0.265,0.311 -0.47,0.679 -0.615,1.103c-0.145,0.424 -0.218,0.882 -0.218,1.372c0,0.49 0.073,0.948 0.218,1.372c0.145,0.424 0.35,0.792 0.615,1.103c0.265,0.311 0.584,0.557 0.957,0.737c0.373,0.181 0.794,0.271 1.263,0.271c0.253,0 0.494,-0.021 0.722,-0.063c0.228,-0.042 0.474,-0.112 0.738,-0.209l0,-1.523Z"/>
+                    <path d="M12,2c5.523,0 10,4.477 10,10c0,5.523 -4.477,10 -10,10c-5.523,0 -10,-4.477 -10,-10c0,-5.523 4.477,-10 10,-10Zm3.405,13.192c-0.351,0.175 -0.662,0.292 -0.933,0.35c-0.27,0.058 -0.551,0.087 -0.841,0.087c-0.52,0 -0.968,-0.103 -1.342,-0.308c-0.375,-0.205 -0.677,-0.482 -0.907,-0.83c-0.23,-0.349 -0.391,-0.756 -0.484,-1.222c-0.093,-0.466 -0.14,-0.964 -0.14,-1.493c0,-0.529 0.047,-1.027 0.14,-1.493c0.093,-0.466 0.254,-0.873 0.484,-1.222c0.23,-0.348 0.532,-0.625 0.907,-0.83c0.374,-0.205 0.822,-0.308 1.342,-0.308c0.29,0 0.571,0.029 0.841,0.087c0.271,0.058 0.582,0.175 0.933,0.35l0.18,-1.349c-0.418,-0.18 -0.811,-0.304 -1.18,-0.373c-0.368,-0.068 -0.762,-0.102 -1.18,-0.102c-0.798,0 -1.516,0.156 -2.155,0.468c-0.639,0.312 -1.188,0.74 -1.647,1.284c-0.459,0.544 -0.813,1.188 -1.063,1.932c-0.25,0.744 -0.375,1.548 -0.375,2.411c0,0.863 0.125,1.667 0.375,2.411c0.25,0.744 0.604,1.388 1.063,1.932c0.459,0.544 1.008,0.972 1.647,1.284c0.639,0.312 1.357,0.468 2.155,0.468c0.418,0 0.812,-0.034 1.18,-0.102c0.369,-0.069 0.762,-0.193 1.18,-0.373l-0.18,-1.349Z"/>
+                </svg>
+            </a>
+            
+            <a href="#" class="social-btn">
+                <svg viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M12.044,20c-7.4,0 -11.958,-7.035 -11.725,-11.39c0.068,-1.247 0.518,-2.345 1.349,-3.286c0.91,-1.028 2.082,-1.579 3.498,-1.647c1.275,-0.063 2.462,0.351 3.537,1.234c0.488,0.403 0.93,0.863 1.32,1.376c0.39,-0.513 0.832,-0.973 1.32,-1.376c1.075,-0.883 2.262,-1.297 3.537,-1.234c1.416,0.068 2.588,0.619 3.498,1.647c0.831,0.941 1.281,2.039 1.349,3.286c0.233,4.355 -4.325,11.39 -11.725,11.39Zm0,-2c5.542,0 9.248,-5.71 9.027,-9.245c-0.051,-0.95 -0.383,-1.749 -0.992,-2.389c-0.67,-0.705 -1.537,-1.086 -2.587,-1.139c-0.965,-0.048 -1.865,0.297 -2.687,1.037l-0.761,0.626l-0.761,-0.626c-0.822,-0.74 -1.722,-1.085 -2.687,-1.037c-1.05,0.053 -1.917,0.434 -2.587,1.139c-0.609,0.64 -0.941,1.439 -0.992,2.389c-0.221,3.535 3.485,9.245 9.027,9.245Z"/>
+                    <path d="M12,2c5.523,0 10,4.477 10,10c0,5.523 -4.477,10 -10,10c-5.523,0 -10,-4.477 -10,-10c0,-5.523 4.477,-10 10,-10Z"/>
+                </svg>
+            </a>
+            
+            <a href="#" class="social-btn">
+                <svg viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M19.615,3.184c-3.604,-0.246 -11.631,-0.245 -15.23,0c-3.897,0.266 -4.356,2.62 -4.385,8.816c0.029,6.185 0.484,8.549 4.385,8.816c3.6,0.245 11.626,0.246 15.23,0c3.897,-0.267 4.356,-2.621 4.385,-8.816c-0.029,-6.185 -0.484,-8.549 -4.385,-8.816Zm-10.615,12.816l0,-6l8,3l-8,3Z"/>
+                </svg>
+            </a>
+        </div>
+    </div>
+    
+    <!-- Кнопка помощи -->
+    <div class="help-btn" id="helpBtn">
+        <i class="fas fa-question"></i>
+    </div>
+    
+    <!-- LiveCat модальное окно -->
+    <div class="modal" id="helpModal">
+        <div class="modal-content">
+            <div class="terminal-header">
+                <div class="terminal-title">LiveCat Support Terminal v2.5.3</div>
+                <button class="close-btn" id="closeModal">&times;</button>
+            </div>
+            
+            <div class="terminal-body" id="terminalBody">
+                <div class="terminal-output" id="terminalOutput">
+                    <p>> Connecting to SDBS Support Network...</p>
+                    <p>> Establishing secure connection... <span style="color: var(--matrix-green);">DONE</span></p>
+                    <p>> Authenticating credentials... <span style="color: var(--matrix-green);">SUCCESS</span></p>
+                    <p>> Welcome to Sensor-dream Boxed System Support</p>
+                    <p>> Type 'help' for available commands</p>
+                    <p>> Initializing DeepSeek API connection...</p>
+                    <p>> Connection established: DeepSeek-R1</p>
+                    <p>> System time: <span id="systemTime"></span></p>
+                    <p>> SDBS Core Status: <span style="color: var(--matrix-green);">OPERATIONAL</span></p>
+                </div>
+                
+                <div class="terminal-input">
+                    <span class="prompt">$</span>
+                    <input type="text" class="cmd-input" id="cmdInput" placeholder="Введите команду...">
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Модальное окно обратной связи -->
+    <div class="feedback-modal" id="feedbackModal">
+        <div class="feedback-content">
+            <div class="feedback-header">
+                <h2 class="feedback-title">Обратная связь</h2>
+                <p class="feedback-subtitle">Оставьте ваш запрос и мы свяжемся с вами</p>
+            </div>
+            
+            <form id="supportForm">
+                <div class="form-group">
+                    <label for="name">Ваше имя</label>
+                    <input type="text" id="name" class="form-control" placeholder="Введите ваше имя" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" class="form-control" placeholder="Введите ваш email" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="topic">Тема сообщения</label>
+                    <select id="topic" class="form-control" required>
+                        <option value="" disabled selected>Выберите тему</option>
+                        <option value="support">Техническая поддержка</option>
+                        <option value="sales">Отдел продаж</option>
+                        <option value="cooperation">Сотрудничество</option>
+                        <option value="other">Другое</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="message">Сообщение</label>
+                    <textarea id="message" class="form-control" rows="5" placeholder="Опишите ваш запрос..." required></textarea>
+                </div>
+                
+                <button type="submit" class="submit-btn">
+                    <i class="fas fa-paper-plane"></i> Отправить сообщение
+                </button>
+            </form>
+            
+            <button class="close-btn" id="closeFeedbackModal" style="position: absolute; top: 15px; right: 15px;">&times;</button>
+        </div>
+    </div>
+    
+    <!-- Футер -->
+    <footer>
+        <p>Sensor-dream Boxed System &copy; 2023. Все права защищены.</p>
+        <p>Круглосуточная поддержка: support@sdbs.ru | +7 (495) 123-45-67</p>
+    </footer>
+    
+    <script>
+        // Анимация матрицы
+        function createMatrixEffect() {
+            const container = document.getElementById('matrixRain');
+            const characters = '01';
+            const fontSize = 14;
+            const columns = Math.floor(window.innerWidth / fontSize);
+            
+            for (let i = 0; i < columns; i++) {
+                const column = document.createElement('div');
+                column.style.position = 'absolute';
+                column.style.top = '-50px';
+                column.style.left = (i * fontSize) + 'px';
+                column.style.width = fontSize + 'px';
+                column.style.height = '100%';
+                column.style.color = 'rgba(0, 255, 0, 0.3)';
+                column.style.fontSize = fontSize + 'px';
+                column.style.fontFamily = 'monospace';
+                column.style.whiteSpace = 'nowrap';
+                column.style.writingMode = 'vertical-rl';
+                column.style.textOrientation = 'mixed';
+                container.appendChild(column);
+                
+                animateColumn(column);
+            }
+            
+            function animateColumn(column) {
+                const charCount = Math.floor(Math.random() * 20) + 10;
+                let content = '';
+                
+                for (let i = 0; i < charCount; i++) {
+                    content += characters.charAt(Math.floor(Math.random() * characters.length));
+                }
+                
+                column.textContent = content;
+                column.style.top = '-50px';
+                
+                const duration = 2000 + Math.random() * 5000;
+                const delay = Math.random() * 5000;
+                
+                setTimeout(() => {
+                    column.style.transition = `top ${duration}ms linear`;
+                    column.style.top = '100%';
+                    
+                    setTimeout(() => {
+                        animateColumn(column);
+                    }, duration);
+                }, delay);
+            }
+        }
+        
+        // Модальные окна
+        const helpBtn = document.getElementById('helpBtn');
+        const helpModal = document.getElementById('helpModal');
+        const closeModal = document.getElementById('closeModal');
+        
+        const feedbackNavBtn = document.getElementById('feedbackNavBtn');
+        const feedbackModal = document.getElementById('feedbackModal');
+        const closeFeedbackModal = document.getElementById('closeFeedbackModal');
+        
+        const cmdInput = document.getElementById('cmdInput');
+        const terminalOutput = document.getElementById('terminalOutput');
+        const supportForm = document.getElementById('supportForm');
+        
+        // Открытие модального окна помощи
+        helpBtn.addEventListener('click', () => {
+            helpModal.style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+            
+            // Обновление времени системы
+            const now = new Date();
+            document.getElementById('systemTime').textContent = now.toLocaleString();
+        });
+        
+        // Открытие модального окна обратной связи
+        feedbackNavBtn.addEventListener('click', () => {
+            feedbackModal.style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+        });
+        
+        // Закрытие модальных окон
+        closeModal.addEventListener('click', () => {
+            helpModal.style.display = 'none';
+            document.body.style.overflow = 'auto';
+        });
+        
+        closeFeedbackModal.addEventListener('click', () => {
+            feedbackModal.style.display = 'none';
+            document.body.style.overflow = 'auto';
+        });
+        
+        // Закрытие по ESC
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                if (helpModal.style.display === 'flex') {
+                    helpModal.style.display = 'none';
+                    document.body.style.overflow = 'auto';
+                }
+                if (feedbackModal.style.display === 'flex') {
+                    feedbackModal.style.display = 'none';
+                    document.body.style.overflow = 'auto';
+                }
+            }
+        });
+        
+        // Обработка команд терминала
+        cmdInput.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter') {
+                const command = cmdInput.value.trim().toLowerCase();
+                cmdInput.value = '';
+                
+                let outputLine = document.createElement('p');
+                outputLine.innerHTML = `$ ${command}`;
+                terminalOutput.appendChild(outputLine);
+                
+                // Обработка команд
+                switch(command) {
+                    case 'help':
+                        outputLine = document.createElement('p');
+                        outputLine.innerHTML = '> Доступные команды: help, contact, support, clear, exit';
+                        terminalOutput.appendChild(outputLine);
+                        break;
+                        
+                    case 'contact':
+                        outputLine = document.createElement('p');
+                        outputLine.innerHTML = '> Контактная информация: support@sdbs.ru | +7 (495) 123-45-67';
+                        terminalOutput.appendChild(outputLine);
+                        break;
+                        
+                    case 'support':
+                        outputLine = document.createElement('p');
+                        outputLine.innerHTML = '> Перенаправление на форму обратной связи...';
+                        terminalOutput.appendChild(outputLine);
+                        
+                        setTimeout(() => {
+                            helpModal.style.display = 'none';
+                            feedbackModal.style.display = 'flex';
+                        }, 1000);
+                        break;
+                        
+                    case 'clear':
+                        terminalOutput.innerHTML = '';
+                        break;
+                        
+                    case 'exit':
+                        helpModal.style.display = 'none';
+                        document.body.style.overflow = 'auto';
+                        break;
+                        
+                    default:
+                        outputLine = document.createElement('p');
+                        outputLine.innerHTML = `> Неизвестная команда: ${command}. Введите 'help' для списка команд`;
+                        terminalOutput.appendChild(outputLine);
+                }
+                
+                // Прокрутка вниз
+                terminalOutput.scrollTop = terminalOutput.scrollHeight;
+            }
+        });
+        
+        // Обработка формы обратной связи
+        supportForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const topic = document.getElementById('topic').value;
+            const message = document.getElementById('message').value;
+            
+            // Отправка данных через PHP
+            sendSupportRequest(name, email, topic, message);
+            
+            // Показать сообщение об успехе
+            alert('Ваше сообщение отправлено! Мы свяжемся с вами в ближайшее время.');
+            
+            // Закрыть модальное окно
+            feedbackModal.style.display = 'none';
+            document.body.style.overflow = 'auto';
+            
+            // Очистка формы
+            supportForm.reset();
+        });
+        
+        // Функция отправки запроса (заглушка)
+        function sendSupportRequest(name, email, topic, message) {
+            // В реальном приложении здесь будет AJAX запрос к PHP скрипту
+            console.log(`Отправка запроса поддержки: 
+Имя: ${name}
+Email: ${email}
+Тема: ${topic}
+Сообщение: ${message}`);
+        }
+        
+        // Инициализация
+        document.addEventListener('DOMContentLoaded', () => {
+            createMatrixEffect();
+            
+            // Обработка карточек услуг
+            document.querySelectorAll('.service-card').forEach(card => {
+                card.addEventListener('click', () => {
+                    const service = card.getAttribute('data-service');
+                    
+                    // Показ деталей услуги в модальном окне
+                    helpModal.style.display = 'flex';
+                    document.body.style.overflow = 'hidden';
+                    
+                    // Обновление времени системы
+                    const now = new Date();
+                    document.getElementById('systemTime').textContent = now.toLocaleString();
+                    
+                    // Очистка и добавление информации об услуге
+                    terminalOutput.innerHTML = '';
+                    
+                    let outputLine = document.createElement('p');
+                    outputLine.innerHTML = `> Запрос информации об услуге: ${service}`;
+                    terminalOutput.appendChild(outputLine);
+                    
+                    outputLine = document.createElement('p');
+                    outputLine.innerHTML = `> Подключение к базе услуг SDBS... <span style="color: var(--matrix-green);">DONE</span>`;
+                    terminalOutput.appendChild(outputLine);
+                    
+                    let serviceInfo = '';
+                    switch(service) {
+                        case 'server':
+                            serviceInfo = 'Серверные решения: Проектирование, установка и обслуживание серверов любой сложности. Мы предлагаем полный цикл работ от выбора оборудования до настройки кластерных систем высокой доступности.';
+                            break;
+                        case 'cloud':
+                            serviceInfo = 'Облачные технологии: Миграция, настройка и оптимизация облачных инфраструктур. Поддержка всех основных платформ: AWS, Azure, Google Cloud, Yandex Cloud.';
+                            break;
+                        case 'support':
+                            serviceInfo = 'Онлайн поддержка: Круглосуточная техническая поддержка и удаленное администрирование. Наши специалисты доступны 24/7 для решения любых технических вопросов.';
+                            break;
+                        case 'security':
+                            serviceInfo = 'Кибербезопасность: Комплексная защита данных и систем от современных угроз. Аудит безопасности, внедрение систем защиты, мониторинг и реагирование на инциденты.';
+                            break;
+                        case 'network':
+                            serviceInfo = 'Сетевые решения: Проектирование и внедрение корпоративных сетей. От небольших офисных сетей до распределенных инфраструктур с несколькими ЦОД.';
+                            break;
+                        case 'backup':
+                            serviceInfo = 'Резервное копирование: Надежные системы резервного копирования и восстановления данных. Разработка стратегий резервирования и аварийного восстановления.';
+                            break;
+                    }
+                    
+                    outputLine = document.createElement('p');
+                    outputLine.innerHTML = `> Информация об услуге:<br>${serviceInfo}`;
+                    terminalOutput.appendChild(outputLine);
+                    
+                    outputLine = document.createElement('p');
+                    outputLine.innerHTML = `> Для связи со специалистом введите команду: support`;
+                    terminalOutput.appendChild(outputLine);
+                    
+                    // Прокрутка вниз
+                    terminalOutput.scrollTop = terminalOutput.scrollHeight;
+                });
+            });
+        });
+    </script>
+<!--
+Что было добавлено
+Кнопка обратной связи в плавающем меню:
+
+Добавлена кнопка "Обратная связь" в навигационной панели
+
+При нажатии открывается модальное окно с формой
+
+Отдельное модальное окно для обратной связи:
+
+Стилизовано в соответствии с общим дизайном сайта
+
+Содержит поля для имени, email, темы сообщения и самого сообщения
+
+Кнопка отправки с иконкой
+
+Доработка функционала:
+
+Команда "support" в терминале теперь перенаправляет на форму обратной связи
+
+Закрытие окон по кнопке и клавише ESC
+
+Адаптивный дизайн для мобильных устройств
+
+Обновленный PHP скрипт:
+
+Добавлено поле "тема сообщения"
+
+Улучшена обработка данных
+
+Форматирование письма с HTML и текстовой версией
+
+Для работы отправки сообщений потребуется:
+
+Установить библиотеку PHPMailer
+
+Настроить параметры SMTP сервера
+
+Подключить скрипт к форме через AJAX или изменить атрибут action формы
+
+Все элементы сохраняют стиль "Матрицы" и старых терминалов, обеспечивая единый дизайн сайта.
+-->
+</body>
+</html>

@@ -3,887 +3,884 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SDBS - Компьютерный сервис</title>
+    <title>Sensor-Dream Boxed System | IT обслуживание</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        @font-face {
-            font-family: 'Matrix';
-            src: url('https://fonts.cdnfonts.com/css/matrix-code-nfi') format('woff2');
-        }
-        
-        :root {
-            --matrix-green: #0f0;
-            --dark-bg: #000;
-            --border-color: #0f0;
-            --text-glow: 0 0 5px #0f0;
-        }
-        
+        /* Общие стили */
         * {
-            box-sizing: border-box;
             margin: 0;
             padding: 0;
+            box-sizing: border-box;
+            font-family: 'Courier New', monospace;
         }
         
         body {
-            background-color: var(--dark-bg);
-            color: var(--matrix-green);
-            font-family: 'Courier New', monospace;
-            line-height: 1.6;
-            padding-top: 70px;
+            background-color: #000;
+            color: #0f0;
             overflow-x: hidden;
-        }
-        
-        /* Header with floating menu */
-        header {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            background-color: rgba(0, 0, 0, 0.9);
-            border-bottom: 1px solid var(--border-color);
-            z-index: 1000;
-            padding: 10px 20px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            box-shadow: 0 0 15px rgba(0, 255, 0, 0.3);
-        }
-        
-        .logo {
-            font-family: 'Matrix', 'Courier New', monospace;
-            font-size: 1.5rem;
-            letter-spacing: 3px;
-            text-transform: uppercase;
-            display: flex;
-            align-items: center;
-        }
-        
-        .logo span {
-            color: var(--matrix-green);
-            text-shadow: var(--text-glow);
-            margin-right: 10px;
-        }
-        
-        .logo .blink {
-            animation: blink 1s step-end infinite;
-        }
-        
-        nav ul {
-            display: flex;
-            list-style: none;
-        }
-        
-        nav ul li {
-            margin-left: 20px;
-        }
-        
-        nav ul li a {
-            color: var(--matrix-green);
-            text-decoration: none;
-            font-size: 0.9rem;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            transition: all 0.3s;
-            padding: 5px 10px;
-            border: 1px solid transparent;
-        }
-        
-        nav ul li a:hover {
-            text-shadow: var(--text-glow);
-            border-color: var(--border-color);
-        }
-        
-        .menu-toggle {
-            display: none;
-            cursor: pointer;
-            font-size: 1.5rem;
-        }
-        
-        /* Main monitor container */
-        .monitor {
-            width: 95%;
-            max-width: 1200px;
-            margin: 20px auto;
-            border: 15px solid #333;
-            border-radius: 10px;
-            padding: 20px;
             position: relative;
-            background-color: var(--dark-bg);
-            box-shadow: 0 0 30px rgba(0, 255, 0, 0.5), inset 0 0 10px rgba(0, 255, 0, 0.3);
-            min-height: calc(100vh - 140px);
+            line-height: 1.6;
         }
         
-        .monitor::before {
-            content: "";
-            position: absolute;
-            top: -10px;
-            left: -10px;
-            right: -10px;
-            bottom: -10px;
-            border: 2px solid var(--border-color);
-            border-radius: 15px;
-            pointer-events: none;
-            opacity: 0.5;
-        }
-        
-        .scanlines {
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: repeating-linear-gradient(
-                to bottom,
-                transparent 0%,
-                rgba(0, 255, 0, 0.05) 1%,
-                transparent 2%
-            );
-            pointer-events: none;
-            z-index: 1;
-        }
-        
-        /* Content styles */
-        .content {
-            position: relative;
-            z-index: 2;
-        }
-        
-        h1, h2, h3 {
-            font-family: 'Matrix', 'Courier New', monospace;
-            color: var(--matrix-green);
-            text-transform: uppercase;
-            margin: 20px 0 15px;
-        }
-        
-        h1 {
-            border-bottom: 1px solid var(--border-color);
-            padding-bottom: 10px;
-            text-align: center;
-            letter-spacing: 3px;
-            font-size: 1.8rem;
-        }
-        
-        h2 {
-            font-size: 1.5rem;
-            letter-spacing: 2px;
-        }
-        
-        h3 {
-            font-size: 1.2rem;
-            letter-spacing: 1px;
-        }
-        
-        p {
-            margin-bottom: 15px;
-        }
-        
-        a {
-            color: var(--matrix-green);
-            text-decoration: none;
-            border-bottom: 1px dotted var(--border-color);
-        }
-        
-        a:hover {
-            text-shadow: var(--text-glow);
-        }
-        
-        .glow {
-            text-shadow: var(--text-glow);
-        }
-        
-        /* Buttons */
-        .button {
-            display: inline-block;
-            padding: 10px 20px;
-            margin: 10px 5px;
-            border: 1px solid var(--border-color);
-            background: transparent;
-            color: var(--matrix-green);
-            font-family: 'Courier New', monospace;
-            text-transform: uppercase;
-            cursor: pointer;
-            transition: all 0.3s;
-            font-size: 0.9rem;
-        }
-        
-        .button:hover {
-            background: var(--matrix-green);
-            color: var(--dark-bg);
-            box-shadow: 0 0 20px var(--matrix-green);
-        }
-        
-        /* Terminal boxes */
-        .terminal {
-            border: 1px solid var(--border-color);
-            padding: 15px;
-            margin: 20px 0;
-            position: relative;
-            background-color: rgba(0, 30, 0, 0.2);
-        }
-        
-        .terminal::before {
-            content: ">_";
-            position: absolute;
-            top: -10px;
-            left: 10px;
-            background: var(--dark-bg);
-            padding: 0 5px;
-            font-family: 'Matrix', 'Courier New', monospace;
-        }
-        
-        /* Features grid */
-        .features {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 20px;
-            margin: 30px 0;
-        }
-        
-        .feature {
-            border: 1px solid var(--border-color);
-            padding: 15px;
-            position: relative;
-            background-color: rgba(0, 30, 0, 0.1);
-        }
-        
-        .feature::before {
-            content: ">>";
-            position: absolute;
-            top: -10px;
-            left: 10px;
-            background: var(--dark-bg);
-            padding: 0 5px;
-            font-family: 'Matrix', 'Courier New', monospace;
-        }
-        
-        /* Matrix text */
-        .matrix-text {
-            font-family: 'Matrix', 'Courier New', monospace;
-            color: var(--matrix-green);
-            white-space: pre;
-            overflow: hidden;
-            margin: 20px 0;
-            font-size: 0.9em;
-            line-height: 1.2;
-        }
-        
-        /* Footer */
-        footer {
-            text-align: center;
-            margin-top: 40px;
-            padding-top: 20px;
-            border-top: 1px solid var(--border-color);
-            font-size: 0.8em;
-        }
-        
-        /* Modal styles */
-        .modal {
-            display: none;
+        /* Анимация падающих символов матрицы */
+        .matrix-bg {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background-color: rgba(0, 0, 0, 0.8);
-            z-index: 2000;
-            overflow: auto;
+            z-index: -1;
+            opacity: 0.2;
+            pointer-events: none;
         }
         
-        .modal-content {
-            background-color: var(--dark-bg);
-            margin: 5% auto;
-            padding: 20px;
-            border: 2px solid var(--border-color);
-            width: 90%;
-            max-width: 800px;
-            position: relative;
-            box-shadow: 0 0 30px rgba(0, 255, 0, 0.5);
+        /* Фиксированное меню */
+        .header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background-color: rgba(0, 20, 0, 0.9);
+            padding: 15px 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+            border-bottom: 1px solid #0f0;
+            box-shadow: 0 0 10px rgba(0, 255, 0, 0.5);
         }
         
-        .close-modal {
-            position: absolute;
-            top: 10px;
-            right: 20px;
-            color: var(--matrix-green);
-            font-size: 28px;
+        .logo {
+            font-size: 1.5rem;
             font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: #0f0;
+            text-shadow: 0 0 5px #0f0;
+        }
+        
+        .nav-menu {
+            display: flex;
+            list-style: none;
+        }
+        
+        .nav-menu li {
+            margin: 0 15px;
+        }
+        
+        .nav-menu a {
+            color: #0f0;
+            text-decoration: none;
+            font-size: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            position: relative;
+            padding: 5px 0;
+            transition: all 0.3s ease;
+        }
+        
+        .nav-menu a:hover {
+            text-shadow: 0 0 10px #0f0;
+        }
+        
+        .nav-menu a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: #0f0;
+            transition: width 0.3s ease;
+        }
+        
+        .nav-menu a:hover::after {
+            width: 100%;
+        }
+        
+        .hamburger {
+            display: none;
             cursor: pointer;
+            font-size: 1.5rem;
         }
         
-        .close-modal:hover {
-            text-shadow: var(--text-glow);
+        /* Стили для секций */
+        section {
+            min-height: 100vh;
+            padding: 100px 10% 50px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            border-bottom: 1px solid #0f0;
         }
         
-        /* Control Panel styles */
-        .control-panel {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 15px;
+        .hero {
+            text-align: center;
+            position: relative;
+            background: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8));
+        }
+        
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            letter-spacing: 4px;
+            text-shadow: 0 0 10px #0f0;
+        }
+        
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 800px;
+            margin: 0 auto 30px;
+            color: #8f8;
+        }
+        
+        .terminal-box {
+            background-color: rgba(0, 20, 0, 0.5);
+            border: 1px solid #0f0;
+            padding: 30px;
+            max-width: 800px;
+            margin: 0 auto;
+            box-shadow: 0 0 20px rgba(0, 255, 0, 0.3);
+            position: relative;
+        }
+        
+        .terminal-box::before {
+            content: '>';
+            position: absolute;
+            top: 30px;
+            left: 15px;
+            color: #0f0;
+            animation: blink 1s infinite;
+        }
+        
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0; }
+        }
+        
+        .btn {
+            display: inline-block;
+            background: transparent;
+            color: #0f0;
+            border: 1px solid #0f0;
+            padding: 12px 30px;
             margin-top: 20px;
+            font-size: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
         }
         
-        .control-group {
-            border: 1px solid var(--border-color);
-            padding: 15px;
+        .btn:hover {
+            background: rgba(0, 255, 0, 0.1);
+            box-shadow: 0 0 15px rgba(0, 255, 0, 0.5);
+            transform: translateY(-3px);
         }
         
-        .control-group h3 {
-            margin-top: 0;
-            border-bottom: 1px solid var(--border-color);
-            padding-bottom: 5px;
+        .section-title {
+            font-size: 2.5rem;
+            margin-bottom: 50px;
+            text-align: center;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            text-shadow: 0 0 5px #0f0;
+            position: relative;
         }
         
-        .control-item {
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 2px;
+            background: #0f0;
+        }
+        
+        /* Сетка услуг */
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 30px;
+        }
+        
+        .service-card {
+            background: rgba(0, 20, 0, 0.3);
+            border: 1px solid #0f0;
+            padding: 30px;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .service-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 0 20px rgba(0, 255, 0, 0.3);
+            background: rgba(0, 30, 0, 0.5);
+        }
+        
+        .service-card i {
+            font-size: 2.5rem;
+            color: #0f0;
+            margin-bottom: 20px;
+        }
+        
+        .service-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            color: #8f8;
+        }
+        
+        /* О компании */
+        .about-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 50px;
+            align-items: center;
+        }
+        
+        .about-text p {
+            margin-bottom: 20px;
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: #8f8;
+        }
+        
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+            margin-top: 30px;
+        }
+        
+        .stat-box {
+            text-align: center;
+            padding: 20px;
+            background: rgba(0, 20, 0, 0.3);
+            border: 1px solid #0f0;
+        }
+        
+        .stat-box .number {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: #0f0;
             margin-bottom: 10px;
         }
         
-        .control-item label {
-            display: block;
-            margin-bottom: 5px;
-            font-size: 0.9em;
+        /* Контакты */
+        .contact-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
         }
         
-        .control-item input[type="range"] {
-            width: 100%;
-            background: var(--matrix-green);
-            height: 2px;
+        .contact-form {
+            background: rgba(0, 20, 0, 0.3);
+            border: 1px solid #0f0;
+            padding: 30px;
         }
         
-        .status-indicator {
-            display: inline-block;
-            width: 10px;
-            height: 10px;
-            border-radius: 50%;
-            margin-right: 5px;
-        }
-        
-        .status-on {
-            background-color: var(--matrix-green);
-            box-shadow: 0 0 5px var(--matrix-green);
-        }
-        
-        .status-off {
-            background-color: #333;
-            border: 1px solid var(--matrix-green);
-        }
-        
-        /* Form styles */
         .form-group {
-            margin-bottom: 15px;
+            margin-bottom: 20px;
         }
         
         .form-group label {
             display: block;
             margin-bottom: 5px;
-            font-size: 0.9em;
+            color: #8f8;
         }
         
         .form-group input,
-        .form-group textarea,
-        .form-group select {
+        .form-group textarea {
             width: 100%;
-            padding: 8px;
-            background-color: rgba(0, 30, 0, 0.2);
-            border: 1px solid var(--border-color);
-            color: var(--matrix-green);
+            padding: 10px;
+            background: rgba(0, 10, 0, 0.5);
+            border: 1px solid #0a0;
+            color: #0f0;
             font-family: 'Courier New', monospace;
         }
         
-        .form-group textarea {
-            min-height: 100px;
-            resize: vertical;
+        .contact-info {
+            background: rgba(0, 20, 0, 0.3);
+            border: 1px solid #0f0;
+            padding: 30px;
         }
         
-        /* Contact links */
-        .contact-links {
+        .contact-info h3 {
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+            color: #8f8;
+        }
+        
+        .info-item {
+            display: flex;
+            margin-bottom: 20px;
+        }
+        
+        .info-item i {
+            font-size: 1.2rem;
+            color: #0f0;
+            margin-right: 15px;
+            min-width: 25px;
+        }
+        
+        /* Футер */
+        .footer {
+            text-align: center;
+            padding: 30px;
+            background: rgba(0, 20, 0, 0.9);
+            border-top: 1px solid #0f0;
+        }
+        
+        .footer p {
+            color: #8f8;
+        }
+        
+        .social-links {
             display: flex;
             justify-content: center;
-            gap: 20px;
-            margin: 20px 0;
+            margin-top: 20px;
         }
         
-        .contact-links a {
+        .social-links a {
+            display: inline-block;
+            width: 40px;
+            height: 40px;
+            background: rgba(0, 20, 0, 0.5);
+            border: 1px solid #0f0;
+            border-radius: 50%;
+            margin: 0 10px;
             display: flex;
             align-items: center;
-            gap: 5px;
-            border: 1px solid var(--border-color);
-            padding: 8px 15px;
-            transition: all 0.3s;
+            justify-content: center;
+            color: #0f0;
+            transition: all 0.3s ease;
         }
         
-        .contact-links a:hover {
+        .social-links a:hover {
             background: rgba(0, 255, 0, 0.1);
-            box-shadow: 0 0 10px var(--matrix-green);
+            box-shadow: 0 0 15px rgba(0, 255, 0, 0.5);
+            transform: translateY(-5px);
         }
         
-        /* Matrix rain effect */
-        .matrix-rain {
+        /* Кнопка прокрутки вверх */
+        .scroll-top {
             position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            z-index: -1;
-            opacity: 0.1;
-            pointer-events: none;
+            bottom: 30px;
+            right: 30px;
+            width: 50px;
+            height: 50px;
+            background: rgba(0, 30, 0, 0.7);
+            border: 2px solid #0f0;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #0f0;
+            font-size: 1.5rem;
+            cursor: pointer;
+            z-index: 999;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.4s ease;
+            box-shadow: 0 0 10px rgba(0, 255, 0, 0.5);
         }
         
-        /* Responsive styles */
-        @media (max-width: 768px) {
-            header {
-                flex-direction: column;
-                padding: 10px;
+        .scroll-top.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .scroll-top:hover {
+            background: rgba(0, 50, 0, 0.9);
+            box-shadow: 0 0 15px rgba(0, 255, 0, 0.8);
+            transform: scale(1.1);
+        }
+        
+        /* Сообщения формы */
+        .form-message {
+            display: none;
+            padding: 15px;
+            margin-top: 20px;
+            border: 1px solid #0f0;
+            background: rgba(0, 20, 0, 0.3);
+            text-align: center;
+        }
+        
+        .form-message.success {
+            color: #0f0;
+            display: block;
+        }
+        
+        .form-message.error {
+            color: #f00;
+            display: block;
+        }
+        
+        .loading {
+            display: none;
+            text-align: center;
+            margin-top: 20px;
+            color: #0f0;
+        }
+        
+        .loading i {
+            animation: spin 1s linear infinite;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        /* Адаптивность */
+        @media (max-width: 992px) {
+            .hero h1 {
+                font-size: 2.8rem;
             }
             
-            .logo {
-                margin-bottom: 10px;
-                font-size: 1.2rem;
-            }
-            
-            nav ul {
-                flex-direction: column;
-                width: 100%;
-                display: none;
-            }
-            
-            nav ul.show {
-                display: flex;
-            }
-            
-            nav ul li {
-                margin: 5px 0;
-                text-align: center;
-            }
-            
-            .menu-toggle {
-                display: block;
-                position: absolute;
-                top: 15px;
-                right: 15px;
-            }
-            
-            .features {
+            .about-content {
                 grid-template-columns: 1fr;
             }
             
-            .monitor {
-                padding: 15px;
-                border-width: 10px;
+            .scroll-top {
+                width: 45px;
+                height: 45px;
+                font-size: 1.3rem;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .hamburger {
+                display: block;
             }
             
-            body {
-                padding-top: 100px;
-            }
-            
-            .contact-links {
+            .nav-menu {
+                position: absolute;
+                top: 70px;
+                left: 0;
+                background: rgba(0, 20, 0, 0.95);
+                width: 100%;
                 flex-direction: column;
                 align-items: center;
-                gap: 10px;
+                padding: 20px 0;
+                clip-path: polygon(0 0, 100% 0, 100% 0, 0 0);
+                transition: all 0.4s ease;
+            }
+            
+            .nav-menu.active {
+                clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+            }
+            
+            .nav-menu li {
+                margin: 15px 0;
+            }
+            
+            .hero h1 {
+                font-size: 2.2rem;
+            }
+            
+            .section-title {
+                font-size: 2rem;
+            }
+            
+            .scroll-top {
+                bottom: 20px;
+                right: 20px;
+                width: 40px;
+                height: 40px;
+                font-size: 1.2rem;
             }
         }
         
-        /* Animations */
-        @keyframes blink {
-            from, to { opacity: 1; }
-            50% { opacity: 0; }
-        }
-        
-        @keyframes rain {
-            from { transform: translateY(-100%); }
-            to { transform: translateY(100vh); }
+        @media (max-width: 480px) {
+            .hero h1 {
+                font-size: 1.8rem;
+            }
+            
+            .terminal-box {
+                padding: 20px 15px;
+            }
+            
+            .section-title {
+                font-size: 1.6rem;
+            }
+            
+            .scroll-top {
+                bottom: 15px;
+                right: 15px;
+                width: 35px;
+                height: 35px;
+                font-size: 1rem;
+            }
         }
     </style>
 </head>
 <body>
-    <div class="matrix-rain" id="matrixRain"></div>
+    <!-- Анимация фона матрицы -->
+    <canvas class="matrix-bg" id="matrixCanvas"></canvas>
     
-    <!-- Floating Header -->
-    <header>
-        <div class="logo">
-            <span>SDBS</span> <span class="blink">_</span>
+    <!-- Фиксированное меню -->
+    <header class="header">
+        <div class="logo">SDBS</div>
+        <ul class="nav-menu" id="navMenu">
+            <li><a href="#home">Главная</a></li>
+            <li><a href="#services">Услуги</a></li>
+            <li><a href="#about">О нас</a></li>
+            <li><a href="#contact">Контакты</a></li>
+        </ul>
+        <div class="hamburger" id="hamburger">
+            <i class="fas fa-bars"></i>
         </div>
-        <div class="menu-toggle" id="menuToggle">≡</div>
-        <nav>
-            <ul id="mainMenu">
-                <li><a href="#services">Услуги</a></li>
-                <li><a href="#about">О нас</a></li>
-                <li><a href="#contacts">Контакты</a></li>
-                <li><a href="#" id="openControlPanel">Статус системы</a></li>
-                <li><a href="#" id="openContactForm">Заявка</a></li>
-            </ul>
-        </nav>
     </header>
     
-    <!-- Main Monitor Content -->
-    <div class="monitor">
-        <div class="scanlines"></div>
-        <div class="content">
-            <h1 class="glow">SENSOR-DREAM BOXED SYSTEM</h1>
-            
-            <div class="terminal">
-                <p>> Загрузка SDBS Core v4.2.1...</p>
-                <p>> Server: SDBS - 23.06.06 - rev: 1730486928</p>
-                <p>> Система готова к работе</p>
-                <p class="glow">> Добро пожаловать в сервисный центр</p>
-            </div>
-            
-            <section id="services">
-                <h2>НАШИ УСЛУГИ</h2>
-                
-                <div class="features">
-                    <div class="feature">
-                        <h3>РЕМОНТ КОМПЬЮТЕРОВ</h3>
-                        <p>Диагностика и ремонт компьютеров любой сложности. Замена компонентов, чистка системных блоков, восстановление данных.</p>
-                    </div>
-                    
-                    <div class="feature">
-                        <h3>УСТАНОВКА ПО</h3>
-                        <p>Установка и настройка операционных систем, драйверов, офисных и специализированных программных комплексов.</p>
-                    </div>
-                    
-                    <div class="feature">
-                        <h3>НАСТРОЙКА СЕРВЕРОВ</h3>
-                        <p>Развертывание и тонкая настройка серверного оборудования: файловые серверы, веб-серверы, серверы баз данных.</p>
-                    </div>
-                    
-                    <div class="feature">
-                        <h3>ОПТИМИЗАЦИЯ РАБОЧИХ СТАНЦИЙ</h3>
-                        <p>Настройка рабочих мест для максимальной производительности и безопасности в корпоративных сетях.</p>
-                    </div>
-                </div>
-            </section>
-            
-            <section id="about">
-                <h2>О КОМПАНИИ</h2>
-                
-                <p>Sensor-Dream Boxed System (SDBS) - профессиональный сервисный центр, специализирующийся на ремонте и обслуживании компьютерной техники, настройке программного обеспечения и серверных решений.</p>
-                
-                <div class="terminal">
-                    <p>> Основано: 2015 год</p>
-                    <p>> Специалистов: 12</p>
-                    <p>> Успешных проектов: 850+</p>
-                    <p>> Среднее время реакции: 15 минут</p>
-                </div>
-            </section>
-            
-            <section id="contacts">
-                <h2>КОНТАКТЫ</h2>
-                
-                <div class="contact-links">
-                    <a href="https://wa.me/79001234567" target="_blank">
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="#0f0">
-                            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
-                        </svg>
-                        WhatsApp
-                    </a>
-                    <a href="https://vk.com/sensordream" target="_blank">
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="#0f0">
-                            <path d="M12.65 18.22c-5.33 0-8.39-3.6-8.58-9.64H6.5v1.77a5.86 5.86 0 003.15-1.1 5.74 5.74 0 001.84-4.17h2.26a4.48 4.48 0 01-1.5 3.3 5.73 5.73 0 003.5 1.32l2.15-2.2h-2.5a5.8 5.8 0 00-1.5-3.3 5.71 5.71 0 00-4.17-1.84H4.07v15.56h8.58v-1.76a5.8 5.8 0 01-3.15 1.1 5.74 5.74 0 01-1.84-4.17H6.5a4.48 4.48 0 001.5 3.3 5.73 5.73 0 003.5 1.32l2.15-2.2h-2.5a5.8 5.8 0 00-1.5-3.3 5.71 5.71 0 00-4.17-1.84H4.07v3.6c.19 6.04 3.25 9.64 8.58 9.64h4.17v-1.76h-4.17z"/>
-                        </svg>
-                        ВКонтакте
-                    </a>
-                    <a href="mailto:sensor-dream@sensor-dream.ru">
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="#0f0">
-                            <path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/>
-                        </svg>
-                        sensor-dream@sensor-dream.ru
-                    </a>
-                </div>
-            </section>
-            
-            <div style="text-align: center; margin: 30px 0;">
-                <button class="button" id="openControlPanel2">СТАТУС СИСТЕМЫ</button>
-                <button class="button" id="openContactForm2">ОСТАВИТЬ ЗАЯВКУ</button>
-            </div>
-            
-            <footer>
-                SDBS v4.2.1 | Server: 23.06.06 - rev: 1730486928<br>
-                © 2023 Sensor-Dream Boxed System. Все права защищены.
-            </footer>
+    <!-- Секция героя -->
+    <section class="hero" id="home">
+        <h1>Sensor-Dream Boxed System</h1>
+        <div class="terminal-box">
+            <p>Инициализация системы...<br>
+            Загрузка протоколов IT-обслуживания...<br>
+            Готово. Добро пожаловать в SDBS.</p>
         </div>
-    </div>
+        <p>Полный спектр IT-услуг для бизнеса. От мониторинга до кибербезопасности.</p>
+        <a href="#contact" class="btn">Запросить подключение</a>
+    </section>
     
-    <!-- Control Panel Modal -->
-    <div id="controlPanelModal" class="modal">
-        <div class="modal-content">
-            <span class="close-modal">&times;</span>
-            <h2>СТАТУС СИСТЕМЫ <span class="status-indicator status-on"></span></h2>
-            
-            <div class="terminal">
-                <p>> Инициализация контрольной панели...</p>
-                <p>> Проверка системных ресурсов...</p>
-                <p class="glow">> Все системы работают в штатном режиме</p>
+    <!-- Секция услуг -->
+    <section id="services">
+        <h2 class="section-title">Наши Услуги</h2>
+        <div class="services-grid">
+            <div class="service-card">
+                <i class="fas fa-server"></i>
+                <h3>Облачные Решения</h3>
+                <p>Развертывание, миграция и управление облачными инфраструктурами. Гибкие тарифы и масштабирование.</p>
             </div>
-            
-            <div class="control-panel">
-                <div class="control-group">
-                    <h3>СЕРВЕРНЫЕ МОДУЛИ</h3>
-                    <div class="control-item">
-                        <label>Основной сервер: <span class="status-indicator status-on"></span> Online</label>
-                    </div>
-                    <div class="control-item">
-                        <label>Резервный сервер: <span class="status-indicator status-on"></span> Online</label>
-                    </div>
-                    <div class="control-item">
-                        <label>База данных: <span class="status-indicator status-on"></span> Stable</label>
-                    </div>
-                </div>
-                
-                <div class="control-group">
-                    <h3>СЛУЖБЫ</h3>
-                    <div class="control-item">
-                        <label><input type="checkbox" checked> Служба мониторинга</label>
-                    </div>
-                    <div class="control-item">
-                        <label><input type="checkbox" checked> Служба резервного копирования</label>
-                    </div>
-                    <div class="control-item">
-                        <label><input type="checkbox" checked> Служба автоматических обновлений</label>
-                    </div>
-                </div>
-                
-                <div class="control-group">
-                    <h3>РЕСУРСЫ</h3>
-                    <div class="control-item">
-                        <label for="cpuUsage">Загрузка CPU: <span id="cpuValue">32</span>%</label>
-                        <input type="range" id="cpuUsage" min="0" max="100" value="32">
-                    </div>
-                    <div class="control-item">
-                        <label for="memUsage">Использование RAM: <span id="memValue">58</span>%</label>
-                        <input type="range" id="memUsage" min="0" max="100" value="58">
-                    </div>
-                </div>
+            <div class="service-card">
+                <i class="fas fa-shield-alt"></i>
+                <h3>Кибербезопасность</h3>
+                <p>Комплексная защита данных, системы обнаружения вторжений, аудит безопасности и восстановление.</p>
             </div>
-            
-            <div style="text-align: center; margin-top: 20px;">
-                <button class="button">ДИАГНОСТИКА</button>
-                <button class="button">ОБНОВИТЬ СТАТУС</button>
+            <div class="service-card">
+                <i class="fas fa-network-wired"></i>
+                <h3>Сетевая Инфраструктура</h3>
+                <p>Проектирование, внедрение и поддержка сетевых решений любой сложности. Оптимизация трафика.</p>
+            </div>
+            <div class="service-card">
+                <i class="fas fa-headset"></i>
+                <h3>IT Поддержка</h3>
+                <p>Круглосуточная техническая поддержка 24/7. Удаленное решение проблем и выезд специалистов.</p>
+            </div>
+            <div class="service-card">
+                <i class="fas fa-database"></i>
+                <h3>Резервное Копирование</h3>
+                <p>Автоматизированные системы бэкапа. Восстановление данных после сбоев и катастроф.</p>
+            </div>
+            <div class="service-card">
+                <i class="fas fa-chart-line"></i>
+                <h3>Мониторинг</h3>
+                <p>Непрерывный контроль инфраструктуры. Предупреждение сбоев и оптимизация производительности.</p>
             </div>
         </div>
-    </div>
+    </section>
     
-    <!-- Contact Form Modal -->
-    <div id="contactModal" class="modal">
-        <div class="modal-content">
-            <span class="close-modal">&times;</span>
-            <h2>ФОРМА ЗАЯВКИ</h2>
-            
-            <div class="terminal">
-                <p>> Инициализация формы...</p>
-                <p class="glow">> Заполните данные для обращения в сервис</p>
+    <!-- О компании -->
+    <section id="about">
+        <h2 class="section-title">О Компании</h2>
+        <div class="about-content">
+            <div class="about-text">
+                <p>Sensor-Dream Boxed System (SDBS) - лидер в сфере IT-обслуживания с 2008 года. Мы предоставляем комплексные решения для бизнеса любого масштаба.</p>
+                <p>Наша миссия - создавать надежные, безопасные и эффективные IT-инфраструктуры, которые позволяют нашим клиентам сосредоточиться на своих основных бизнес-задачах.</p>
+                <p>Команда SDBS состоит из сертифицированных специалистов с глубокими знаниями в области сетевых технологий, кибербезопасности и облачных вычислений.</p>
+                
+                <div class="stats">
+                    <div class="stat-box">
+                        <div class="number">15+</div>
+                        <div>лет опыта</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="number">500+</div>
+                        <div>клиентов</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="number">99.9%</div>
+                        <div>uptime</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="number">24/7</div>
+                        <div>поддержка</div>
+                    </div>
+                </div>
             </div>
-            
-            <form id="contactForm">
-                <div class="form-group">
-                    <label for="name">ВАШЕ ИМЯ</label>
-                    <input type="text" id="name" required>
+            <div class="about-image">
+                <div class="terminal-box">
+                    <p>Система SDBS активирована<br>
+                    Статус: Оперативный<br>
+                    Мониторинг: Активен<br>
+                    Защита: Максимальный уровень<br>
+                    Готовность: 100%</p>
                 </div>
-                
-                <div class="form-group">
-                    <label for="phone">ТЕЛЕФОН</label>
-                    <input type="tel" id="phone" required>
-                </div>
-                
-                <div class="form-group">
-                    <label for="service">ТИП УСЛУГИ</label>
-                    <select id="service" required>
-                        <option value="">Выберите услугу</option>
-                        <option value="repair">Ремонт компьютера</option>
-                        <option value="software">Установка ПО</option>
-                        <option value="server">Настройка сервера</option>
-                        <option value="workstation">Настройка рабочей станции</option>
-                        <option value="other">Другое</option>
-                    </select>
-                </div>
-                
-                <div class="form-group">
-                    <label for="message">ОПИСАНИЕ ПРОБЛЕМЫ</label>
-                    <textarea id="message" required></textarea>
-                </div>
-                
-                <div class="form-group">
-                    <label><input type="checkbox" required> Я согласен на обработку персональных данных</label>
-                </div>
-                
-                <div style="text-align: center;">
-                    <button type="submit" class="button">ОТПРАВИТЬ ЗАЯВКУ</button>
-                    <button type="reset" class="button">ОЧИСТИТЬ ФОРМУ</button>
-                </div>
-            </form>
+            </div>
         </div>
+    </section>
+    
+    <!-- Контакты -->
+    <section id="contact">
+        <h2 class="section-title">Контакты</h2>
+        <div class="contact-grid">
+            <div class="contact-form">
+                <h3>Отправить запрос</h3>
+                <form id="contactForm">
+                    <div class="form-group">
+                        <label for="name">Имя *</label>
+                        <input type="text" id="name" name="name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email *</label>
+                        <input type="email" id="email" name="email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="service">Услуга</label>
+                        <input type="text" id="service" name="service">
+                    </div>
+                    <div class="form-group">
+                        <label for="message">Сообщение *</label>
+                        <textarea id="message" name="message" rows="5" required></textarea>
+                    </div>
+                    <button type="submit" class="btn" id="submitBtn">Отправить</button>
+                    
+                    <!-- Сообщения формы -->
+                    <div class="form-message" id="formMessage"></div>
+                    <div class="loading" id="loading">
+                        <i class="fas fa-spinner"></i> Отправка данных...
+                    </div>
+                </form>
+            </div>
+            <div class="contact-info">
+                <h3>Наши контакты</h3>
+                <div class="info-item">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <div>г. Москва, ул. Технологическая, д. 42, офис 707</div>
+                </div>
+                <div class="info-item">
+                    <i class="fas fa-phone"></i>
+                    <div>+7 (495) 123-45-67</div>
+                </div>
+                <div class="info-item">
+                    <i class="fas fa-envelope"></i>
+                    <div>contact@sdbs.ru</div>
+                </div>
+                <div class="info-item">
+                    <i class="fas fa-clock"></i>
+                    <div>Пн-Пт: 9:00 - 18:00<br>Сб-Вс: по договоренности</div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Футер -->
+    <footer class="footer">
+        <div class="logo">SDBS</div>
+        <p>Sensor-Dream Boxed System © 2023. Все права защищены.</p>
+        <div class="social-links">
+            <a href="#"><i class="fab fa-telegram"></i></a>
+            <a href="#"><i class="fab fa-vk"></i></a>
+            <a href="#"><i class="fab fa-github"></i></a>
+            <a href="#"><i class="fab fa-linkedin"></i></a>
+        </div>
+    </footer>
+    
+    <!-- Кнопка прокрутки вверх -->
+    <div class="scroll-top" id="scrollTopBtn">
+        <i class="fas fa-arrow-up"></i>
     </div>
     
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            // Matrix rain effect
-            const chars = "01アイウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホマミムメモヤユヨラリルレロワヲン";
-            const rainContainer = document.getElementById('matrixRain');
-            const fontSize = 14;
-            const columns = Math.floor(window.innerWidth / fontSize);
+        // Анимация матрицы на фоне
+        const canvas = document.getElementById('matrixCanvas');
+        const ctx = canvas.getContext('2d');
+        
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+        
+        const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789$#@%&*";
+        const fontSize = 14;
+        const columns = canvas.width / fontSize;
+        
+        const drops = [];
+        for(let i = 0; i < columns; i++) {
+            drops[i] = Math.floor(Math.random() * canvas.height / fontSize);
+        }
+        
+        function drawMatrix() {
+            ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
             
-            for (let i = 0; i < columns; i++) {
-                const column = document.createElement('div');
-                column.style.position = 'absolute';
-                column.style.top = '0';
-                column.style.left = (i * fontSize) + 'px';
-                column.style.width = fontSize + 'px';
-                column.style.height = '100%';
-                column.style.color = '#0f0';
-                column.style.fontFamily = 'Matrix, monospace';
-                column.style.fontSize = fontSize + 'px';
-                column.style.lineHeight = fontSize + 'px';
-                column.style.textAlign = 'center';
-                column.style.opacity = Math.random() * 0.5 + 0.1;
-                column.style.animation = `rain ${Math.random() * 2 + 1}s linear infinite`;
-                column.style.animationDelay = `${Math.random() * 2}s`;
+            ctx.fillStyle = '#0f0';
+            ctx.font = `${fontSize}px monospace`;
+            
+            for(let i = 0; i < drops.length; i++) {
+                const text = chars.charAt(Math.floor(Math.random() * chars.length));
+                ctx.fillText(text, i * fontSize, drops[i] * fontSize);
                 
-                let text = '';
-                const length = Math.floor(Math.random() * 20) + 10;
-                for (let j = 0; j < length; j++) {
-                    text += chars[Math.floor(Math.random() * chars.length)];
+                if(drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
+                    drops[i] = 0;
                 }
                 
-                column.textContent = text;
-                rainContainer.appendChild(column);
+                drops[i]++;
             }
-            
-            // Mobile menu toggle
-            const menuToggle = document.getElementById('menuToggle');
-            const mainMenu = document.getElementById('mainMenu');
-            
-            menuToggle.addEventListener('click', function() {
-                mainMenu.classList.toggle('show');
-            });
-            
-            // Modal functionality
-            const controlPanelModal = document.getElementById('controlPanelModal');
-            const contactModal = document.getElementById('contactModal');
-            const openControlPanel = document.getElementById('openControlPanel');
-            const openControlPanel2 = document.getElementById('openControlPanel2');
-            const openContactForm = document.getElementById('openContactForm');
-            const openContactForm2 = document.getElementById('openContactForm2');
-            const closeButtons = document.querySelectorAll('.close-modal');
-            
-            function openModal(modal) {
-                modal.style.display = 'block';
-                document.body.style.overflow = 'hidden';
-            }
-            
-            function closeModal(modal) {
-                modal.style.display = 'none';
-                document.body.style.overflow = 'auto';
-            }
-            
-            openControlPanel.addEventListener('click', function(e) {
+        }
+        
+        setInterval(drawMatrix, 33);
+        
+        // Меню для мобильных устройств
+        const hamburger = document.getElementById('hamburger');
+        const navMenu = document.getElementById('navMenu');
+        
+        hamburger.addEventListener('click', () => {
+            navMenu.classList.toggle('active');
+            hamburger.innerHTML = navMenu.classList.contains('active') ? 
+                '<i class="fas fa-times"></i>' : '<i class="fas fa-bars"></i>';
+        });
+        
+        // Плавная прокрутка
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
                 e.preventDefault();
-                openModal(controlPanelModal);
-            });
-            
-            openControlPanel2.addEventListener('click', function(e) {
-                e.preventDefault();
-                openModal(controlPanelModal);
-            });
-            
-            openContactForm.addEventListener('click', function(e) {
-                e.preventDefault();
-                openModal(contactModal);
-            });
-            
-            openContactForm2.addEventListener('click', function(e) {
-                e.preventDefault();
-                openModal(contactModal);
-            });
-            
-            closeButtons.forEach(function(button) {
-                button.addEventListener('click', function() {
-                    const modal = this.closest('.modal');
-                    closeModal(modal);
-                });
-            });
-            
-            window.addEventListener('click', function(e) {
-                if (e.target.classList.contains('modal')) {
-                    closeModal(e.target);
-                }
-            });
-            
-            // CPU/Memory usage display
-            const cpuUsage = document.getElementById('cpuUsage');
-            const cpuValue = document.getElementById('cpuValue');
-            const memUsage = document.getElementById('memUsage');
-            const memValue = document.getElementById('memValue');
-            
-            cpuUsage.addEventListener('input', function() {
-                cpuValue.textContent = this.value;
-            });
-            
-            memUsage.addEventListener('input', function() {
-                memValue.textContent = this.value;
-            });
-            
-            // Simulate changing resources
-            setInterval(() => {
-                const randomChange = Math.floor(Math.random() * 5) - 2;
-                let newCpu = parseInt(cpuUsage.value) + randomChange;
-                newCpu = Math.max(0, Math.min(100, newCpu));
-                cpuUsage.value = newCpu;
-                cpuValue.textContent = newCpu;
                 
-                const newMem = parseInt(memUsage.value) + Math.floor(Math.random() * 3) - 1;
-                newMem = Math.max(0, Math.min(100, newMem));
-                memUsage.value = newMem;
-                memValue.textContent = newMem;
-            }, 3000);
-            
-            // Form submission
-            const contactForm = document.getElementById('contactForm');
-            
-            contactForm.addEventListener('submit', function(e) {
-                e.preventDefault();
-                alert('Заявка принята. Мы свяжемся с вами в ближайшее время.');
-                closeModal(contactModal);
-                this.reset();
-            });
-            
-            // Blinking cursor effect
-            setInterval(() => {
-                const blinkers = document.querySelectorAll('.blink');
-                blinkers.forEach(el => {
-                    el.style.visibility = el.style.visibility === 'hidden' ? 'visible' : 'hidden';
+                if(navMenu.classList.contains('active')) {
+                    navMenu.classList.remove('active');
+                    hamburger.innerHTML = '<i class="fas fa-bars"></i>';
+                }
+                
+                const target = document.querySelector(this.getAttribute('href'));
+                window.scrollTo({
+                    top: target.offsetTop - 70,
+                    behavior: 'smooth'
                 });
-            }, 500);
+            });
+        });
+        
+        // Адаптивность фона матрицы
+        window.addEventListener('resize', () => {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        });
+        
+        // Кнопка прокрутки вверх
+        const scrollTopBtn = document.getElementById('scrollTopBtn');
+        
+        // Показать/скрыть кнопку при прокрутке
+        window.addEventListener('scroll', () => {
+            if (window.pageYOffset > 300) {
+                scrollTopBtn.classList.add('active');
+            } else {
+                scrollTopBtn.classList.remove('active');
+            }
+        });
+        
+        // Плавная прокрутка вверх при клике
+        scrollTopBtn.addEventListener('click', () => {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+        
+        // Отправка формы
+        const contactForm = document.getElementById('contactForm');
+        const submitBtn = document.getElementById('submitBtn');
+        const formMessage = document.getElementById('formMessage');
+        const loading = document.getElementById('loading');
+        
+        contactForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Показать индикатор загрузки
+            submitBtn.disabled = true;
+            loading.style.display = 'block';
+            formMessage.style.display = 'none';
+            
+            // Сбор данных формы
+            const formData = new FormData(this);
+            
+            // Отправка данных на сервер
+            fetch('send_email.php', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                if(data.status === 'success') {
+                    formMessage.textContent = data.message;
+                    formMessage.className = 'form-message success';
+                    contactForm.reset();
+                } else {
+                    formMessage.textContent = data.message;
+                    formMessage.className = 'form-message error';
+                }
+                
+                formMessage.style.display = 'block';
+                loading.style.display = 'none';
+                submitBtn.disabled = false;
+                
+                // Автоматическое скрытие сообщения через 5 секунд
+                setTimeout(() => {
+                    formMessage.style.display = 'none';
+                }, 5000);
+            })
+            .catch(error => {
+                formMessage.textContent = 'Ошибка при отправке запроса. Попробуйте позже.';
+                formMessage.className = 'form-message error';
+                formMessage.style.display = 'block';
+                loading.style.display = 'none';
+                submitBtn.disabled = false;
+                
+                setTimeout(() => {
+                    formMessage.style.display = 'none';
+                }, 5000);
+            });
         });
     </script>
     <!--
-Основные изменения:
-Обновлённое описание услуг:
-Ремонт компьютеров
-Установка программного обеспечения
-Тонкая настройка серверов
-Оптимизация рабочих станций
-Добавлена версия сервера:
-Server: SDBS - 23.06.06 - rev: 1730486928
+Особенности реализации
+Клиентская часть (JavaScript):
 
-Контакты:
+AJAX-отправка данных без перезагрузки страницы
 
-WhatsApp (с иконкой)
-ВКонтакте (с иконкой)
-Email: sensor-dream@sensor-dream.ru (с иконкой)
+Индикатор загрузки во время отправки
 
-Адаптация контента:
-Изменены заголовки и описания под IT-услуги
-Обновлён текст в терминальных блоках
-Добавлена информация о компании
+Валидация обязательных полей
 
-Форма заявки:
-Специализированные поля для IT-услуг
-Выбор типа услуги
-Описание проблемы
-Мелкие улучшения:
-Адаптивные контактные ссылки
-Иконки для соцсетей и почты
-Симуляция изменения нагрузки сервера
-Обновлённый футер с версией сервера
-Лендинг сохранил весь оригинальный стиль "матрицы" и старого монитора, но теперь полностью ориентирован на компьютерный сервис.    
+Сообщения об успехе/ошибке в стиле сайта
+
+Автоматическое скрытие сообщений через 5 секунд
+
+Серверная часть (PHP):
+
+Защита от XSS и инъекций
+
+Валидация email-адреса
+
+Использование PHPMailer для надежной отправки
+
+Поддержка SMTP-аутентификации
+
+JSON-ответы для обработки на клиенте
+
+Дизайн:
+
+Сообщения в стиле терминала
+
+Анимация загрузки (вращающаяся иконка)
+
+Цветовое выделение успешных и ошибочных сообщений
+
+Это решение обеспечивает надежную и безопасную отправку писем с сайта с сохранением стиля "матрицы" и терминала.
     -->
 </body>
 </html>

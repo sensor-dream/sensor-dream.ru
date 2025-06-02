@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SDBS - Sensor-Dream Boxed System</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/header.css">
+    <link rel="stylesheet" href="css/matrix.css">
+    <link rel="stylesheet" href="css/modal.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Floating Header -->
+    <header class="floating-header">
+        <div class="header-container">
+            <div class="logo">
+                <span class="logo-sd">SD</span><span class="logo-bs">BS</span>
+            </div>
+            <nav class="main-nav">
+                <ul>
+                    <li><a href="#services">Услуги</a></li>
+                    <li><a href="services/servers.html">Серверы</a></li>
+                    <li><a href="services/vps-vds.html">VPS/VDS</a></li>
+                    <li><a href="services/domains.html">Домены</a></li>
+                    <li><a href="services/support.html">Поддержка</a></li>
+                    <li><a href="#contacts">Контакты</a></li>
+                </ul>
+            </nav>
+            <button class="mobile-menu-btn">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+    </header>
+
+    <!-- Matrix Background Canvas -->
+    <canvas id="matrixCanvas"></canvas>
+
+    <div class="terminal-container">
+        <main class="terminal-body">
+            <section class="hero-section">
+                <h1 class="terminal-title">
+                    <span class="typed-text" id="typed-text"></span>
+                    <span class="cursor">_</span>
+                </h1>
+                <p class="terminal-subtitle">Профессиональные IT-решения для вашего бизнеса</p>
+                <div class="hero-buttons">
+                    <button id="feedbackBtn" class="btn feedback-btn">
+                        <i class="fas fa-envelope"></i> Обратная связь
+                    </button>
+                </div>
+            </section>
+
+            <section id="services" class="services-section">
+                <h2><i class="fas fa-server"></i> Наши услуги</h2>
+                <div class="services-grid">
+                    <a href="services/servers.html" class="service-card">
+                        <div class="service-icon">
+                            <i class="fas fa-server"></i>
+                        </div>
+                        <h3>Настройка серверов</h3>
+                        <p>Профессиональная настройка и оптимизация серверов под ваши задачи</p>
+                        <span class="service-link">Подробнее <i class="fas fa-arrow-right"></i></span>
+                    </a>
+                    
+                    <a href="services/vps-vds.html" class="service-card">
+                        <div class="service-icon">
+                            <i class="fas fa-cloud"></i>
+                        </div>
+                        <h3>VPS/VDS установка</h3>
+                        <p>Развертывание виртуальных серверов с любой конфигурацией</p>
+                        <span class="service-link">Подробнее <i class="fas fa-arrow-right"></i></span>
+                    </a>
+                    
+                    <a href="services/domains.html" class="service-card">
+                        <div class="service-icon">
+                            <i class="fas fa-globe"></i>
+                        </div>
+                        <h3>Домены и сайты</h3>
+                        <p>Регистрация доменов, установка и настройка CMS</p>
+                        <span class="service-link">Подробнее <i class="fas fa-arrow-right"></i></span>
+                    </a>
+                    
+                    <a href="services/support.html" class="service-card">
+                        <div class="service-icon">
+                            <i class="fas fa-headset"></i>
+                        </div>
+                        <h3>Удаленная поддержка</h3>
+                        <p>Решение проблем в режиме реального времени</p>
+                        <span class="service-link">Подробнее <i class="fas fa-arrow-right"></i></span>
+                    </a>
+                </div>
+            </section>
+
+            <section class="features-section">
+                <h2><i class="fas fa-star"></i> Почему мы?</h2>
+                    <div class="features-grid">
+                    <div class="feature-card">
+                        <i class="fas fa-clock"></i>
+                        <h3>Быстро</h3>
+                        <p>Среднее время реакции на запрос - 15 минут</p>
+                    </div>
+                    <div class="feature-card">
+                        <i class="fas fa-shield-alt"></i>
+                        <h3>Надёжно</h3>
+                        <p>Гарантия на все работы 30 дней</p>
+                    </div>
+                    <div class="feature-card">
+                        <i class="fas fa-lock"></i>
+                        <h3>Безопасно</h3>
+                        <p>Все соединения шифруются</p>
+                    </div>
+                    <div class="feature-card">
+                        <i class="fas fa-wallet"></i>
+                        <h3>Выгодно</h3>
+                        <p>Цены ниже рыночных на 10-15%</p>
+                    </div>
+                </div>
+            </section>
+
+            <section id="contacts" class="contacts-section">
+                <h2><i class="fas fa-envelope"></i> Контакты</h2>
+                <div class="contacts-grid">
+                    <div class="contact-card">
+                        <i class="fab fa-whatsapp"></i>
+                        <h3>WhatsApp</h3>
+                        <a href="https://wa.me/79538760049">+7 953 876-00-49</a>
+                    </div>
+                    <div class="contact-card">
+                        <i class="fab fa-telegram"></i>
+                        <h3>Telegram</h3>
+                        <a href="https://t.me/sensordream">@sensordream</a>
+                    </div>
+                    <div class="contact-card">
+                        <i class="fab fa-vk"></i>
+                        <h3>ВКонтакте</h3>
+                        <a href="https://vk.com/kid23062006">vk.com/kid23062006</a>
+                    </div>
+                    <div class="contact-card">
+                        <i class="fas fa-envelope"></i>
+                        <h3>Email</h3>
+                        <a href="mailto:info@sdbs.ru">info@sdbs.ru</a>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <footer class="terminal-footer">
+        <div class="footer-container">
+            <div class="footer-logo">
+                <span>SDBS</span>
+                <p>Sensor-Dream Boxed System</p>
+            </div>
+            <div class="footer-links">
+                <a href="#services">Услуги</a>
+                <a href="services/servers.html">Серверы</a>
+                <a href="services/vps-vds.html">VPS/VDS</a>
+                <a href="services/domains.html">Домены</a>
+                <a href="services/support.html">Поддержка</a>
+            </div>
+            <div class="footer-social">
+                <a href="https://wa.me/79538760049"><i class="fab fa-whatsapp"></i></a>
+                <a href="https://t.me/sensordream"><i class="fab fa-telegram"></i></a>
+                <a href="https://vk.com/kid23062006"><i class="fab fa-vk"></i></a>
+            </div>
+        </div>
+        <div class="copyright">
+            © 2023 Sensor-Dream Boxed System. Все права защищены.
+        </div>
+    </footer>
+
+    <!-- В конец body перед закрывающим тегом </body> -->
+    <div class="live-chat-container">
+        <div class="chat-header">
+            <span>AI Помощник</span>
+            <button class="close-chat"><i class="fas fa-times"></i></button>
+        </div>
+        <div class="chat-body">
+            <div id="aiChatContainer" class="ai-chat-container"></div>
+            <div class="chat-input-container">
+                <input type="text" id="aiUserInput" placeholder="Введите ваш вопрос...">
+                <button id="aiSendBtn"><i class="fas fa-paper-plane"></i></button>
+            </div>
+        </div>
+    </div>
+    <button class="live-chat-btn">
+        <i class="fas fa-robot"></i>
+    </button>
+
+    <!-- Модальные окна будут загружаться через JS -->
+    
+    <script src="js/matrix.js"></script>
+    <script src="js/header.js"></script>
+    <script src="js/main.js"></script>
+    <script src="js/modal.js"></script>
+    <script src="js/ai-chat.js"></script>
+    <script src="js/form-validation.js"></script>
+</body>
+</html>

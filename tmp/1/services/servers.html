@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Настройка серверов | SDBS</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/modal.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div id="header-placeholder"></div>
+    
+    <div class="matrix-bg">
+        <video autoplay muted loop id="matrixVideo">
+            <source src="../assets/videos/matrix-bg.mp4" type="video/mp4">
+        </video>
+    </div>
+    
+    <div class="terminal-container service-page">
+        <main class="terminal-body">
+            <h1><i class="fas fa-server"></i> Настройка серверов</h1>
+            
+            <div class="service-content">
+                <div class="service-description">
+                    <h2>Профессиональная настройка серверов любой сложности</h2>
+                    <p>Мы предлагаем комплексные решения по настройке и оптимизации серверного оборудования для вашего бизнеса.</p>
+                    
+                    <div class="features">
+                        <h3>Наши услуги включают:</h3>
+                        <ul>
+                            <li>Установка и настройка серверных ОС (Linux, Windows Server)</li>
+                            <li>Развертывание и конфигурация серверного ПО</li>
+                            <li>Настройка сетевой инфраструктуры</li>
+                            <li>Оптимизация производительности сервера</li>
+                            <li>Настройка систем мониторинга</li>
+                            <li>Обеспечение безопасности сервера</li>
+                            <li>Резервное копирование и восстановление данных</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="service-pricing">
+                    <h3>Тарифы:</h3>
+                    <div class="pricing-card">
+                        <h4>Базовый</h4>
+                        <p class="price">5 000 ₽</p>
+                        <ul>
+                            <li>Первичная настройка сервера</li>
+                            <li>Установка базового ПО</li>
+                            <li>Настройка сети</li>
+                            <li>Консультация</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="pricing-card">
+                        <h4>Оптимизация</h4>
+                        <p class="price">10 000 ₽</p>
+                        <ul>
+                            <li>Все из Базового</li>
+                            <li>Оптимизация производительности</li>
+                            <li>Настройка мониторинга</li>
+                            <li>Базовая безопасность</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="pricing-card">
+                        <h4>Комплексный</h4>
+                        <p class="price">20 000 ₽</p>
+                        <ul>
+                            <li>Все из Оптимизации</li>
+                            <li>Расширенная безопасность</li>
+                            <li>Резервное копирование</li>
+                            <li>Гарантия 1 месяц</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="action-buttons">
+                <button id="feedbackBtn" class="btn feedback-btn">
+                    <i class="fas fa-envelope"></i> Заказать услугу
+                </button>
+            </div>
+        </main>
+    </div>
+    
+    <div id="footer-placeholder"></div>
+    
+    <script src="../js/main.js"></script>
+    <script src="../js/modal.js"></script>
+    <script src="../js/form-validation.js"></script>
+    <script>
+        // Load header and footer
+        fetch('../partials/header.html')
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById('header-placeholder').innerHTML = data;
+            });
+        
+        fetch('../partials/footer.html')
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById('footer-placeholder').innerHTML = data;
+            });
+    </script>
+</body>
+</html>

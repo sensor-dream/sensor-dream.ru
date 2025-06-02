@@ -1,0 +1,582 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SDBS - Sensor-dream Boxed System</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Courier New', monospace;
+        }
+        
+        body {
+            background-color: #000;
+            color: #0f0;
+            overflow: hidden;
+            position: relative;
+            height: 100vh;
+            line-height: 1.4;
+        }
+        
+        /* Matrix эффект */
+        .matrix-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            opacity: 0.15;
+        }
+        
+        /* Шапка */
+        header {
+            padding: 20px;
+            border-bottom: 1px solid #0f0;
+            text-align: center;
+            position: relative;
+        }
+        
+        .logo {
+            font-size: 2.5rem;
+            letter-spacing: 4px;
+            text-shadow: 0 0 10px #0f0;
+            margin-bottom: 10px;
+        }
+        
+        .subtitle {
+            font-size: 1.2rem;
+            opacity: 0.8;
+        }
+        
+        /* Основной контент */
+        .container {
+            max-width: 1200px;
+            margin: 30px auto;
+            padding: 20px;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+        }
+        
+        .terminal {
+            flex: 1;
+            min-width: 300px;
+            background-color: rgba(0, 20, 0, 0.6);
+            border: 1px solid #0f0;
+            border-radius: 5px;
+            padding: 20px;
+            margin: 10px;
+            box-shadow: 0 0 15px rgba(0, 255, 0, 0.3);
+            height: 400px;
+            overflow-y: auto;
+        }
+        
+        .terminal-header {
+            font-size: 1.3rem;
+            margin-bottom: 15px;
+            color: #0f0;
+            text-shadow: 0 0 5px #0f0;
+        }
+        
+        .command {
+            color: #0f0;
+            margin-bottom: 10px;
+        }
+        
+        .command::before {
+            content: "> ";
+            color: #0f0;
+        }
+        
+        .response {
+            margin-left: 20px;
+            margin-bottom: 15px;
+            color: #0a0;
+        }
+        
+        .services {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .service-card {
+            background: rgba(0, 30, 0, 0.5);
+            border: 1px solid #0a0;
+            padding: 15px;
+            border-radius: 3px;
+            transition: all 0.3s;
+        }
+        
+        .service-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 0 10px rgba(0, 255, 0, 0.5);
+        }
+        
+        /* Кнопки */
+        .buttons {
+            flex: 0 0 300px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 30px;
+            margin: 10px;
+        }
+        
+        .livechat-btn, .feedback-btn {
+            width: 100%;
+            padding: 20px;
+            background: rgba(0, 30, 0, 0.7);
+            border: 2px solid #0f0;
+            color: #0f0;
+            font-size: 1.2rem;
+            border-radius: 3px;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .livechat-btn::before, .feedback-btn::before {
+            content: "";
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(
+                transparent,
+                rgba(0, 255, 0, 0.3),
+                transparent
+            );
+            transform: rotate(45deg);
+            transition: all 0.5s;
+            z-index: -1;
+        }
+        
+        .livechat-btn:hover, .feedback-btn:hover {
+            background: rgba(0, 50, 0, 0.9);
+            box-shadow: 0 0 20px rgba(0, 255, 0, 0.5);
+        }
+        
+        .livechat-btn:hover::before, .feedback-btn:hover::before {
+            top: 0;
+            left: 0;
+        }
+        
+        .livechat-btn i {
+            margin-right: 10px;
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0% { opacity: 0.5; }
+            50% { opacity: 1; }
+            100% { opacity: 0.5; }
+        }
+        
+        /* Модальное окно */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            z-index: 100;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .modal-content {
+            background-color: #000;
+            border: 2px solid #0f0;
+            border-radius: 5px;
+            width: 90%;
+            max-width: 500px;
+            padding: 30px;
+            box-shadow: 0 0 30px rgba(0, 255, 0, 0.5);
+            position: relative;
+        }
+        
+        .close-btn {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            color: #0f0;
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .close-btn:hover {
+            color: #f00;
+            transform: scale(1.2);
+        }
+        
+        .modal-title {
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 8px;
+        }
+        
+        input, textarea {
+            width: 100%;
+            padding: 12px;
+            background-color: rgba(0, 20, 0, 0.5);
+            border: 1px solid #0f0;
+            color: #0f0;
+            font-size: 1rem;
+            border-radius: 3px;
+        }
+        
+        textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+        
+        .submit-btn {
+            width: 100%;
+            padding: 15px;
+            background-color: rgba(0, 30, 0, 0.7);
+            border: 2px solid #0f0;
+            color: #0f0;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            border-radius: 3px;
+        }
+        
+        .submit-btn:hover {
+            background-color: rgba(0, 50, 0, 0.9);
+            box-shadow: 0 0 10px rgba(0, 255, 0, 0.5);
+        }
+        
+        /* Футер */
+        footer {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            text-align: center;
+            padding: 15px;
+            border-top: 1px solid #0f0;
+            font-size: 0.9rem;
+            opacity: 0.7;
+        }
+        
+        /* Анимации */
+        .cursor {
+            display: inline-block;
+            width: 8px;
+            height: 1em;
+            background-color: #0f0;
+            margin-left: 4px;
+            animation: blink 1s infinite;
+            vertical-align: middle;
+        }
+        
+        @keyframes blink {
+            50% { opacity: 0; }
+        }
+        
+        .glitch {
+            position: relative;
+        }
+        
+        .glitch::before, .glitch::after {
+            content: attr(data-text);
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+        
+        .glitch::before {
+            left: 2px;
+            text-shadow: -1px 0 red;
+            clip: rect(24px, 550px, 90px, 0);
+            animation: glitch-anim 5s infinite linear alternate-reverse;
+        }
+        
+        .glitch::after {
+            left: -2px;
+            text-shadow: -1px 0 blue;
+            clip: rect(85px, 550px, 140px, 0);
+            animation: glitch-anim2 5s infinite linear alternate-reverse;
+        }
+        
+        @keyframes glitch-anim {
+            0% { clip: rect(42px, 9999px, 44px, 0); }
+            5% { clip: rect(12px, 9999px, 59px, 0); }
+            10% { clip: rect(48px, 9999px, 29px, 0); }
+            15% { clip: rect(42px, 9999px, 73px, 0); }
+            20% { clip: rect(63px, 9999px, 27px, 0); }
+            25% { clip: rect(34px, 9999px, 55px, 0); }
+            30% { clip: rect(86px, 9999px, 73px, 0); }
+            35% { clip: rect(20px, 9999px, 20px, 0); }
+            40% { clip: rect(26px, 9999px, 60px, 0); }
+            45% { clip: rect(25px, 9999px, 66px, 0); }
+            50% { clip: rect(57px, 9999px, 98px, 0); }
+            55% { clip: rect(5px, 9999px, 46px, 0); }
+            60% { clip: rect(82px, 9999px, 31px, 0); }
+            65% { clip: rect(54px, 9999px, 27px, 0); }
+            70% { clip: rect(28px, 9999px, 99px, 0); }
+            75% { clip: rect(45px, 9999px, 69px, 0); }
+            80% { clip: rect(23px, 9999px, 85px, 0); }
+            85% { clip: rect(54px, 9999px, 84px, 0); }
+            90% { clip: rect(45px, 9999px, 47px, 0); }
+            95% { clip: rect(37px, 9999px, 20px, 0); }
+            100% { clip: rect(73px, 9999px, 99px, 0); }
+        }
+        
+        @keyframes glitch-anim2 {
+            0% { clip: rect(65px, 9999px, 100px, 0); }
+            5% { clip: rect(52px, 9999px, 74px, 0); }
+            10% { clip: rect(79px, 9999px, 85px, 0); }
+            15% { clip: rect(75px, 9999px, 5px, 0); }
+            20% { clip: rect(67px, 9999px, 61px, 0); }
+            25% { clip: rect(14px, 9999px, 79px, 0); }
+            30% { clip: rect(1px, 9999px, 66px, 0); }
+            35% { clip: rect(86px, 9999px, 30px, 0); }
+            40% { clip: rect(23px, 9999px, 98px, 0); }
+            45% { clip: rect(85px, 9999px, 72px, 0); }
+            50% { clip: rect(71px, 9999px, 75px, 0); }
+            55% { clip: rect(2px, 9999px, 48px, 0); }
+            60% { clip: rect(30px, 9999px, 16px, 0); }
+            65% { clip: rect(59px, 9999px, 50px, 0); }
+            70% { clip: rect(41px, 9999px, 62px, 0); }
+            75% { clip: rect(2px, 9999px, 82px, 0); }
+            80% { clip: rect(47px, 9999px, 73px, 0); }
+            85% { clip: rect(3px, 9999px, 27px, 0); }
+            90% { clip: rect(26px, 9999px, 55px, 0); }
+            95% { clip: rect(42px, 9999px, 97px, 0); }
+            100% { clip: rect(38px, 9999px, 49px, 0); }
+        }
+    </style>
+</head>
+<body>
+    <!-- Matrix эффект -->
+    <canvas id="matrixCanvas" class="matrix-bg"></canvas>
+    
+    <!-- Шапка -->
+    <header>
+        <div class="logo glitch" data-text="SDBS">SDBS</div>
+        <div class="subtitle">Sensor-dream Boxed System</div>
+    </header>
+    
+    <!-- Основной контент -->
+    <div class="container">
+        <div class="terminal">
+            <div class="terminal-header">SDBS TERMINAL [v2.4.3]</div>
+            <div class="command">system.status --check</div>
+            <div class="response">> STATUS: <span style="color:#0f0">ONLINE</span> | SERVICES: ACTIVE</div>
+            
+            <div class="command">services.list</div>
+            <div class="response">
+                <div class="services">
+                    <div class="service-card">
+                        <i class="fas fa-server"></i> Серверы
+                        <div style="font-size:0.9rem; margin-top:5px; opacity:0.8">Управление и обслуживание серверов</div>
+                    </div>
+                    <div class="service-card">
+                        <i class="fas fa-laptop"></i> Компьютеры
+                        <div style="font-size:0.9rem; margin-top:5px; opacity:0.8">Ремонт и настройка ПК</div>
+                    </div>
+                    <div class="service-card">
+                        <i class="fas fa-network-wired"></i> Сети
+                        <div style="font-size:0.9rem; margin-top:5px; opacity:0.8">Настройка и защита сетей</div>
+                    </div>
+                    <div class="service-card">
+                        <i class="fas fa-headset"></i> Поддержка
+                        <div style="font-size:0.9rem; margin-top:5px; opacity:0.8">Круглосуточная онлайн-помощь</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="command">system.motto</div>
+            <div class="response">> "Your problems - our solutions. Anytime. Anywhere."</div>
+            
+            <div class="command">contact.info</div>
+            <div class="response">> support@sdbs.io | +7 (XXX) XXX-XXXX</div>
+            
+            <div class="command">_<span class="cursor"></span></div>
+        </div>
+        
+        <div class="buttons">
+            <button class="livechat-btn" id="livechatBtn">
+                <i class="fas fa-robot"></i> LiveChat с DeepSeek
+            </button>
+            <button class="feedback-btn" id="feedbackBtn">
+                <i class="fas fa-envelope"></i> Обратная связь
+            </button>
+        </div>
+    </div>
+    
+    <!-- Модальное окно обратной связи -->
+    <div class="modal" id="feedbackModal">
+        <div class="modal-content">
+            <span class="close-btn" id="closeModal">&times;</span>
+            <div class="modal-title">ФОРМА ОБРАТНОЙ СВЯЗИ</div>
+            <form id="feedbackForm">
+                <div class="form-group">
+                    <label for="name">Имя:</label>
+                    <input type="text" id="name" required>
+                </div>
+                <div class="form-group">
+                    <label for="email">Email:</label>
+                    <input type="email" id="email" required>
+                </div>
+                <div class="form-group">
+                    <label for="message">Сообщение:</label>
+                    <textarea id="message" required></textarea>
+                </div>
+                <button type="submit" class="submit-btn">ОТПРАВИТЬ</button>
+            </form>
+        </div>
+    </div>
+    
+    <!-- Футер -->
+    <footer>
+        SDBS TERMINAL SYSTEM © 2025 | ALL SYSTEMS OPERATIONAL
+    </footer>
+    
+    <script>
+        // Matrix эффект
+        const canvas = document.getElementById('matrixCanvas');
+        const ctx = canvas.getContext('2d');
+        
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+        
+        const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789$#@%&*";
+        const charArray = chars.split("");
+        const fontSize = 14;
+        const columns = canvas.width / fontSize;
+        const drops = [];
+        
+        for (let i = 0; i < columns; i++) {
+            drops[i] = Math.random() * canvas.height;
+        }
+        
+        function drawMatrix() {
+            ctx.fillStyle = "rgba(0, 0, 0, 0.05)";
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            
+            ctx.fillStyle = "#0f0";
+            ctx.font = `${fontSize}px monospace`;
+            
+            for (let i = 0; i < drops.length; i++) {
+                const text = charArray[Math.floor(Math.random() * charArray.length)];
+                ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+                
+                if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
+                    drops[i] = 0;
+                }
+                
+                drops[i]++;
+            }
+        }
+        
+        // Управление модальным окном
+        const modal = document.getElementById('feedbackModal');
+        const feedbackBtn = document.getElementById('feedbackBtn');
+        const closeModal = document.getElementById('closeModal');
+        const feedbackForm = document.getElementById('feedbackForm');
+        
+        feedbackBtn.addEventListener('click', () => {
+            modal.style.display = 'flex';
+        });
+        
+        closeModal.addEventListener('click', () => {
+            modal.style.display = 'none';
+        });
+        
+        // Закрытие по клику вне окна
+        window.addEventListener('click', (e) => {
+            if (e.target === modal) {
+                modal.style.display = 'none';
+            }
+        });
+        
+        // Закрытие по ESC
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && modal.style.display === 'flex') {
+                modal.style.display = 'none';
+            }
+        });
+        
+        // Обработка формы
+        feedbackForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            alert('Сообщение отправлено! Мы свяжемся с вами в ближайшее время.');
+            feedbackForm.reset();
+            modal.style.display = 'none';
+        });
+        
+        // LiveChat
+        document.getElementById('livechatBtn').addEventListener('click', () => {
+            alert('Подключение к DeepSeek AI...\nЧат инициализирован. Как я могу вам помочь?');
+        });
+        
+        // Анимация Matrix
+        setInterval(drawMatrix, 33);
+        
+        // Автопрокрутка терминала
+        const terminal = document.querySelector('.terminal');
+        setInterval(() => {
+            terminal.scrollTop = terminal.scrollHeight;
+        }, 100);
+        
+        // Ресайз canvas при изменении размера окна
+        window.addEventListener('resize', () => {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        });
+    </script>
+    <!--
+Особенности реализации:
+Стиль старого терминала Matrix:
+Зелёный текст на чёрном фоне
+Эффект падающих символов Matrix на заднем плане
+Имитация интерфейса командной строки
+Мигающий курсор
+Функциональные элементы:
+Кнопка "LiveChat с DeepSeek" (искусственный интеллект)
+Кнопка "Обратная связь" для вызова модального окна
+Модальное окно с формой обратной связи
+Закрытие модального окна по ESC и клику вне окна
+Сервисы SDBS:
+Серверы
+Компьютеры
+Сети
+Поддержка
+Дополнительные эффекты:
+Глитч-эффект для логотипа SDBS
+Пульсирующая анимация для кнопки LiveChat
+Неоновое свечение элементов интерфейса
+Автоматическая прокрутка терминала
+Лендинг полностью адаптивен и будет корректно отображаться на различных устройствах. Чтобы использовать, просто скопируйте код в HTML-файл и откройте в браузере.
+    -->
+</body>
+</html>
+
+

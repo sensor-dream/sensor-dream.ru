@@ -1,0 +1,72 @@
+/* Основные стили */
+@font-face {
+    font-family: 'Matrix';
+    src: url('https://fonts.cdnfonts.com/css/matrix-code-nfi') format('woff2');
+}
+
+:root {
+    --matrix-green: #0f0;
+    --dark-bg: #000;
+    --border-color: #0f0;
+    --text-glow: 0 0 5px #0f0;
+    --selection-color: #f00;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background-color: var(--dark-bg);
+    color: var(--matrix-green);
+    font-family: 'Courier New', monospace;
+    line-height: 1.6;
+    padding-top: 70px;
+    overflow-x: hidden;
+}
+
+/* Matrix Rain (улучшенная видимость) */
+.matrix-rain {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: -1;
+    opacity: 0.3; /* Увеличена прозрачность */
+    pointer-events: none;
+    font-family: 'Matrix', monospace;
+    font-size: 16px; /* Увеличен размер символов */
+    line-height: 1;
+    color: var(--matrix-green);
+    text-shadow: 0 0 5px var(--matrix-green); /* Усилено свечение */
+    overflow: hidden;
+}
+
+.matrix-column {
+    position: absolute;
+    top: 0;
+    width: 16px; /* Увеличен шаг колонок */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    animation: rain 3s linear infinite;
+}
+
+@keyframes rain {
+    from { transform: translateY(-100%); }
+    to { transform: translateY(100vh); }
+}
+
+/* Остальные стили из оригинального файла */
+header { /* ... */ }
+.logo { /* ... */ }
+.monitor { /* ... */ }
+/* и все остальные стили... */
+
+/* Адаптивные стили */
+@media (max-width: 768px) {
+    /* ... */
+}
