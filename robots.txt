@@ -1,5 +1,10 @@
 User-agent: *
-Allow: /
-Disallow: /admin/
-Disallow: /private/
-Sitemap: https://sdbs.ru/sitemap.xml
+Disallow: 
+Crawl-delay: 5
+Disallow: /cgi-bin/
+Disallow: /temp/
+Disallow: /hidden/
+Disallow: /system/
+Disallow: /tools/
+Disallow: /.*/
+Sitemap: https://sensor-dream.ru/sitemap.xml

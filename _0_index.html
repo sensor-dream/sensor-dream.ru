@@ -1,2445 +1,319 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-
-    <meta property="og:title" content="Sensor-Dream Boxed System | IT обслуживание">
-    <meta property="og:description" content="Профессиональное IT обслуживание: облачные решения, кибербезопасность, сетевая инфраструктура, IT поддержка, резервное копирование, мониторинг.">
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="https://sensor-dream.ru">
-    <meta property="og:image" content="https://sensor-dream.ru/images/og-image.jpg">
-    <meta property="og:locale" content="ru_RU">
-    
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sensor-Dream Boxed System | IT обслуживание</title>
-    <meta name="description" content="Sensor-Dream Boxed System - профессиональное IT обслуживание. Облачные решения, кибербезопасность, сетевая инфраструктура, IT поддержка, резервное копирование, мониторинг.">
-    <meta name="keywords" content="IT обслуживание, облачные решения, кибербезопасность, сетевая инфраструктура, IT поддержка, резервное копирование, мониторинг, SDBS">
-    <meta name="author" content="Sensor-Dream Boxed System">
+    <meta name="description" content="ИП Тесленко П.М. - IT услуги, ремонт компьютеров, установка ПО, серверы, онлайн поддержка. Профессиональные решения для вашей техники.">
+    <meta name="keywords" content="ремонт компьютеров, IT услуги, установка Windows, Linux, ремонт бытовой техники, серверы, онлайн поддержка">
+
+    <title>ИП Тесленко П.М. | IT решения и ремонт техники</title>
+
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-     <style>
-        /* Общие стили */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Courier New', monospace;
-        }
-        
-        body {
-            background-color: #000;
-            color: #0f0;
-            overflow-x: hidden;
-            position: relative;
-            line-height: 1.6;
-            background-image: 
-                radial-gradient(circle at 10% 20%, rgba(0, 30, 0, 0.1) 0%, transparent 20%),
-                radial-gradient(circle at 90% 80%, rgba(0, 30, 0, 0.1) 0%, transparent 20%);
-        }
-        
-        /* Анимация падающих символов матрицы */
-        .matrix-bg {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -1;
-            opacity: 0.15;
-            pointer-events: none;
-        }
-        
-        /* Фиксированное меню */
-        .header {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            background-color: rgba(0, 20, 0, 0.95);
-            padding: 15px 5%;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            z-index: 1000;
-            border-bottom: 1px solid #0f0;
-            box-shadow: 0 0 15px rgba(0, 255, 0, 0.3);
-            backdrop-filter: blur(5px);
-        }
-        
-        .logo {
-            font-size: 1.6rem;
-            font-weight: bold;
-            text-transform: uppercase;
-            letter-spacing: 3px;
-            color: #0f0;
-            text-shadow: 0 0 10px #0f0;
-            display: flex;
-            align-items: center;
-        }
+    <link rel="stylesheet" href="Css/style.css">
 
-        .logo i {
-            margin-right: 10px;
-            color: #0f0;
-            text-shadow: 0 0 8px #0f0;
-        }
-        
-        .nav-menu {
-            display: flex;
-            list-style: none;
-        }
-        
-        .nav-menu li {
-            margin: 0 15px;
-        }
+    <script src="Js/script.js" crossorigin="" async=""></script>
+    <style>
 
-        .nav-menu a {
-            color: #8f8;
-            text-decoration: none;
-            font-size: 1.1rem;
-            text-transform: uppercase;
-            letter-spacing: 1.5px;
-            position: relative;
-            padding: 8px 0;
-            transition: all 0.3s ease;
-            font-weight: 600;
-        }
-        
-        .nav-menu a:hover {
-            color: #0f0;
-            text-shadow: 0 0 10px #0f0;
-        }
-        
-        .nav-menu a::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 0;
-            height: 2px;
-            background: linear-gradient(90deg, transparent, #0f0, transparent);
-            transition: width 0.3s ease;
-        }
-        
-        .nav-menu a:hover::after {
-            width: 100%;
-        }
-        
-        .hamburger {
-            display: none;
-            cursor: pointer;
-            font-size: 1.8rem;
-            color: #0f0;
-        }
-        
-         /* Стили для секций */
-        section {
-            min-height: 100vh;
-            padding: 120px 10% 80px;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            border-bottom: 1px solid rgba(0, 255, 0, 0.2);
-            position: relative;
-        }
-
-        .hero {
-            text-align: center;
-            position: relative;
-            background: linear-gradient(rgba(0, 0, 0, 0.85), rgba(0, 0, 0, 0.85));
-        }
-        
-        .hero h1 {
-            font-size: 3rem;
-            margin-bottom: 25px;
-            text-transform: uppercase;
-            letter-spacing: 5px;
-            text-shadow: 0 0 15px #0f0;
-            background: linear-gradient(to right, #8f8, #0f0, #8f8);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            animation: titleGlow 3s infinite alternate;
-        }
-
-        @keyframes titleGlow {
-            0% { text-shadow: 0 0 10px #0f0; }
-            100% { text-shadow: 0 0 20px #0f0, 0 0 30px #0f0; }
-        }
-        
-        .hero p {
-            font-size: 1.3rem;
-            max-width: 800px;
-            margin: 0 auto 40px;
-            color: #8f8;
-            line-height: 1.8;
-        }
-        
-        .terminal-box {
-            background-color: rgba(0, 20, 0, 0.4);
-            border: 1px solid #0f0;
-            padding: 35px;
-            max-width: 850px;
-            margin: 0 auto 30px;
-            box-shadow: 0 0 30px rgba(0, 255, 0, 0.4);
-            position: relative;
-            border-radius: 5px;
-            overflow: hidden;
-        }
-
-        .terminal-box::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(135deg, rgba(0, 30, 0, 0.1), rgba(0, 15, 0, 0.3));
-            pointer-events: none;
-        }
-
-        .terminal-box p {
-            position: relative;
-            z-index: 1;
-            font-size: 1.2rem;
-            line-height: 1.8;
-            color: #8f8;
-        }
-
-        .terminal-box p::before {
-            content: '>';
-            position: absolute;
-            left: -25px;
-            color: #0f0;
-            animation: blink 1s infinite;
-        }
-        
-        @keyframes blink {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0; }
-        }
-
-        .btn {
-            display: inline-block;
-            background: linear-gradient(45deg, rgba(0, 50, 0, 0.7), rgba(0, 30, 0, 0.9));
-            color: #0f0;
-            border: 1px solid #0f0;
-            padding: 14px 35px;
-            margin-top: 30px;
-            font-size: 1.1rem;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            text-decoration: none;
-            border-radius: 3px;
-            position: relative;
-            overflow: hidden;
-            box-shadow: 0 0 10px rgba(0, 255, 0, 0.3);
-            font-weight: 600;
-        }
-        
-        .btn::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(0, 255, 0, 0.2), transparent);
-            transition: 0.5s;
-        }
-
-        .btn:hover {
-            background: linear-gradient(45deg, rgba(0, 60, 0, 0.8), rgba(0, 40, 0, 1));
-            box-shadow: 0 0 20px rgba(0, 255, 0, 0.6);
-            transform: translateY(-5px);
-        }
-        
-        .btn:hover::before {
-            left: 100%;
-        }
-
-        .section-title {
-            font-size: 2.8rem;
-            margin-bottom: 60px;
-            text-align: center;
-            text-transform: uppercase;
-            letter-spacing: 4px;
-            text-shadow: 0 0 10px #0f0;
-            position: relative;
-            padding-bottom: 20px;
-        }
-        
-        .section-title::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 150px;
-            height: 3px;
-            background: linear-gradient(90deg, transparent, #0f0, transparent);
-        }
-        
-        /* Сетка услуг */
-        .services-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-            gap: 35px;
-            margin-top: 40px;
-        }
-        
-        
-        .service-card {
-            background: rgba(0, 20, 0, 0.25);
-            border: 1px solid rgba(0, 255, 0, 0.3);
-            padding: 35px 30px;
-            transition: all 0.4s ease;
-            position: relative;
-            overflow: hidden;
-            text-decoration: none;
-            color: inherit;
-            display: block;
-            border-radius: 8px;
-            backdrop-filter: blur(5px);
-        }
-
-        .service-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(135deg, rgba(0, 30, 0, 0.1), rgba(0, 15, 0, 0.3));
-            pointer-events: none;
-        }
-        
-        .service-card:hover {
-            transform: translateY(-15px) scale(1.03);
-            box-shadow: 0 0 30px rgba(0, 255, 0, 0.4);
-            background: rgba(0, 30, 0, 0.4);
-            border-color: #0f0;
-        }
-        
-         .service-card i {
-            font-size: 3rem;
-            color: #0f0;
-            margin-bottom: 25px;
-            text-shadow: 0 0 10px rgba(0, 255, 0, 0.5);
-            transition: all 0.3s ease;
-        }
-
-        .service-card:hover i {
-            transform: scale(1.2);
-        }
-        
-        .service-card h3 {
-            font-size: 1.6rem;
-            margin-bottom: 20px;
-            color: #8f8;
-            position: relative;
-            z-index: 1;
-        }
-
-        .service-card p {
-            color: #8f8;
-            margin-bottom: 25px;
-            position: relative;
-            z-index: 1;
-            line-height: 1.7;
-        }
-
-        .service-card .btn {
-            margin-top: 10px;
-            padding: 10px 20px;
-            font-size: 0.95rem;
-        }
-        
-        /* О компании */
-        .about-content {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 60px;
-            align-items: center;
-        }
-
-        .about-text p {
-            margin-bottom: 25px;
-            font-size: 1.15rem;
-            line-height: 1.9;
-            color: #8f8;
-            position: relative;
-            z-index: 1;
-        }
-        
-        .stats {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 25px;
-            margin-top: 40px;
-        }
-        
-        .stat-box {
-            text-align: center;
-            padding: 25px;
-            background: rgba(0, 20, 0, 0.25);
-            border: 1px solid rgba(0, 255, 0, 0.3);
-            border-radius: 8px;
-            transition: all 0.3s ease;
-            backdrop-filter: blur(5px);
-        }
-
-        .stat-box:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 0 20px rgba(0, 255, 0, 0.3);
-            background: rgba(0, 30, 0, 0.35);
-            border-color: #0f0;
-        }
-
-        .stat-box .number {
-            font-size: 2.8rem;
-            font-weight: bold;
-            color: #0f0;
-            margin-bottom: 15px;
-            text-shadow: 0 0 10px rgba(0, 255, 0, 0.5);
-        }
-
-        .about-image .terminal-box {
-            box-shadow: 0 0 25px rgba(0, 255, 0, 0.4);
-            padding: 30px;
-        }
-        
-        /* Контакты */
-        .contact-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-            gap: 35px;
-        }
-        
-        .contact-form {
-            background: rgba(0, 20, 0, 0.3);
-            border: 1px solid #0f0;
-            padding: 30px;
-        }
-        
-        .form-group {
-            margin-bottom: 20px;
-        }
-        
-        .form-group label {
-            display: block;
-            margin-bottom: 5px;
-            color: #8f8;
-        }
-        
-        .form-group input,
-        .form-group textarea {
-            width: 100%;
-            padding: 10px;
-            background: rgba(0, 10, 0, 0.5);
-            border: 1px solid #0a0;
-            color: #0f0;
-            font-family: 'Courier New', monospace;
-        }
-        
-        .contact-info {
-            background: rgba(0, 20, 0, 0.25);
-            border: 1px solid rgba(0, 255, 0, 0.3);
-            padding: 35px;
-            border-radius: 8px;
-            backdrop-filter: blur(5px);
-            transition: all 0.3s ease;
-        }
-
-        .contact-info:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 0 20px rgba(0, 255, 0, 0.3);
-            background: rgba(0, 30, 0, 0.35);
-            border-color: #0f0;
-        }
-        
-        .contact-info h3 {
-            font-size: 1.6rem;
-            margin-bottom: 25px;
-            color: #8f8;
-            position: relative;
-            padding-bottom: 15px;
-        }
-
-        .contact-info h3::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 60px;
-            height: 2px;
-            background: #0f0;
-        }
-        
-        .info-item {
-            display: flex;
-            margin-bottom: 25px;
-            align-items: flex-start;
-        }
-        
-        .info-item i {
-            font-size: 1.3rem;
-            color: #0f0;
-            margin-right: 20px;
-            min-width: 25px;
-            margin-top: 5px;
-            text-shadow: 0 0 8px rgba(0, 255, 0, 0.5);
-        }
-
-        .info-item div {
-            color: #8f8;
-            line-height: 1.7;
-        }
-        
-        .info-item a {
-            color: #0f0;
-            text-decoration: none;
-            transition: all 0.3s ease;
-        }
-        
-        .info-item a:hover {
-            text-shadow: 0 0 10px #0f0;
-        }
-        
-        
-        /* Футер */
-        .footer {
-            text-align: center;
-            padding: 40px 30px;
-            background: rgba(0, 20, 0, 0.95);
-            border-top: 1px solid rgba(0, 255, 0, 0.2);
-            backdrop-filter: blur(5px);
-        }
-
-        .footer .logo {
-            justify-content: center;
-            margin-bottom: 20px;
-            font-size: 2rem;
-        }
-        
-        .footer p {
-            color: #8f8;
-            max-width: 800px;
-            margin: 0 auto 25px;
-            line-height: 1.7;
-        }
-
-        .social-links {
-            display: flex;
-            justify-content: center;
-            margin-top: 25px;
-            flex-wrap: wrap;
-        }
-        
-        .social-links a {
-            display: inline-block;
-            width: 45px;
-            height: 45px;
-            background: rgba(0, 30, 0, 0.4);
-            border: 1px solid rgba(0, 255, 0, 0.3);
-            border-radius: 50%;
-            margin: 0 12px 15px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: #0f0;
-            transition: all 0.3s ease;
-            font-size: 1.2rem;
-        }
-        
-        .social-links a:hover {
-            background: rgba(0, 50, 0, 0.6);
-            box-shadow: 0 0 15px rgba(0, 255, 0, 0.5);
-            transform: translateY(-5px) scale(1.1);
-            border-color: #0f0;
-        }
-
-         .footer-nav {
-            display: flex;
-            justify-content: center;
-            flex-wrap: wrap;
-            margin-top: 25px;
-        }
-        
-        .footer-nav a {
-            color: #8f8;
-            margin: 0 15px 15px;
-            text-decoration: none;
-            transition: all 0.3s ease;
-        }
-        
-        .footer-nav a:hover {
-            color: #0f0;
-            text-shadow: 0 0 10px #0f0;
-        }
-        
-        .copyright {
-            margin-top: 25px;
-            color: #5a5;
-            font-size: 0.9rem;
-        }
-        
-        /* Кнопка прокрутки вверх */
-        .scroll-top {
-            position: fixed;
-            bottom: 40px;
-            right: 40px;
-            width: 55px;
-            height: 55px;
-            background: rgba(0, 40, 0, 0.8);
-            border: 2px solid #0f0;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: #0f0;
-            font-size: 1.6rem;
-            cursor: pointer;
-            z-index: 999;
-            opacity: 0;
-            transform: translateY(20px);
-            transition: all 0.4s ease;
-            box-shadow: 0 0 15px rgba(0, 255, 0, 0.5);
-            backdrop-filter: blur(5px);
-        }
-        
-        .scroll-top.active {
-            opacity: 1;
-            transform: translateY(0);
-        }
-        
-        .scroll-top:hover {
-            background: rgba(0, 60, 0, 0.9);
-            box-shadow: 0 0 20px rgba(0, 255, 0, 0.8);
-            transform: scale(1.1);
-        }
-        
-       /* Страницы услуг */
-        .service-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 120px 20px 60px;
-        }
-        
-        .service-hero {
-            text-align: center;
-            margin-bottom: 60px;
-        }
-        
-        .service-hero h1 {
-            font-size: 3.2rem;
-            margin-bottom: 25px;
-            text-transform: uppercase;
-            letter-spacing: 3px;
-            text-shadow: 0 0 15px #0f0;
-            background: linear-gradient(to right, #8f8, #0f0, #8f8);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            animation: titleGlow 3s infinite alternate;
-        }
-        
-        .service-hero p {
-            max-width: 700px;
-            margin: 0 auto;
-            color: #8f8;
-            font-size: 1.2rem;
-            line-height: 1.8;
-        }
-
-        .service-content {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 45px;
-        }
-        
-        @media (min-width: 992px) {
-            .service-content {
-                grid-template-columns: 1fr 1fr;
-            }
-        }
-        
-        .service-description, 
-        .service-features {
-            background: rgba(0, 20, 0, 0.25);
-            border: 1px solid rgba(0, 255, 0, 0.3);
-            padding: 35px;
-            box-shadow: 0 0 20px rgba(0, 255, 0, 0.3);
-            border-radius: 8px;
-            backdrop-filter: blur(5px);
-            transition: all 0.3s ease;
-        }
-
-        .service-description:hover, 
-        .service-features:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 0 30px rgba(0, 255, 0, 0.4);
-            background: rgba(0, 30, 0, 0.35);
-            border-color: #0f0;
-        }
-        
-        .service-description h3,
-        .service-features h3 {
-            font-size: 1.7rem;
-            margin-bottom: 25px;
-            color: #8f8;
-            position: relative;
-            padding-bottom: 15px;
-        }
-
-        .service-description h3::after,
-        .service-features h3::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 50px;
-            height: 2px;
-            background: #0f0;
-        }
-
-        .service-description p {
-            color: #8f8;
-            margin-bottom: 20px;
-            line-height: 1.8;
-        }
-        
-        .feature-list {
-            list-style-type: none;
-        }
-        
-         .feature-list li {
-            margin-bottom: 20px;
-            padding-left: 30px;
-            position: relative;
-            color: #8f8;
-            line-height: 1.7;
-        }
-
-        .feature-list li:before {
-            content: '>';
-            position: absolute;
-            left: 0;
-            color: #0f0;
-            animation: blink 1s infinite;
-            font-weight: bold;
-        }
-        
-        .service-benefits {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-            gap: 35px;
-            margin-top: 50px;
-        }
-
-         .benefit-card {
-            background: rgba(0, 20, 0, 0.25);
-            border: 1px solid rgba(0, 255, 0, 0.3);
-            padding: 30px;
-            text-align: center;
-            transition: all 0.4s ease;
-            border-radius: 8px;
-            backdrop-filter: blur(5px);
-        }
-        
-        .benefit-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 0 25px rgba(0, 255, 0, 0.4);
-            background: rgba(0, 30, 0, 0.35);
-            border-color: #0f0;
-        }
-
-        .benefit-card i {
-            font-size: 2.5rem;
-            color: #0f0;
-            margin-bottom: 20px;
-            text-shadow: 0 0 10px rgba(0, 255, 0, 0.5);
-            transition: all 0.3s ease;
-        }
-
-        .benefit-card:hover i {
-            transform: scale(1.2);
-        }
-        
-        .benefit-card h4 {
-            font-size: 1.5rem;
-            margin-bottom: 15px;
-            color: #8f8;
-        }
-        
-        .benefit-card p {
-            color: #8f8;
-            line-height: 1.7;
-        }
-        
-        .service-cta {
-            text-align: center;
-            margin-top: 60px;
-        }
-        
-        /* LiveChat кнопка и окно */
-        .livechat-btn {
-            position: fixed;
-            bottom: 40px;
-            left: 40px;
-            width: 65px;
-            height: 65px;
-            background: rgba(0, 40, 0, 0.8);
-            border: 2px solid #0f0;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: #0f0;
-            font-size: 1.8rem;
-            cursor: pointer;
-            z-index: 999;
-            box-shadow: 0 0 15px rgba(0, 255, 0, 0.5);
-            transition: all 0.3s ease;
-            backdrop-filter: blur(5px);
-        }
-        
-        .livechat-btn:hover {
-            background: rgba(0, 60, 0, 0.9);
-            box-shadow: 0 0 20px rgba(0, 255, 0, 0.8);
-            transform: scale(1.1);
-        }
-        
-        .livechat-modal {
-            position: fixed;
-            bottom: 120px;
-            left: 40px;
-            width: 370px;
-            height: 470px;
-            background: rgba(0, 20, 0, 0.97);
-            border: 1px solid #0f0;
-            box-shadow: 0 0 25px rgba(0, 255, 0, 0.6);
-            z-index: 1000;
-            display: flex;
-            flex-direction: column;
-            display: none;
-            border-radius: 10px;
-            overflow: hidden;
-            backdrop-filter: blur(10px);
-        }
-        
-        .chat-header {
-            padding: 18px;
-            background: rgba(0, 40, 0, 0.9);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border-bottom: 1px solid #0f0;
-        }
-        
-        .chat-header h3 {
-            margin: 0;
-            font-size: 1.3rem;
-            color: #8f8;
-        }
-
-        .close-chat {
-            color: #0f0;
-            font-size: 1.8rem;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .close-chat:hover {
-            text-shadow: 0 0 10px #0f0;
-        }
-        
-        .chat-messages {
-            flex: 1;
-            padding: 20px;
-            overflow-y: auto;
-            display: flex;
-            flex-direction: column;
-        }
-        
-        .message {
-            margin-bottom: 18px;
-            padding: 15px;
-            border-radius: 8px;
-            max-width: 85%;
-            line-height: 1.5;
-            position: relative;
-            animation: messageAppear 0.3s ease;
-        }
-        
-        @keyframes messageAppear {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .message.received {
-            align-self: flex-start;
-            background: rgba(0, 50, 0, 0.4);
-            border: 1px solid #0a0;
-        }
-        
-        .message.sent {
-            align-self: flex-end;
-            background: rgba(0, 70, 0, 0.4);
-            border: 1px solid #0f0;
-        }
-        
-        .chat-input {
-            display: flex;
-            padding: 15px;
-            border-top: 1px solid #0f0;
-            background: rgba(0, 30, 0, 0.8);
-        }
-        
-        .chat-input input {
-            flex: 1;
-            padding: 12px;
-            background: rgba(0, 15, 0, 0.6);
-            border: 1px solid #0a0;
-            color: #0f0;
-            font-family: 'Courier New', monospace;
-            border-radius: 5px;
-        }
-        
-        .chat-input button {
-            background: transparent;
-            border: 1px solid #0f0;
-            color: #0f0;
-            padding: 0 20px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            margin-left: 10px;
-            border-radius: 5px;
-        }
-        
-        .chat-input button:hover {
-            background: rgba(0, 255, 0, 0.1);
-        }
-        
-        /* Модальное окно формы */
-        .modal {
-            display: none;
-            position: fixed;
-            z-index: 1001;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.8);
-            backdrop-filter: blur(5px);
-            max-height: 100%; /* Ограничиваем высоту контента */
-            overflow-y: auto; /* Включаем скролл при переполнении */
-            overscroll-behavior: contain; /* Блокирует скролл родителя */
-        }
-        
-        .modal-content {
-            position: relative;
-            background: rgba(0, 25, 0, 0.97);
-            margin: 10% auto;
-            padding: 40px;
-            border: 1px solid #0f0;
-            box-shadow: 0 0 30px rgba(0, 255, 0, 0.6);
-            max-width: 650px;
-            animation: modalAppear 0.5s ease;
-            border-radius: 10px;
-            overflow: hidden;
-            backdrop-filter: blur(10px);
-            scrollbar-gutter: stable;
-        }
-        
-        @keyframes modalAppear {
-            from { opacity: 0; transform: translateY(-50px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        
-        .close-modal {
-            position: absolute;
-            top: 10px;
-            right: 15px;
-            color: #0f0;
-            font-size: 32px;
-            font-weight: bold;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-        
-        .close-modal:hover {
-            text-shadow: 0 0 15px #0f0;
-            transform: scale(1.2);
-        }
-
-        .modal-content h3 {
-            font-size: 1.6rem;
-            margin-bottom: 30px;
-            color: #8f8;
-            text-align: center;
-            position: relative;
-            padding-bottom: 15px;
-        }
-        
-        .modal-content h3::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 80px;
-            height: 2px;
-            background: #0f0;
-        }
-
-        .form-group {
-            margin-bottom: 25px;
-        }
-        
-        .form-group label {
-            display: block;
-            margin-bottom: 8px;
-            color: #8f8;
-            font-size: 1.1rem;
-        }
-        
-        .form-group input,
-        .form-group textarea,
-        .form-group select {
-            width: 100%;
-            padding: 12px 15px;
-            background: rgba(0, 15, 0, 0.6);
-            border: 1px solid #0a0;
-            color: #0f0;
-            font-family: 'Courier New', monospace;
-            font-size: 1.1rem;
-            border-radius: 5px;
-            transition: all 0.3s ease;
-        }
-        
-        .form-group input:focus,
-        .form-group textarea:focus,
-        .form-group select:focus {
-            border-color: #0f0;
-            box-shadow: 0 0 10px rgba(0, 255, 0, 0.3);
-            outline: none;
-        }
-        
-        #submitBtn {
-            width: 100%;
-            padding: 16px;
-            font-size: 1.1rem;
-            margin-top: 10px;
-        }
-        
-        /* Адаптивность */
-        @media (max-width: 1200px) {
-            .hero h1 {
-                font-size: 3.2rem;
-            }
-            
-            .section-title {
-                font-size: 2.5rem;
-            }
-        }
-
-        @media (max-width: 992px) {
-            .hero h1 {
-                font-size: 2.8rem;
-            }
-            
-            .about-content {
-                grid-template-columns: 1fr;
-                gap: 40px;
-            }
-            
-            .scroll-top {
-                width: 50px;
-                height: 50px;
-                font-size: 1.5rem;
-                bottom: 30px;
-                right: 30px;
-            }
-            
-            .livechat-btn {
-                width: 60px;
-                height: 60px;
-                font-size: 1.6rem;
-                bottom: 30px;
-                left: 30px;
-            }
-            
-            .livechat-modal {
-                width: 330px;
-                height: 440px;
-                bottom: 110px;
-                left: 30px;
-            }
-        }
-        
-        @media (max-width: 768px) {
-            .hamburger {
-                display: block;
-            }
-            
-            .nav-menu {
-                position: absolute;
-                top: 80px;
-                left: 0;
-                background: rgba(0, 20, 0, 0.97);
-                width: 100%;
-                flex-direction: column;
-                align-items: center;
-                padding: 25px 0;
-                clip-path: polygon(0 0, 100% 0, 100% 0, 0 0);
-                transition: all 0.4s ease;
-                backdrop-filter: blur(10px);
-            }
-            
-            .nav-menu.active {
-                clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
-            }
-            
-            .nav-menu li {
-                margin: 18px 0;
-            }
-            
-            .hero h1 {
-                font-size: 2.5rem;
-            }
-            
-            .section-title {
-                font-size: 2.2rem;
-            }
-            
-            .terminal-box {
-                padding: 25px 20px;
-            }
-            
-            .scroll-top {
-                bottom: 25px;
-                right: 25px;
-                width: 45px;
-                height: 45px;
-                font-size: 1.4rem;
-            }
-            
-            .livechat-btn {
-                bottom: 25px;
-                left: 25px;
-                width: 55px;
-                height: 55px;
-                font-size: 1.5rem;
-            }
-            
-            .livechat-modal {
-                bottom: 95px;
-                left: 25px;
-                width: 300px;
-                height: 420px;
-            }
-            
-            .modal-content {
-                margin: 15% auto;
-                width: 90%;
-                padding: 30px;
-            }
-            
-            section {
-                padding: 100px 5% 60px;
-            }
-        }
-        
-        @media (max-width: 480px) {
-            .hero h1 {
-                font-size: 2.2rem;
-            }
-            
-            .section-title {
-                font-size: 1.9rem;
-            }
-            
-            .hero p {
-                font-size: 1.1rem;
-            }
-            
-            .terminal-box {
-                padding: 20px 15px;
-            }
-            
-            .btn {
-                padding: 12px 25px;
-                font-size: 1rem;
-            }
-            
-            .services-grid,
-            .contact-grid,
-            .service-benefits {
-                grid-template-columns: 1fr;
-            }
-            
-            .service-card, 
-            .contact-info,
-            .benefit-card {
-                padding: 25px 20px;
-            }
-            
-            .scroll-top {
-                bottom: 20px;
-                right: 20px;
-                width: 40px;
-                height: 40px;
-                font-size: 1.2rem;
-            }
-            
-            .livechat-btn {
-                bottom: 20px;
-                left: 20px;
-                width: 50px;
-                height: 50px;
-                font-size: 1.4rem;
-            }
-            
-            .livechat-modal {
-                width: 280px;
-                left: 20px;
-                bottom: 85px;
-            }
-        }
-
-
-        /* Стили для страницы блога */
-        .blog-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 120px 20px 80px;
-        }
-        
-        .blog-hero {
-            text-align: center;
-            margin-bottom: 60px;
-        }
-        
-        .blog-hero h1 {
-            font-size: 3.2rem;
-            margin-bottom: 25px;
-            text-transform: uppercase;
-            letter-spacing: 3px;
-            text-shadow: 0 0 15px #0f0;
-            background: linear-gradient(to right, #8f8, #0f0, #8f8);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            animation: titleGlow 3s infinite alternate;
-        }
-        
-        .blog-hero p {
-            max-width: 700px;
-            margin: 0 auto;
-            color: #8f8;
-            font-size: 1.2rem;
-            line-height: 1.8;
-        }
-
-        .articles-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-            gap: 35px;
-            margin-top: 45px;
-        }
-
-        .article-card {
-            background: rgba(0, 20, 0, 0.25);
-            border: 1px solid rgba(0, 255, 0, 0.3);
-            padding: 30px;
-            transition: all 0.4s ease;
-            text-decoration: none;
-            color: inherit;
-            display: block;
-            border-radius: 8px;
-            backdrop-filter: blur(5px);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .article-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(135deg, rgba(0, 30, 0, 0.1), rgba(0, 15, 0, 0.3));
-            pointer-events: none;
-        }
-        
-        .article-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 0 30px rgba(0, 255, 0, 0.4);
-            background: rgba(0, 30, 0, 0.35);
-            border-color: #0f0;
-        }
-        
-        .article-image {
-            height: 220px;
-            background-color: rgba(0, 40, 0, 0.4);
-            border: 1px solid #0a0;
-            margin-bottom: 25px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            overflow: hidden;
-            border-radius: 5px;
-            position: relative;
-            z-index: 1;
-        }
-        
-        .article-image i {
-            font-size: 3.5rem;
-            color: #0a0;
-            text-shadow: 0 0 10px rgba(0, 255, 0, 0.5);
-            transition: all 0.3s ease;
-        }
-
-        .article-card:hover .article-image i {
-            transform: scale(1.2);
-        }
-        
-        .article-meta {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 20px;
-            color: #5a5;
-            font-size: 0.95rem;
-            position: relative;
-            z-index: 1;
-        }
-        
-        .article-card h3 {
-            font-size: 1.6rem;
-            margin-bottom: 20px;
-            color: #8f8;
-            position: relative;
-            z-index: 1;
-            transition: all 0.3s ease;
-        }
-
-        .article-card:hover h3 {
-            color: #0f0;
-        }
-        
-        .article-card p {
-            color: #8f8;
-            margin-bottom: 25px;
-            position: relative;
-            z-index: 1;
-            line-height: 1.7;
-        }
-
-        .article-card .btn {
-            position: relative;
-            z-index: 1;
-            margin-top: 10px;
-            padding: 10px 20px;
-            font-size: 0.95rem;
-        }
-               
-        .blog-pagination {
-            display: flex;
-            justify-content: center;
-            margin-top: 50px;
-            gap: 12px;
-        }
-        
-        .blog-pagination a {
-            display: inline-block;
-            padding: 10px 18px;
-            background: rgba(0, 20, 0, 0.3);
-            border: 1px solid rgba(0, 255, 0, 0.3);
-            color: #8f8;
-            text-decoration: none;
-            transition: all 0.3s ease;
-            border-radius: 5px;
-            font-weight: 600;
-        }
-
-        .blog-pagination a:hover,
-        .blog-pagination a.active {
-            background: rgba(0, 30, 0, 0.4);
-            box-shadow: 0 0 10px rgba(0, 255, 0, 0.3);
-            color: #0f0;
-            border-color: #0f0;
-        }
-        
-        .blog-cta {
-            text-align: center;
-            margin-top: 60px;
-            background: rgba(0, 20, 0, 0.25);
-            border: 1px solid rgba(0, 255, 0, 0.3);
-            padding: 40px 30px;
-            border-radius: 10px;
-            backdrop-filter: blur(5px);
-        }
-
-         .blog-cta p {
-            font-size: 1.3rem;
-            margin-bottom: 25px;
-            color: #8f8;
-            max-width: 700px;
-            margin: 0 auto 30px;
-            line-height: 1.8;
-        }
-
-        .subscribe-form {
-            max-width: 500px;
-            margin: 0 auto;
-            display: flex;
-        }
-        
-        .subscribe-form input {
-            flex: 1;
-            padding: 14px 20px;
-            background: rgba(0, 15, 0, 0.6);
-            border: 1px solid #0a0;
-            color: #0f0;
-            font-family: 'Courier New', monospace;
-            border-radius: 5px 0 0 5px;
-            border-right: none;
-        }
-        
-        .subscribe-form button {
-            background: linear-gradient(45deg, rgba(0, 50, 0, 0.7), rgba(0, 30, 0, 0.9));
-            color: #0f0;
-            border: 1px solid #0f0;
-            padding: 0 25px;
-            cursor: pointer;
-            font-weight: 600;
-            letter-spacing: 1px;
-            border-radius: 0 5px 5px 0;
-            transition: all 0.3s ease;
-        }
-        
-        .subscribe-form button:hover {
-            background: linear-gradient(45deg, rgba(0, 60, 0, 0.8), rgba(0, 40, 0, 1));
-            box-shadow: 0 0 10px rgba(0, 255, 0, 0.3);
-        }
-
-        /* Анимация появления элементов */
-        .fade-in {
-            opacity: 0;
-            transform: translateY(30px);
-            transition: opacity 0.6s ease, transform 0.6s ease;
-        }
-        
-        .fade-in.appear {
-            opacity: 1;
-            transform: translateY(0);
-        }
     </style>
 </head>
 <body>
-     <!-- Анимация фона матрицы -->
-    <canvas class="matrix-bg" id="matrixCanvas"></canvas>
+    <!-- Матричный дождь -->
+    <div class="matrix-rain" id="matrixRain"></div>
     
-    <!-- Фиксированное меню -->
-    <header class="header">
-        <div class="logo"><i class="fas fa-cube"></i>SDBS</div>
-        <ul class="nav-menu" id="navMenu">
-            <li><a href="#home">Главная</a></li>
-            <li><a href="#services">Услуги</a></li>
-            <li><a href="#blog">Блог</a></li>
-            <li><a href="#about">О нас</a></li>
-            <li><a href="#contact">Контакты</a></li>
-        </ul>
-        <div class="hamburger" id="hamburger">
-            <i class="fas fa-bars"></i>
+    <!-- Шапка с навигацией -->
+    <header>
+        <div class="container">
+            <nav>
+                <a href="#" class="logo">
+                    <i class="fas fa-terminal"></i>
+                    ИП Тесленко П.М.
+                </a>
+                <button class="mobile-menu-btn" id="mobileMenuBtn">
+                    <i class="fas fa-bars"></i>
+                </button>
+                <ul class="nav-links" id="navLinks">
+                    <li><a href="#services">Услуги</a></li>
+                    <li><a href="#about">О нас</a></li>
+                    <li><a href="#contact">Контакты</a></li>
+                    <li><a href="#" id="feedbackBtn">Обратная связь</a></li>
+                </ul>
+            </nav>
         </div>
     </header>
     
-    <!-- Секция героя -->
-    <section class="hero" id="home">
-        <h1>Sensor-Dream Boxed System</h1>
-        <div class="terminal-box fade-in">
-            <p>Инициализация системы...<br>
-            Загрузка протоколов IT-обслуживания...<br>
-            Готово. Добро пожаловать в SDBS.</p>
+    <!-- Главная секция -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <div class="terminal-header">
+                    <div class="terminal-buttons">
+                        <div class="terminal-button close"></div>
+                        <div class="terminal-button minimize"></div>
+                        <div class="terminal-button maximize"></div>
+                    </div>
+                    <div class="terminal-title">Система ИП Тесленко П.М. - v1.0</div>
+                </div>
+                <div class="terminal-body">
+                    <div class="terminal-prompt">
+                        <span class="terminal-command">user@client:~$</span> запрос на IT-услуги
+                    </div>
+                    <div class="terminal-prompt">
+                        <span class="terminal-command">system@teslenko:~$</span> Добро пожаловать в ИП Тесленко П.М.!
+                    </div>
+                    <div class="terminal-prompt">
+                        <span class="terminal-command">system@teslenko:~$</span> Мы предоставляем комплексные IT-решения:
+                    </div>
+                    <div class="terminal-prompt">
+                        >> Ремонт компьютеров и серверов
+                    </div>
+                    <div class="terminal-prompt">
+                        >> Установка и настройка Windows/Linux
+                    </div>
+                    <div class="terminal-prompt">
+                        >> Ремонт бытовой техники
+                    </div>
+                    <div class="terminal-prompt">
+                        >> Установка программного обеспечения
+                    </div>
+                    <div class="terminal-prompt">
+                        >> Круглосуточная онлайн-поддержка
+                    </div>
+                    <div class="terminal-prompt">
+                        <span class="terminal-command">system@teslenko:~$</span> Готовы к работе<span class="blinking-cursor"></span>
+                    </div>
+                    
+                    <div class="hero-buttons">
+                        <a href="#services" class="btn">Наши услуги</a>
+                        <a href="#" class="btn" id="contactBtn">Связаться с нами</a>
+                    </div>
+                </div>
+            </div>
         </div>
-        <p class="fade-in">Полный спектр IT-услуг для бизнеса. От мониторинга до кибербезопасности.</p>
-        <a href="#" class="btn open-contact fade-in">Запросить подключение</a>
     </section>
     
     <!-- Секция услуг -->
-    <section id="services">
-        <h2 class="section-title">Наши Услуги</h2>
-        <div class="services-grid">
-            <a href="#cloud" class="service-card">
-                <i class="fas fa-server"></i>
-                <h3>Облачные Решения</h3>
-                <p>Развертывание, миграция и управление облачными инфраструктурами. Гибкие тарифы и масштабирование.</p>
-                <div class="btn" style="margin-top: 15px;">Подробнее</div>
-            </a>
-            <a href="#cybersecurity" class="service-card">
-                <i class="fas fa-shield-alt"></i>
-                <h3>Кибербезопасность</h3>
-                <p>Комплексная защита данных, системы обнаружения вторжений, аудит безопасности и восстановление.</p>
-                <div class="btn" style="margin-top: 15px;">Подробнее</div>
-            </a>
-            <a href="#network" class="service-card">
-                <i class="fas fa-network-wired"></i>
-                <h3>Сетевая Инфраструктура</h3>
-                <p>Проектирование, внедрение и поддержка сетевых решений любой сложности. Оптимизация трафика.</p>
-                <div class="btn" style="margin-top: 15px;">Подробнее</div>
-            </a>
-            <a href="#support" class="service-card">
-                <i class="fas fa-headset"></i>
-                <h3>IT Поддержка</h3>
-                <p>Круглосуточная техническая поддержка 24/7. Удаленное решение проблем и выезд специалистов.</p>
-                <div class="btn" style="margin-top: 15px;">Подробнее</div>
-            </a>
-            <a href="#backup" class="service-card">
-                <i class="fas fa-database"></i>
-                <h3>Резервное Копирование</h3>
-                <p>Автоматизированные системы бэкапа. Восстановление данных после сбоев и катастроф.</p>
-                <div class="btn" style="margin-top: 15px;">Подробнее</div>
-            </a>
-            <a href="#monitoring" class="service-card">
-                <i class="fas fa-chart-line"></i>
-                <h3>Мониторинг</h3>
-                <p>Непрерывный контроль инфраструктуры. Предупреждение сбоев и оптимизация производительности.</p>
-                <div class="btn" style="margin-top: 15px;">Подробнее</div>
-            </a>
+    <section class="services" id="services">
+        <div class="container">
+            <h2 class="section-title">Наши Услуги</h2>
+            <div class="services-grid">
+                <div class="service-card" data-service="repair">
+                    <div class="service-icon">
+                        <i class="fas fa-laptop-medical"></i>
+                    </div>
+                    <h3 class="service-title">Ремонт компьютеров</h3>
+                    <p class="service-description">Диагностика и ремонт компьютеров, ноутбуков, моноблоков. Замена компонентов, чистка системных блоков.</p>
+                    <a href="#" class="read-more">Подробнее <i class="fas fa-chevron-right"></i></a>
+                </div>
+                
+                <div class="service-card" data-service="server">
+                    <div class="service-icon">
+                        <i class="fas fa-server"></i>
+                    </div>
+                    <h3 class="service-title">Серверные решения</h3>
+                    <p class="service-description">Установка, настройка и обслуживание серверов. Резервное копирование, облачные решения, администрирование.</p>
+                    <a href="#" class="read-more">Подробнее <i class="fas fa-chevron-right"></i></a>
+                </div>
+                
+                <div class="service-card" data-service="os">
+                    <div class="service-icon">
+                        <i class="fab fa-linux"></i>
+                    </div>
+                    <h3 class="service-title">Установка ОС</h3>
+                    <p class="service-description">Установка и настройка Windows и Linux. Драйверы, обновления, оптимизация системы под ваши задачи.</p>
+                    <a href="#" class="read-more">Подробнее <i class="fas fa-chevron-right"></i></a>
+                </div>
+                
+                <div class="service-card" data-service="appliance">
+                    <div class="service-icon">
+                        <i class="fas fa-plug"></i>
+                    </div>
+                    <h3 class="service-title">Ремонт бытовой техники</h3>
+                    <p class="service-description">Ремонт холодильников, стиральных машин, телевизоров и другой бытовой техники. Гарантия на работы.</p>
+                    <a href="#" class="read-more">Подробнее <i class="fas fa-chevron-right"></i></a>
+                </div>
+                
+                <div class="service-card" data-service="software">
+                    <div class="service-icon">
+                        <i class="fas fa-download"></i>
+                    </div>
+                    <h3 class="service-title">Установка ПО</h3>
+                    <p class="service-description">Установка и настройка программного обеспечения. Антивирусы, офисные пакеты, специализированные программы.</p>
+                    <a href="#" class="read-more">Подробнее <i class="fas fa-chevron-right"></i></a>
+                </div>
+                
+                <div class="service-card" data-service="support">
+                    <div class="service-icon">
+                        <i class="fas fa-headset"></i>
+                    </div>
+                    <h3 class="service-title">Онлайн-поддержка</h3>
+                    <p class="service-description">Удаленная помощь по телефону, через мессенджеры или специальные программы. Решение проблем в режиме реального времени.</p>
+                    <a href="#" class="read-more">Подробнее <i class="fas fa-chevron-right"></i></a>
+                </div>
+            </div>
         </div>
     </section>
     
-    <!-- Страницы услуг -->
-    <div id="services-pages">
-        <!-- Облачные решения -->
-        <div id="cloud" class="service-container">
-            <div class="service-hero">
-                <h1>Облачные Решения</h1>
-                <p>Современные облачные технологии для вашего бизнеса</p>
-            </div>
-            
-            <div class="service-content">
-                <div class="service-description">
-                    <h3>Описание услуги</h3>
-                    <p>Наши облачные решения предоставляют гибкую и масштабируемую IT-инфраструктуру, которая позволяет вашей компании сосредоточиться на основных бизнес-задачах, не беспокоясь о технической стороне.</p>
-                    <p>Мы предлагаем полный спектр облачных сервисов: от частных и гибридных облаков до публичных решений с гарантией безопасности и надежности.</p>
-                    <p>Наши эксперты помогут с миграцией в облако, оптимизацией затрат и обеспечат круглосуточную поддержку вашей инфраструктуры.</p>
+    <!-- Секция "О нас" -->
+    <section class="about" id="about">
+        <div class="container">
+            <h2 class="section-title">О Нас</h2>
+            <div class="about-content">
+                <div class="about-text">
+                    <h3>ИП Тесленко П.М. - ваш надежный IT-партнер</h3>
+                    <p>Мы предоставляем профессиональные IT-услуги с 2010 года. Наша команда состоит из опытных специалистов с глубокими знаниями в области компьютерных технологий и ремонта бытовой техники.</p>
+                    <p>Наша миссия - сделать технологии доступными и понятными для каждого клиента. Мы стремимся к долгосрочным партнерским отношениям, основанным на доверии и качестве предоставляемых услуг.</p>
+                    <p>Каждый проект мы выполняем с максимальной ответственностью и вниманием к деталям. Мы используем только качественные комплектующие и оригинальное программное обеспечение.</p>
+                    <p>Наши специалисты регулярно проходят обучение и повышают квалификацию, чтобы оставаться в курсе последних технологических тенденций.</p>
+                    <a href="#" class="btn" id="aboutContactBtn">Связаться с нами</a>
                 </div>
-                
-                <div class="service-features">
-                    <h3>Ключевые особенности</h3>
-                    <ul class="feature-list">
-                        <li>Развертывание частных, публичных и гибридных облаков</li>
-                        <li>Миграция существующих приложений в облако</li>
-                        <li>Автоматическое масштабирование ресурсов</li>
-                        <li>Резервное копирование и восстановление данных</li>
-                        <li>Мониторинг и управление производительностью</li>
-                        <li>Повышение уровня безопасности данных</li>
-                        <li>Оптимизация затрат на IT-инфраструктуру</li>
-                        <li>Техническая поддержка 24/7</li>
-                    </ul>
+                <div class="about-image">
+                    <!-- Placeholder для изображения -->
+                    <div style="background: #222; height: 400px; display: flex; align-items: center; justify-content: center;">
+                        <i class="fas fa-laptop-code" style="font-size: 5rem; color: #0aff0a;"></i>
+                    </div>
                 </div>
-            </div>
-            
-            <div class="service-benefits">
-                <div class="benefit-card">
-                    <i class="fas fa-bolt"></i>
-                    <h4>Высокая доступность</h4>
-                    <p>Гарантированный uptime 99.9% для критически важных приложений</p>
-                </div>
-                <div class="benefit-card">
-                    <i class="fas fa-lock"></i>
-                    <h4>Безопасность</h4>
-                    <p>Многоуровневая защита данных и соответствие стандартам</p>
-                </div>
-                <div class="benefit-card">
-                    <i class="fas fa-chart-line"></i>
-                    <h4>Экономия</h4>
-                    <p>Снижение затрат на IT до 40% благодаря облачным решениям</p>
-                </div>
-            </div>
-            
-            <div class="service-cta">
-                <a href="#" class="btn open-contact">Заказать облачное решение</a>
             </div>
         </div>
-        
-        <!-- Кибербезопасность -->
-        <div id="cybersecurity" class="service-container">
-            <div class="service-hero">
-                <h1>Кибербезопасность</h1>
-                <p>Комплексная защита вашего бизнеса от киберугроз</p>
+    </section>
+    
+    <!-- Кнопка помощи -->
+    <div class="help-btn" id="helpBtn">
+        <i class="fas fa-headset"></i>
+    </div>
+    
+    <!-- Модальное окно обратной связи -->
+    <div class="modal" id="feedbackModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Обратная связь</h3>
+                <button class="close-modal">&times;</button>
             </div>
-            
-            <div class="service-content">
-                <div class="service-description">
-                    <h3>Описание услуги</h3>
-                    <p>В современном цифровом мире безопасность данных - приоритет номер один. Наши решения по кибербезопасности обеспечивают защиту от всех видов угроз: от фишинга и вирусов до целевых атак и программ-вымогателей.</p>
-                    <p>Мы предлагаем многоуровневую систему защиты, включая антивирусные решения, системы обнаружения вторжений, шифрование данных и обучение сотрудников.</p>
-                    <p>Наши эксперты проводят регулярный аудит безопасности и разрабатывают индивидуальные стратегии защиты для каждого клиента.</p>
-                </div>
-                
-                <div class="service-features">
-                    <h3>Ключевые особенности</h3>
-                    <ul class="feature-list">
-                        <li>Защита от вирусов, троянов и программ-вымогателей</li>
-                        <li>Системы обнаружения и предотвращения вторжений (IDS/IPS)</li>
-                        <li>Защита периметра сети (Firewall)</li>
-                        <li>Шифрование конфиденциальных данных</li>
-                        <li>Аудит безопасности и тестирование на проникновение</li>
-                        <li>Обучение сотрудников по кибербезопасности</li>
-                        <li>Мониторинг угроз в реальном времени</li>
-                        <li>План реагирования на инциденты</li>
-                    </ul>
-                </div>
-            </div>
-            
-            <div class="service-benefits">
-                <div class="benefit-card">
-                    <i class="fas fa-shield-alt"></i>
-                    <h4>Всесторонняя защита</h4>
-                    <p>Комплексный подход к безопасности на всех уровнях инфраструктуры</p>
-                </div>
-                <div class="benefit-card">
-                    <i class="fas fa-user-secret"></i>
-                    <h4>Конфиденциальность</h4>
-                    <p>Гарантия сохранности ваших данных и интеллектуальной собственности</p>
-                </div>
-                <div class="benefit-card">
-                    <i class="fas fa-history"></i>
-                    <h4>Непрерывность бизнеса</h4>
-                    <p>Предотвращение простоев из-за кибератак и сбоев</p>
-                </div>
-            </div>
-            
-            <div class="service-cta">
-                <a href="#" class="btn open-contact">Запросить аудит безопасности</a>
-            </div>
-        </div>
-        
-        <!-- Сетевая инфраструктура -->
-        <div id="network" class="service-container">
-            <div class="service-hero">
-                <h1>Сетевая Инфраструктура</h1>
-                <p>Надежные и производительные сетевые решения</p>
-            </div>
-            
-            <div class="service-content">
-                <div class="service-description">
-                    <h3>Описание услуги</h3>
-                    <p>Мы проектируем, внедряем и поддерживаем современные сетевые инфраструктуры, обеспечивающие бесперебойную работу вашего бизнеса. Наши решения масштабируются вместе с вашей компанией и соответствуют самым строгим требованиям.</p>
-                    <p>От локальных сетей до распределенных корпоративных сетей - мы создаем инфраструктуру, которая обеспечивает высокую скорость передачи данных, безопасность и отказоустойчивость.</p>
-                    <p>Наши специалисты используют только проверенное оборудование и передовые технологии для построения надежных сетей.</p>
-                </div>
-                
-                <div class="service-features">
-                    <h3>Ключевые особенности</h3>
-                    <ul class="feature-list">
-                        <li>Проектирование и развертывание локальных сетей (LAN)</li>
-                        <li>Настройка беспроводных сетей (Wi-Fi)</li>
-                        <li>Построение распределенных сетей (WAN)</li>
-                        <li>Виртуальные частные сети (VPN)</li>
-                        <li>Настройка межсетевых экранов</li>
-                        <li>Оптимизация сетевой производительности</li>
-                        <li>Мониторинг и анализ сетевого трафика</li>
-                        <li>Обеспечение отказоустойчивости</li>
-                    </ul>
-                </div>
-            </div>
-            
-            <div class="service-benefits">
-                <div class="benefit-card">
-                    <i class="fas fa-tachometer-alt"></i>
-                    <h4>Производительность</h4>
-                    <p>Оптимизированные сети для быстрой передачи данных</p>
-                </div>
-                <div class="benefit-card">
-                    <i class="fas fa-wifi"></i>
-                    <h4>Беспроводные решения</h4>
-                    <p>Современные Wi-Fi сети с широким покрытием</p>
-                </div>
-                <div class="benefit-card">
-                    <i class="fas fa-sync-alt"></i>
-                    <h4>Отказоустойчивость</h4>
-                    <p>Резервирование критически важных компонентов сети</p>
-                </div>
-            </div>
-            
-            <div class="service-cta">
-                <a href="#" class="btn open-contact">Запросить консультацию</a>
-            </div>
-        </div>
-        
-        <!-- IT Поддержка -->
-        <div id="support" class="service-container">
-            <div class="service-hero">
-                <h1>IT Поддержка</h1>
-                <p>Профессиональная техническая поддержка 24/7</p>
-            </div>
-            
-            <div class="service-content">
-                <div class="service-description">
-                    <h3>Описание услуги</h3>
-                    <p>Наша служба IT-поддержки обеспечивает бесперебойную работу вашей IT-инфраструктуры. Мы решаем проблемы до того, как они повлияют на ваш бизнес, и предоставляем быструю помощь при возникновении инцидентов.</p>
-                    <p>Наши специалисты работают круглосуточно, без выходных, чтобы обеспечить максимальную доступность ваших систем. Мы предлагаем различные модели поддержки - от удаленной помощи до выезда специалистов на место.</p>
-                    <p>С нами вы получаете не просто решение проблем, а партнера, который заботится о вашей IT-инфраструктуре.</p>
-                </div>
-                
-                <div class="service-features">
-                    <h3>Ключевые особенности</h3>
-                    <ul class="feature-list">
-                        <li>Круглосуточная поддержка 24/7/365</li>
-                        <li>Удаленное решение проблем</li>
-                        <li>Выезд специалистов на место</li>
-                        <li>Проактивный мониторинг систем</li>
-                        <li>Управление инцидентами и запросами</li>
-                        <li>Поддержка пользователей</li>
-                        <li>Обслуживание оборудования</li>
-                        <li>Обновление программного обеспечения</li>
-                    </ul>
-                </div>
-            </div>
-            
-            <div class="service-benefits">
-                <div class="benefit-card">
-                    <i class="fas fa-headset"></i>
-                    <h4>Доступность</h4>
-                    <p>Поддержка 24/7 без выходных и праздников</p>
-                </div>
-                <div class="benefit-card">
-                    <i class="fas fa-rocket"></i>
-                    <h4>Оперативность</h4>
-                    <p>Среднее время реакции - 15 минут</p>
-                </div>
-                <div class="benefit-card">
-                    <i class="fas fa-user-tie"></i>
-                    <h4>Экспертиза</h4>
-                    <p>Сертифицированные специалисты с опытом от 5 лет</p>
-                </div>
-            </div>
-            
-            <div class="service-cta">
-                <a href="#" class="btn open-contact">Подключить поддержку</a>
-            </div>
-        </div>
-        
-        <!-- Резервное копирование -->
-        <div id="backup" class="service-container">
-            <div class="service-hero">
-                <h1>Резервное Копирование</h1>
-                <p>Надежная защита ваших данных от потерь</p>
-            </div>
-            
-            <div class="service-content">
-                <div class="service-description">
-                    <h3>Описание услуги</h3>
-                    <p>Наши решения по резервному копированию обеспечивают сохранность ваших данных в любых ситуациях - от случайного удаления до масштабных катастроф. Мы используем многоуровневый подход к бэкапам, гарантируя возможность восстановления в любой момент.</p>
-                    <p>Системы автоматического резервного копирования работают незаметно для пользователей, сохраняя данные как локально, так и в защищенных облачных хранилищах. Мы регулярно тестируем процесс восстановления, чтобы убедиться в его надежности.</p>
-                    <p>С нами ваши данные защищены от любых непредвиденных обстоятельств.</p>
-                </div>
-                
-                <div class="service-features">
-                    <h3>Ключевые особенности</h3>
-                    <ul class="feature-list">
-                        <li>Автоматическое резервное копирование</li>
-                        <li>Многоуровневая стратегия бэкапов (3-2-1)</li>
-                        <li>Локальные и облачные хранилища</li>
-                        <li>Шифрование резервных копий</li>
-                        <li>Тестирование восстановления данных</li>
-                        <li>Хранение версий файлов</li>
-                        <li>Защита от программ-вымогателей</li>
-                        <li>Мониторинг статуса бэкапов</li>
-                    </ul>
-                </div>
-            </div>
-            
-            <div class="service-benefits">
-                <div class="benefit-card">
-                    <i class="fas fa-database"></i>
-                    <h4>Надежность</h4>
-                    <p>Гарантированное восстановление данных в любой момент</p>
-                </div>
-                <div class="benefit-card">
-                    <i class="fas fa-cloud"></i>
-                    <h4>Безопасность</h4>
-                    <p>Защищенные хранилища с шифрованием данных</p>
-                </div>
-                <div class="benefit-card">
-                    <i class="fas fa-history"></i>
-                    <h4>История изменений</h4>
-                    <p>Хранение версий файлов до 10 лет</p>
-                </div>
-            </div>
-            
-            <div class="service-cta">
-                <a href="#" class="btn open-contact">Защитить данные</a>
-            </div>
-        </div>
-        
-        <!-- Мониторинг -->
-        <div id="monitoring" class="service-container">
-            <div class="service-hero">
-                <h1>Мониторинг</h1>
-                <p>Непрерывный контроль вашей IT-инфраструктуры</p>
-            </div>
-            
-            <div class="service-content">
-                <div class="service-description">
-                    <h3>Описание услуги</h3>
-                    <p>Наши системы мониторинга обеспечивают круглосуточный контроль за всеми компонентами вашей IT-инфраструктуры. Мы отслеживаем производительность систем, доступность сервисов и предупреждаем о потенциальных проблемах до их возникновения.</p>
-                    <p>С помощью современных инструментов мониторинга мы собираем и анализируем данные о работе ваших систем, выявляем узкие места и оптимизируем производительность. Наши специалисты оперативно реагируют на любые аномалии, минимизируя простои.</p>
-                    <p>С нами вы всегда будете в курсе состояния вашей IT-инфраструктуры.</p>
-                </div>
-                
-                <div class="service-features">
-                    <h3>Ключевые особенности</h3>
-                    <ul class="feature-list">
-                        <li>Мониторинг серверов и сетевого оборудования</li>
-                        <li>Контроль производительности приложений</li>
-                        <li>Отслеживание доступности веб-сервисов</li>
-                        <li>Анализ сетевого трафика</li>
-                        <li>Прогнозирование сбоев</li>
-                        <li>Автоматические оповещения</li>
-                        <li>Детальная аналитика и отчетность</li>
-                        <li>Интеграция с системами управления инцидентами</li>
-                    </ul>
-                </div>
-            </div>
-            
-            <div class="service-benefits">
-                <div class="benefit-card">
-                    <i class="fas fa-eye"></i>
-                    <h4>Предсказуемость</h4>
-                    <p>Прогнозирование проблем до их возникновения</p>
-                </div>
-                <div class="benefit-card">
-                    <i class="fas fa-bell"></i>
-                    <h4>Оповещения</h4>
-                    <p>Мгновенные уведомления о критических событиях</p>
-                </div>
-                <div class="benefit-card">
-                    <i class="fas fa-chart-bar"></i>
-                    <h4>Аналитика</h4>
-                    <p>Детальные отчеты о производительности систем</p>
-                </div>
-            </div>
-            
-            <div class="service-cta">
-                <a href="#" class="btn open-contact">Подключить мониторинг</a>
+            <div class="modal-body">
+                <form id="feedbackForm">
+                    <div class="form-group">
+                        <label for="name">Ваше имя</label>
+                        <input type="text" id="name" class="form-control" required>
+                        <div class="error-message" id="nameError">Пожалуйста, введите ваше имя</div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="email" id="email" class="form-control" required>
+                        <div class="error-message" id="emailError">Пожалуйста, введите корректный email</div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="phone">Телефон</label>
+                        <input type="tel" id="phone" class="form-control" required>
+                        <div class="error-message" id="phoneError">Пожалуйста, введите корректный номер телефона</div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="service">Услуга</label>
+                        <select id="service" class="form-control">
+                            <option value="">Выберите услугу</option>
+                            <option value="repair">Ремонт компьютеров</option>
+                            <option value="server">Серверные решения</option>
+                            <option value="os">Установка ОС</option>
+                            <option value="appliance">Ремонт бытовой техники</option>
+                            <option value="software">Установка ПО</option>
+                            <option value="support">Онлайн-поддержка</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="message">Сообщение</label>
+                        <textarea id="message" class="form-control" rows="5" required></textarea>
+                        <div class="error-message" id="messageError">Пожалуйста, введите ваше сообщение</div>
+                    </div>
+                    
+                    <button type="submit" class="submit-btn">Отправить запрос</button>
+                </form>
             </div>
         </div>
     </div>
     
-   <!-- О компании -->
-    <section id="about">
-        <h2 class="section-title">О Компании</h2>
-        <div class="about-content">
-            <div class="about-text">
-                <p>Sensor-Dream Boxed System (SDBS) - лидер в сфере IT-обслуживания с 2008 года. Мы предоставляем комплексные решения для бизнеса любого масштаба.</p>
-                <p>Наша миссия - создавать надежные, безопасные и эффективные IT-инфраструктуры, которые позволяют нашим клиентам сосредоточиться на своих основных бизнес-задачах.</p>
-                <p>Команда SDBS состоит из сертифицированных специалистов с глубокими знаниями в области сетевых технологий, кибербезопасности и облачных вычислений.</p>
-                
-                <div class="stats">
-                    <div class="stat-box">
-                        <div class="number">15+</div>
-                        <div>лет опыта</div>
-                    </div>
-                    <div class="stat-box">
-                        <div class="number">500+</div>
-                        <div>клиентов</div>
-                    </div>
-                    <div class="stat-box">
-                        <div class="number">99.9%</div>
-                        <div>uptime</div>
-                    </div>
-                    <div class="stat-box">
-                        <div class="number">24/7</div>
-                        <div>поддержка</div>
+    <!-- Модальное окно чата поддержки -->
+    <div class="modal" id="chatModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Онлайн-поддержка</h3>
+                <button class="close-modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="chat-messages" id="chatMessages">
+                    <div class="message support">
+                        <strong>Поддержка:</strong> Здравствуйте! Чем я могу вам помочь?
                     </div>
                 </div>
-            </div>
-            <div class="about-image">
-                <div class="terminal-box">
-                    <p>Система SDBS активирована<br>
-                    Статус: Оперативный<br>
-                    Мониторинг: Активен<br>
-                    Защита: Максимальный уровень<br>
-                    Готовность: 100%</p>
+                <div class="chat-input">
+                    <input type="text" id="chatInput" placeholder="Введите ваше сообщение...">
+                    <button id="sendMessageBtn">Отправить</button>
                 </div>
             </div>
         </div>
-    </section>
+    </div>
     
-   <!-- Контакты -->
-    <section id="contact">
-        <h2 class="section-title">Контакты</h2>
-        <div class="contact-grid">
-            <div class="contact-info">
-                <h3>Наши контакты</h3>
-                 <div class="info-item h-card">
-                    <i class="fas fa-map-marker-alt"></i>
-                    <div class="p-adr h-adr">
-                        <span class="p-street-address">ул. Технологическая, д. 42</span>, 
-                        <span class="p-locality">г. Москва</span>, 
-                        <span class="p-extended-address">офис 707</span>
-                    </div>
-                </div>  
-                <div class="info-item">
-                    <i class="fas fa-phone"></i>
-                    <div>+7 (495) 123-45-67</div>
-                </div>
-                <div class="info-item">
-                    <i class="fas fa-envelope"></i>
-                    <div><a href="mailto:contact@sensor-dream.ru" class="u-email">contact@sensor-dream.ru</a></div>
-                </div>
-                <div class="info-item">
-                    <i class="fas fa-clock"></i>
-                    <div class="p-opening-hours">
-                        Пн-Пт: <time>9:00</time> - <time>18:00</time><br>
-                        Сб-Вс: по договоренности
-                    </div>
-                </div>
+    <!-- Модальное окно услуги -->
+    <div class="modal" id="serviceModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title" id="serviceModalTitle">Название услуги</h3>
+                <button class="close-modal">&times;</button>
             </div>
-            <div class="contact-info">
-                <h3>Свяжитесь с нами</h3>
-                <p>Используйте кнопку "Запросить подключение" для отправки запроса.</p>
-                <p>Наша служба поддержки доступна 24/7 через LiveChat.</p>
-                <a href="#" class="btn open-contact" style="margin-top: 20px;">Отправить запрос</a>
+            <div class="modal-body" id="serviceModalBody">
+                <!-- Контент будет загружен динамически -->
             </div>
-        </div>
-    </section>
-
-    <!-- Страница блога -->
-    <div id="blog-page" class="blog-container" style="display: none;">
-        <div class="blog-hero">
-            <h1>Блог SDBS</h1>
-            <p>Актуальные новости, статьи и советы из мира IT</p>
-        </div>
-        
-        <div class="articles-grid">
-            <a href="#article1" class="article-card">
-                <div class="article-image">
-                    <i class="fas fa-shield-alt"></i>
-                </div>
-                <div class="article-meta">
-                    <span>Кибербезопасность</span>
-                    <span>15 мая 2023</span>
-                </div>
-                <h3>10 советов по защите от кибератак в 2023 году</h3>
-                <p>Новые угрозы требуют новых подходов к безопасности. Узнайте, как защитить свой бизнес от современных киберугроз.</p>
-                <div class="btn">Читать далее</div>
-            </a>
-            
-            <a href="#article2" class="article-card">
-                <div class="article-image">
-                    <i class="fas fa-cloud"></i>
-                </div>
-                <div class="article-meta">
-                    <span>Облачные технологии</span>
-                    <span>3 мая 2023</span>
-                </div>
-                <h3>Гибридные облака: будущее корпоративной IT-инфраструктуры</h3>
-                <p>Почему гибридные облака становятся стандартом для крупного бизнеса и как правильно выбрать стратегию миграции.</p>
-                <div class="btn">Читать далее</div>
-            </a>
-            
-            <a href="#article3" class="article-card">
-                <div class="article-image">
-                    <i class="fas fa-network-wired"></i>
-                </div>
-                <div class="article-meta">
-                    <span>Сетевые решения</span>
-                    <span>22 апреля 2023</span>
-                </div>
-                <h3>Wi-Fi 6E: революция в беспроводных сетях</h3>
-                <p>Все о новом стандарте беспроводной связи: преимущества, особенности внедрения и практические рекомендации.</p>
-                <div class="btn">Читать далее</div>
-            </a>
-            
-            <a href="#article4" class="article-card">
-                <div class="article-image">
-                    <i class="fas fa-database"></i>
-                </div>
-                <div class="article-meta">
-                    <span>Резервное копирование</span>
-                    <span>10 апреля 2023</span>
-                </div>
-                <h3>Стратегия 3-2-1: золотой стандарт резервного копирования</h3>
-                <p>Как правильно организовать резервное копирование данных, чтобы гарантировать их сохранность в любых ситуациях.</p>
-                <div class="btn">Читать далее</div>
-            </a>
-        </div>
-        
-        <div class="blog-pagination">
-            <a href="#" class="active">1</a>
-            <a href="#">2</a>
-            <a href="#">3</a>
-            <a href="#"><i class="fas fa-chevron-right"></i></a>
-        </div>
-        
-        <div class="blog-cta">
-            <p>Подпишитесь на нашу рассылку, чтобы первыми получать новые статьи</p>
-            <form class="subscribe-form">
-                <input type="email" placeholder="Ваш email" required>
-                <button type="submit">Подписаться</button>
-            </form>
         </div>
     </div>
     
     <!-- Футер -->
-    <footer class="footer">
-        <div class="logo"><i class="fas fa-cube"></i>SDBS</div>
-        <p>Профессиональные IT-решения для вашего бизнеса. Обеспечиваем надежность, безопасность и эффективность вашей цифровой инфраструктуры.</p>
-        
-        <div class="footer-nav">
-            <a href="#home">Главная</a>
-            <a href="#services">Услуги</a>
-            <a href="#blog">Блог</a>
-            <a href="#about">О нас</a>
-            <a href="#contact">Контакты</a>
-            <a href="#">Политика конфиденциальности</a>
-        </div>
-        
-        <div class="social-links">
-            <a href="#"><i class="fab fa-telegram"></i></a>
-            <a href="#"><i class="fab fa-vk"></i></a>
-            <a href="#"><i class="fab fa-github"></i></a>
-            <a href="#"><i class="fab fa-linkedin"></i></a>
-            <a href="#"><i class="fab fa-youtube"></i></a>
-        </div>
-        
-        <div class="copyright">Sensor-Dream Boxed System © 2023. Все права защищены.</div>
-    </footer>
-    
-        <!-- Модальное окно формы обратной связи -->
-        <div class="modal" id="contactModal">
-        <div class="modal-content">
-            <span class="close-modal" id="closeContactModal">&times;</span>
-            <h3>Отправить запрос</h3>
-            <form id="contactForm">
-                <div class="form-group">
-                    <label for="name">Имя *</label>
-                    <input type="text" id="name" name="name" required>
+    <footer id="contact">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>ИП Тесленко П.М.</h3>
+                    <p style="color: var(--matrix-text); margin-bottom: 20px;">Профессиональные IT-услуги и ремонт техники с 2010 года</p>
+                    <div class="contact-info">
+                        <i class="fas fa-map-marker-alt"></i> г. Москва, ул. Техническая, 15
+                    </div>
+                    <div class="contact-info">
+                        <i class="fas fa-phone"></i> +7 (999) 123-45-67
+                    </div>
+                    <div class="contact-info">
+                        <i class="fas fa-envelope"></i> info@teslenko-it.ru
+                    </div>
                 </div>
-                <div class="form-group">
-                    <label for="email">Email *</label>
-                    <input type="email" id="email" name="email" required>
+                
+                <div class="footer-column">
+                    <h3>Наши услуги</h3>
+                    <ul>
+                        <li><a href="#"><i class="fas fa-chevron-right"></i> Ремонт компьютеров</a></li>
+                        <li><a href="#"><i class="fas fa-chevron-right"></i> Серверные решения</a></li>
+                        <li><a href="#"><i class="fas fa-chevron-right"></i> Установка ОС</a></li>
+                        <li><a href="#"><i class="fas fa-chevron-right"></i> Ремонт бытовой техники</a></li>
+                        <li><a href="#"><i class="fas fa-chevron-right"></i> Установка ПО</a></li>
+                        <li><a href="#"><i class="fas fa-chevron-right"></i> Онлайн-поддержка</a></li>
+                    </ul>
                 </div>
-                 <div class="form-group">
-                    <label for="phone">Телефон</label>
-                    <input type="tel" id="phone" name="phone">
+                
+                <div class="footer-column">
+                    <h3>Часы работы</h3>
+                    <ul>
+                        <li><i class="far fa-clock"></i> Пн-Пт: 9:00 - 20:00</li>
+                        <li><i class="far fa-clock"></i> Сб: 10:00 - 18:00</li>
+                        <li><i class="far fa-clock"></i> Вс: 10:00 - 16:00</li>
+                    </ul>
+                    <h3 style="margin-top: 20px;">Онлайн-поддержка</h3>
+                    <ul>
+                        <li><i class="far fa-clock"></i> Круглосуточно</li>
+                    </ul>
                 </div>
-                <div class="form-group">
-                    <label for="service">Услуга</label>
-                    <select id="service" name="service">
-                        <option value="">Выберите услугу</option>
-                        <option value="cloud">Облачные решения</option>
-                        <option value="cybersecurity">Кибербезопасность</option>
-                        <option value="network">Сетевая инфраструктура</option>
-                        <option value="support">IT Поддержка</option>
-                        <option value="backup">Резервное копирование</option>
-                        <option value="monitoring">Мониторинг</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label for="message">Сообщение *</label>
-                    <textarea id="message" name="message" rows="5" required></textarea>
-                </div>
-                <button type="submit" class="btn" id="submitBtn">Отправить</button>
-            </form>
-        </div>
-    </div>
-    
-    <!-- Кнопка прокрутки вверх -->
-    <div class="scroll-top" id="scrollTopBtn">
-        <i class="fas fa-arrow-up"></i>
-    </div>
-    
-    <!-- Кнопка LiveChat -->
-    <div class="livechat-btn" id="liveChatBtn">
-        <i class="fas fa-comments"></i>
-    </div>
-    
-    <!-- Окно LiveChat -->
-    <div class="livechat-modal" id="liveChatModal">
-        <div class="chat-header">
-            <h3>Техническая поддержка</h3>
-            <span class="close-chat" id="closeChat">&times;</span>
-        </div>
-        <div class="chat-messages" id="chatMessages">
-            <div class="message received">
-                Здравствуйте! Чем мы можем вам помочь?
+            </div>
+            <div class="copyright">
+                &copy; 2023 ИП Тесленко П.М. Все права защищены.
             </div>
         </div>
-        <div class="chat-input">
-            <input type="text" id="chatInput" placeholder="Введите сообщение...">
-            <button id="sendMessageBtn"><i class="fas fa-paper-plane"></i></button>
-        </div>
-    </div>
-    
-    <!-- Микроразметка Schema.org -->
-    <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "Organization",
-      "name": "Sensor-Dream Boxed System",
-      "url": "https://sensor-dream.ru",
-      "logo": "https://sensor-dream.ru/logo.png",
-      "description": "Профессиональное IT обслуживание: облачные решения, кибербезопасность, сетевая инфраструктура, IT поддержка, резервное копирование, мониторинг.",
-      "address": {
-        "@type": "PostalAddress",
-        "streetAddress": "ул. Технологическая, д. 42, офис 707",
-        "addressLocality": "Москва",
-        "postalCode": "123456",
-        "addressCountry": "RU"
-      },
-      "contactPoint": {
-        "@type": "ContactPoint",
-        "telephone": "+7-495-123-45-67",
-        "contactType": "Customer service",
-        "availableLanguage": "Russian",
-        "email": "contact@sensor-dream.ru"
-      },
-      "openingHoursSpecification": [
-        {
-          "@type": "OpeningHoursSpecification",
-          "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
-          "opens": "09:00",
-          "closes": "18:00"
-        }
-      ],
-      "sameAs": [
-        "https://t.me/sdbs",
-        "https://vk.com/sdbs",
-        "https://github.com/sdbs",
-        "https://linkedin.com/sdbs"
-      ],
-      "potentialAction": {
-        "@type": "ReadAction",
-        "target": "https://sensor-dream.ru/blog"
-      }
-    }
-    </script>
-    
-    <script>
-
-        // Добавляем анимацию появления элементов при прокрутке
-        const fadeElements = document.querySelectorAll('.fade-in');
-        
-        const appearOptions = {
-            threshold: 0.15,
-            rootMargin: "0px 0px -100px 0px"
-        };
-        
-        const appearOnScroll = new IntersectionObserver(function(entries, appearOnScroll) {
-            entries.forEach(entry => {
-                if (!entry.isIntersecting) {
-                    return;
-                } else {
-                    entry.target.classList.add('appear');
-                    appearOnScroll.unobserve(entry.target);
-                }
-            });
-        }, appearOptions);
-        
-        fadeElements.forEach(element => {
-            appearOnScroll.observe(element);
-        });
-
-         // Улучшенная анимация матрицы
-        const canvas = document.getElementById('matrixCanvas');
-        const ctx = canvas.getContext('2d');
-        
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
-        
-        const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789$#@%&*";
-        const fontSize = 16;
-        const columns = canvas.width / fontSize;
-        
-        const drops = [];
-        for(let i = 0; i < columns; i++) {
-            drops[i] = {
-                y: Math.random() * -100,
-                speed: 2 + Math.random() * 5
-            };
-        }
-        
-        function drawMatrix() {
-            ctx.fillStyle = 'rgba(0, 0, 0, 0.04)';
-            ctx.fillRect(0, 0, canvas.width, canvas.height);
-            
-            ctx.fillStyle = '#0f0';
-            ctx.font = `bold ${fontSize}px monospace`;
-            
-            for(let i = 0; i < drops.length; i++) {
-                const text = chars.charAt(Math.floor(Math.random() * chars.length));
-                const x = i * fontSize;
-                const y = drops[i].y;
-                
-                // Градиент для символов
-                const gradient = ctx.createLinearGradient(x, y, x, y + fontSize);
-                gradient.addColorStop(0, '#0f0');
-                gradient.addColorStop(1, 'rgba(0, 255, 0, 0.3)');
-                
-                ctx.fillStyle = gradient;
-                ctx.fillText(text, x, y);
-                
-                // Случайное появление новых символов
-                if (y > canvas.height && Math.random() > 0.975) {
-                    drops[i].y = 0;
-                    drops[i].speed = 2 + Math.random() * 5;
-                } else {
-                    drops[i].y += drops[i].speed;
-                }
-            }
-        }
-        
-        setInterval(drawMatrix, 50);
-        
-        // Меню для мобильных устройств
-        const hamburger = document.getElementById('hamburger');
-        const navMenu = document.getElementById('navMenu');
-        
-        hamburger.addEventListener('click', () => {
-            navMenu.classList.toggle('active');
-            hamburger.innerHTML = navMenu.classList.contains('active') ? 
-                '<i class="fas fa-times"></i>' : '<i class="fas fa-bars"></i>';
-        });
-        
-        // Плавная прокрутка
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function(e) {
-                e.preventDefault();
-                
-                if(navMenu.classList.contains('active')) {
-                    navMenu.classList.remove('active');
-                    hamburger.innerHTML = '<i class="fas fa-bars"></i>';
-                }
-                
-                const target = document.querySelector(this.getAttribute('href'));
-                window.scrollTo({
-                    top: target.offsetTop - 70,
-                    behavior: 'smooth'
-                });
-            });
-        });
-        
-        // Адаптивность фона матрицы
-        window.addEventListener('resize', () => {
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
-        });
-        
-        // Кнопка прокрутки вверх
-        const scrollTopBtn = document.getElementById('scrollTopBtn');
-        
-        // Показать/скрыть кнопку при прокрутке
-        window.addEventListener('scroll', () => {
-            if (window.pageYOffset > 300) {
-                scrollTopBtn.classList.add('active');
-            } else {
-                scrollTopBtn.classList.remove('active');
-            }
-        });
-        
-        // Плавная прокрутка вверх при клике
-        scrollTopBtn.addEventListener('click', () => {
-            window.scrollTo({
-                top: 0,
-                behavior: 'smooth'
-            });
-        });
-        
-        // Навигация по страницам услуг
-        document.querySelectorAll('.service-card').forEach(card => {
-            card.addEventListener('click', function(e) {
-                e.preventDefault();
-                const targetId = this.getAttribute('href');
-                const targetSection = document.querySelector(targetId);
-                
-                if (targetSection) {
-                    // Скрыть все страницы услуг
-                    document.querySelectorAll('.service-container').forEach(page => {
-                        page.style.display = 'none';
-                    });
-                    
-                    // Показать выбранную страницу
-                    targetSection.style.display = 'block';
-                    
-                    // Прокрутить к странице
-                    window.scrollTo({
-                        top: targetSection.offsetTop - 70,
-                        behavior: 'smooth'
-                    });
-                }
-            });
-        });
-        
-        // Изначально скрыть все страницы услуг
-        document.querySelectorAll('.service-container').forEach(page => {
-            page.style.display = 'none';
-        });
-        
-        // LiveChat функционал
-        const liveChatBtn = document.getElementById('liveChatBtn');
-        const liveChatModal = document.getElementById('liveChatModal');
-        const closeChat = document.getElementById('closeChat');
-        const chatMessages = document.getElementById('chatMessages');
-        const chatInput = document.getElementById('chatInput');
-        const sendMessageBtn = document.getElementById('sendMessageBtn');
-        
-        liveChatBtn.addEventListener('click', () => {
-            liveChatModal.style.display = 'flex';
-        });
-        
-        closeChat.addEventListener('click', () => {
-            liveChatModal.style.display = 'none';
-        });
-        
-        function addMessage(text, isSent) {
-            const messageDiv = document.createElement('div');
-            messageDiv.classList.add('message');
-            messageDiv.classList.add(isSent ? 'sent' : 'received');
-            messageDiv.textContent = text;
-            chatMessages.appendChild(messageDiv);
-            // Прокрутка вниз
-            chatMessages.scrollTop = chatMessages.scrollHeight;
-        }
-        
-        sendMessageBtn.addEventListener('click', () => {
-            const message = chatInput.value.trim();
-            if (message) {
-                addMessage(message, true);
-                // Очищаем поле ввода
-                chatInput.value = '';
-                // Имитация ответа (через 1 секунду)
-                setTimeout(() => {
-                    addMessage('Спасибо за ваше сообщение. Наш специалист свяжется с вами в ближайшее время.', false);
-                }, 1000);
-            }
-        });
-        
-        // Отправка по Enter
-        chatInput.addEventListener('keypress', (e) => {
-            if (e.key === 'Enter') {
-                sendMessageBtn.click();
-            }
-        });
-        
-        // Модальное окно формы обратной связи
-        const contactModal = document.getElementById('contactModal');
-        const closeContactModal = document.getElementById('closeContactModal');
-        const openContactBtns = document.querySelectorAll('.open-contact');
-        
-        openContactBtns.forEach(btn => {
-            btn.addEventListener('click', (e) => {
-                e.preventDefault();
-                contactModal.style.display = 'block';
-            });
-        });
-        
-        closeContactModal.addEventListener('click', () => {
-            contactModal.style.display = 'none';
-        });
-        
-        // Закрытие модальных окон при клике вне контента
-        window.addEventListener('click', (e) => {
-            if (e.target === contactModal) {
-                contactModal.style.display = 'none';
-            }
-            if (e.target === liveChatModal) {
-                liveChatModal.style.display = 'none';
-            }
-        });
-        
-         // Добавляем обработку пункта меню "Блог"
-        document.querySelectorAll('.nav-menu a[href="#blog"]').forEach(anchor => {
-            anchor.addEventListener('click', function(e) {
-                e.preventDefault();
-                
-                if(navMenu.classList.contains('active')) {
-                    navMenu.classList.remove('active');
-                    hamburger.innerHTML = '<i class="fas fa-bars"></i>';
-                }
-                
-                // Скрыть все страницы услуг
-                document.querySelectorAll('.service-container').forEach(page => {
-                    page.style.display = 'none';
-                });
-                
-                // Показать страницу блога
-                document.getElementById('blog-page').style.display = 'block';
-                
-                // Скрыть все основные секции
-                document.querySelectorAll('section').forEach(section => {
-                    section.style.display = 'none';
-                });
-                
-                // Прокрутить вверх
-                window.scrollTo({
-                    top: 0,
-                    behavior: 'smooth'
-                });
-            });
-        });
-
-        // Обработка кликов по другим пунктам меню (чтобы показывать основное содержимое)
-        document.querySelectorAll('.nav-menu a:not([href="#blog"])').forEach(anchor => {
-            anchor.addEventListener('click', function(e) {
-                // Показать все основные секции
-                document.querySelectorAll('section').forEach(section => {
-                    section.style.display = 'flex';
-                });
-                
-                // Скрыть страницу блога
-                document.getElementById('blog-page').style.display = 'none';
-            });
-        });
-        
-        // Изначально скрыть страницу блога
-        document.getElementById('blog-page').style.display = 'none';
-
-        // Закрытие модальных окон по ESC
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape') {
-                if (liveChatModal.style.display === 'flex') {
-                    liveChatModal.style.display = 'none';
-                }
-                if (contactModal.style.display === 'block') {
-                    contactModal.style.display = 'none';
-                }
-            }
-        });
-
-    </script>
-    <!--
-Основные изменения:
-
-Добавлена микроразметка Schema.org в формате JSON-LD для улучшения SEO
-
-Форма обратной связи вынесена в модальное окно
-
-Все кнопки вызова формы заменены на класс "open-contact"
-
-Реализовано закрытие модальных окон:
-
-По клику на крестик
-
-По клику вне области контента
-
-По нажатию клавиши ESC
-
-Добавлены анимации появления модальных окон
-
-Обновлена секция контактов - теперь вместо формы там кнопка вызова модального окна
-
-Добавлены адаптивные стили для модальных окон
-
-Все изменения сохраняют оригинальный стиль "матрицы" и улучшают пользовательский опыт, делая форму обратной связи более доступной с любой страницы сайта.
-    -->
+    </footer>
 </body>
 </html>
